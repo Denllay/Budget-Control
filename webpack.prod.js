@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
@@ -9,17 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   optimization: {
-    minimizer: [
-      new OptimizeCssAssetsPlugin(),
-      new HtmlWebpackPlugin({
-        template: path.join(__dirname, "./src", "index.html"),
-        minify: {
-          removeAttributeQuotes: true,
-          collapseWhitespace: true,
-          removeComments: true,
-        },
-      }),
-    ],
+    minimizer: [new OptimizeCssAssetsPlugin()],
   },
   plugins: [new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" })],
   module: {
