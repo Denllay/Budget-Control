@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "development",
   // Дев сервер
@@ -8,6 +9,9 @@ module.exports = {
     port: 8080,
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "./public", "index.html"),
+    }),
     // Копирование
     new CopyPlugin({
       patterns: [{ from: "./src", to: "./static" }],

@@ -1,6 +1,7 @@
 const path = require("path");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   mode: "production",
   output: {
@@ -10,7 +11,17 @@ module.exports = {
   optimization: {
     minimizer: [new OptimizeCssAssetsPlugin()],
   },
-  plugins: [new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" })],
+  plugins: [
+    new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "./public", "index.html"),
+      minify: {
+        removeAttributeQuotes: true,
+        collapseWhitespace: true,
+        removeComments: true,
+      },
+    }),
+  ],
   module: {
     rules: [
       {

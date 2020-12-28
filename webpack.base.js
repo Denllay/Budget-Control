@@ -1,6 +1,5 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   module: {
     rules: [
@@ -54,9 +53,6 @@ module.exports = {
   },
   plugins: [
     // ХТМЛ
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, "./public", "index.html"),
-    }),
     // Очистка говна
     new CleanWebpackPlugin(),
   ],
