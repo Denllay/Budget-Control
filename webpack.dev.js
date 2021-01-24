@@ -7,6 +7,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "./dist"),
     port: 8080,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,5 +21,6 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: path.resolve(__dirname, "./dist"),
+    publicPath: "/",
   },
 };
