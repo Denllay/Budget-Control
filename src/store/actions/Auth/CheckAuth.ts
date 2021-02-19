@@ -1,6 +1,6 @@
-import { Dispatch } from "react";
-import { app } from "../../../Firebase/config";
-import { EnumAuthAction, TAuthAction } from "../../types/Auth/Auth";
+import { Dispatch } from 'react';
+import { app } from '../../../Firebase/config';
+import { EnumAuthAction, TAuthAction } from '../../types/Auth/Auth';
 
 export const CheckAuth = () => {
   return async (dispatch: Dispatch<TAuthAction>) => {

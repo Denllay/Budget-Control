@@ -6,24 +6,22 @@
   right: 0;
   height: 100vh;
   width: 100vw;
-  background-color: #000;
-  opacity: 0.75;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .content {
-  background: #ffffff;
+  background: #535763;
   width: 75%;
   height: 75%;
   padding: 50px 35px;
 }
 .title h2 {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   font-size: 36px;
-  color: #000;
+  color: #fff;
 }
 .form {
   display: flex;
@@ -32,10 +30,10 @@
 }
 .input {
   color: #000;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   font-size: 18px;
-  background: #eaeaea;
+  background: #fff;
   border: 0;
   border-radius: 5px;
   outline: none;
@@ -54,22 +52,22 @@
 }
 .submit {
   cursor: pointer;
-  color: #000;
-  font-family: "Montserrat", sans-serif;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: bold;
   border-radius: 5px;
   border: 0;
-  background: #eaeaea;
+  background: #282d3c;
   padding: 12px 30px;
   margin-top: 30px;
   width: 130px;
   outline: none;
 
   &:hover {
-    background: #000;
+    background: #fff;
     transition: all 0.5s ease;
-    color: #fff;
+    color: #282d3c;
   }
   &:not(:hover) {
     transition: all 0.5s ease;
