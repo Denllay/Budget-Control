@@ -10,7 +10,7 @@ export const Nav: React.FC<IProps> = () => {
   return (
     <div className={styles.header_inner}>
       <div className={styles.logo_block}>
-        <h1 className={styles.logo}>Family</h1>
+        <h1 className={styles.logo}>Budget Control</h1>
       </div>
       <nav className={styles.nav}>
         {AuthStatus === EnumAuthAction.AUTH_LOGIN ? (

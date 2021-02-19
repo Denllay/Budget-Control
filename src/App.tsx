@@ -6,13 +6,13 @@ import { Nav } from './components/Nav/Nav';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import Auth from './components/Auth/Auth';
 import { EnumAuthAction } from './store/types/Auth/Auth';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Main } from './components/Main/Main';
+import { Home } from './Home/Home';
 
 export const App: React.FC = () => {
   const authStatus = useTypedSelector((state) => state.auth.status);
   const { CheckAuth } = useActions();
-
   useEffect(() => {
     CheckAuth();
     console.log(authStatus);
@@ -21,6 +21,7 @@ export const App: React.FC = () => {
     <div className={styles.wrapper}>
       <Nav />
       <Switch>
+        (
         <PrivateRoute
           component={Main}
           condition={authStatus}
@@ -29,6 +30,7 @@ export const App: React.FC = () => {
           pathRedirect="/"
           path="/main"
         />
+        )
         <PrivateRoute
           component={Auth}
           condition={authStatus}
@@ -37,6 +39,9 @@ export const App: React.FC = () => {
           pathRedirect="/"
           path={['/registration', '/login']}
         />
+        <Route exact path="/">
+          <Home />
+        </Route>
       </Switch>
     </div>
   );

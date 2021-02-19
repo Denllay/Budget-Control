@@ -1,0 +1,32 @@
+.graph_data {
+  margin: 5px 0px 0px 30px;
+}
+
+.list_item {
+  display: flex;
+  justify-content: space-between;
+  width: 220px;
+  margin: 8px 0px;
+}
+.block_color {
+  display: flex;
+  align-items: center;
+}
+.item_color {
+  width: 26px;
+  height: 26px;
+  border-radius: 100%;
+}
+.item_name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 10px;
+}
+.procent_data {
+  display: flex;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}

@@ -2,3 +2,5 @@ node_modules
 dist
 .idea
 .vscode
+.idea
+config.ts
