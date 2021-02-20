@@ -8,7 +8,7 @@ import Auth from './components/Auth/Auth';
 import { EnumAuthAction } from './store/types/Auth/Auth';
 import { Route, Switch } from 'react-router-dom';
 import { Main } from './components/Main/Main';
-import { Home } from './Home/Home';
+import { Home } from './components/Home/Home';
 
 export const App: React.FC = () => {
   const authStatus = useTypedSelector((state) => state.auth.status);
