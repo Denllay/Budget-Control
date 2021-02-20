@@ -10,24 +10,24 @@ export const GetDataBudget = () => {
       const uid = auth.currentUser && auth.currentUser.uid;
       const data = await firebase
         .database()
-        .ref('users')
-        .child(uid)
+        .ref(`users/${uid}`)
         .get()
-        .then(function (snapshot) {
+        .then((snapshot) => {
           if (snapshot.exists()) {
             return snapshot.val();
           } else {
             console.log('No data available'); //Change
           }
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.error(error);
         });
 
       if (!!data) {
         const formatData = Object.entries(data.Budgets).reduce((acc, el) => {
           const data = {
-            title: el[0],
+            title: el[1]['title'],
+            budgetId: el[0],
             category: [],
           };
           Object.values(el[1]['category']).forEach((el) => data.category.push(el));
@@ -35,6 +35,8 @@ export const GetDataBudget = () => {
           return acc;
         }, []);
         dispath({ type: EnumActionBudget.BUDGET_GET_DATA, payload: formatData });
+      } else {
+        dispath({ type: EnumActionBudget.BUDGET_GET_DATA, payload: undefined });
       }
     } catch (error) {
       console.log(error);

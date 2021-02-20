@@ -1,7 +1,13 @@
 import { TCurrency } from '../../../types/Budget';
-
+export const enum EnumLoadBudgetAction {
+  LOADING = 'LOADING',
+  LOADED = 'LOADED',
+}
+type TLoadBudgetAction = EnumLoadBudgetAction.LOADED | EnumLoadBudgetAction.LOADING;
 export interface IBudgetInitialState {
   showAddMenu: boolean;
+  budgets: 'undefined';
+  loadStatus: TLoadBudgetAction;
 }
 
 ///
@@ -22,6 +28,8 @@ export const enum EnumActionBudget {
   BUDGET_SHOW_ADD_MENU = 'BUDGET_SHOW_ADD_MENU',
   BUDGET_GET_DATA = 'BUDGET_GET_DATA',
   BUDGET_CLEAR_DATA = 'BUDGET_CLEAR_DATA',
+  BUDGET_REMOVE = 'BUDGET_REMOVE',
+  BUDGET_CATEGORY_ADD = 'BUDGET_CATEGORY_ADD',
 }
 export interface IBudgetShowMenuAction {
   type: EnumActionBudget.BUDGET_SHOW_ADD_MENU;
@@ -37,7 +45,11 @@ interface IBudgetsData {
 export interface IBudgetClearData {
   type: EnumActionBudget.BUDGET_CLEAR_DATA;
 }
-export type TBudgetAction = IBudgetShowMenuAction | IBudgetGetDataAction | IBudgetClearData;
+export interface IBudgetRemove {
+  type: EnumActionBudget.BUDGET_REMOVE;
+  budgetId: string;
+}
+export type TBudgetAction = IBudgetShowMenuAction | IBudgetGetDataAction | IBudgetClearData | IBudgetRemove;
 
 ///
 

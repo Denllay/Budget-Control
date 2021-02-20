@@ -19,7 +19,7 @@ export const Main: React.FC<IProps> = () => {
   const graphBudgets =
     budget.budgets &&
     budget.budgets.map((el, index) => {
-      return <BudgetItem key={index} data={el.category} />;
+      return <BudgetItem key={index} data={el.category} budgetId={el.budgetId} />;
     });
   return (
     <div className={styles.wrapper}>

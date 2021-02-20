@@ -7,6 +7,7 @@ const Auth: React.FC<PropsType> = (props) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+
   const { RegAuth, LoginAuth } = useActions();
   const path: string = location.pathname;
   const onCloseModal = (e: React.MouseEvent<HTMLDivElement>) => {

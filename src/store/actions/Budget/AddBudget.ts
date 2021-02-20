@@ -1,6 +1,5 @@
-import { auth } from '../../../Firebase/config';
 import { IBudgetAddAction, IBudgetAddData } from '../../types/Budget/Budget';
-import firebase from '../../../Firebase/config';
+import firebase, { auth } from '../../../Firebase/config';
 import { GetDataBudget } from './GetDataBudget';
 export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
   /*
@@ -8,6 +7,7 @@ export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
   */
   return (dispatch) => {
     const uid = auth.currentUser && auth.currentUser.uid;
+    const budgetId = ('id-' + Math.abs(new Date().valueOf())).replace(/\./, '');
     const data: IBudgetAddData = {
       title,
       category: {
@@ -21,10 +21,7 @@ export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
     };
     firebase
       .database()
-      .ref('users')
-      .child(uid)
-      .child('Budgets')
-      .child(title)
+      .ref(`users/${uid}/Budgets/${budgetId}`)
       .set(data)
       .then(() => {
         console.log('Saved Data'); // Change
