@@ -6,7 +6,7 @@ export const enum EnumLoadBudgetAction {
 type TLoadBudgetAction = EnumLoadBudgetAction.LOADED | EnumLoadBudgetAction.LOADING;
 export interface IBudgetInitialState {
   showAddMenu: boolean;
-  budgets: 'undefined';
+  budgets: null;
   loadStatus: TLoadBudgetAction;
 }
 

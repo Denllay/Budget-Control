@@ -1,46 +1,79 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './Auth.module.scss';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useActions } from '../../hooks/useActions';
-type PropsType = RouteComponentProps;
-const Auth: React.FC<PropsType> = (props) => {
+import { TModalAuth } from '../../types/ModalAuth';
+import Modal from 'react-modal';
+interface IProps {
+  statusModal: TModalAuth;
+  setModal: Dispatch<SetStateAction<TModalAuth>>;
+}
+export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-
   const { RegAuth, LoginAuth } = useActions();
-  const path: string = location.pathname;
-  const onCloseModal = (e: React.MouseEvent<HTMLDivElement>) => {
-    (e.target as HTMLDivElement).id === 'closeModal' && props.history.push('/');
+  //
+  const closeModal = () => {
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+    setModal(null);
   };
+  //
   const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value);
   const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value);
   const onChangeConfirmPassword = (e: React.FormEvent<HTMLInputElement>) => setConfirmPassword(e.currentTarget.value);
+  //
   const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
     const sucsessEmail = /.+@.+\..+/i.test(email);
-    const sucsessPassword = password.trim() === confirmPassword.trim();
-    switch (path) {
-      case '/login':
-        sucsessEmail ? LoginAuth({ email, password }) : console.log('Введите данные правильно'); //CHANGE
-        break;
-      case '/registration':
-        if (sucsessPassword && sucsessEmail && !!password.trim()) {
-          RegAuth({ password, email });
-        } else {
-          console.log('Напишите данные правильно'); //CHANGE
-        }
-        break;
-      default:
-        break;
+    const sucsessPassword = password.trim() === confirmPassword.trim() && password.trim();
+
+    if (statusModal === 'login' && sucsessEmail && password.trim()) {
+      LoginAuth({ email, password });
+      closeModal();
+    } else if (statusModal === 'reg' && sucsessPassword && sucsessEmail) {
+      RegAuth({ password, email });
+      closeModal();
+    } else {
+      console.log('Введите данные правильно');
     }
   };
-
+  Modal.setAppElement('#root');
   return (
-    <div className={styles.wrapper} id="closeModal" onClick={onCloseModal}>
-      <div className={styles.content}>
+    <div className={styles.auth_modal}>
+      <Modal
+        isOpen={!!statusModal}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.7)',
+            zIndex: 100,
+          },
+          content: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            backgroundColor: '#535763',
+            border: 'none',
+            width: '50vw',
+            padding: '50px 35px',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+          },
+        }}
+      >
         <div className={styles.title}>
-          <h2>{path === '/login' ? 'Login' : 'Registration'}</h2>
+          <h2>{statusModal === 'login' ? 'Login' : 'Registration'}</h2>
         </div>
         <form className={styles.form} onSubmit={onSubmitForm}>
           <input type="email" className={styles.input} placeholder="Email" value={email} onChange={onChangeEmail} />
@@ -51,7 +84,7 @@ const Auth: React.FC<PropsType> = (props) => {
             value={password}
             onChange={onChangePassword}
           />
-          {path === '/registration' ? (
+          {statusModal === 'reg' ? (
             <input
               type="password"
               className={styles.input}
@@ -62,8 +95,7 @@ const Auth: React.FC<PropsType> = (props) => {
           ) : null}
           <input type="submit" value="submit" className={styles.submit} />
         </form>
-      </div>
+      </Modal>
     </div>
   );
 };
-export default withRouter(Auth); // Пришлось использовать из-за history.push()

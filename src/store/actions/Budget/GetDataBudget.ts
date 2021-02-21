@@ -36,7 +36,7 @@ export const GetDataBudget = () => {
         }, []);
         dispath({ type: EnumActionBudget.BUDGET_GET_DATA, payload: formatData });
       } else {
-        dispath({ type: EnumActionBudget.BUDGET_GET_DATA, payload: undefined });
+        dispath({ type: EnumActionBudget.BUDGET_GET_DATA, payload: null });
       }
     } catch (error) {
       console.log(error);

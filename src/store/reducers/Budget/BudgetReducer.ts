@@ -2,7 +2,7 @@ import { EnumActionBudget, EnumLoadBudgetAction, IBudgetInitialState, TBudgetAct
 
 const InitialState: IBudgetInitialState = {
   showAddMenu: false,
-  budgets: undefined,
+  budgets: null,
   loadStatus: EnumLoadBudgetAction.LOADING,
 };
 export const BudgetReducer = (state = InitialState, action: TBudgetAction) => {
@@ -12,7 +12,7 @@ export const BudgetReducer = (state = InitialState, action: TBudgetAction) => {
     case EnumActionBudget.BUDGET_GET_DATA:
       return { ...state, budgets: action.payload, loadStatus: EnumLoadBudgetAction.LOADED };
     case EnumActionBudget.BUDGET_CLEAR_DATA:
-      return { ...state, budgets: undefined };
+      return { ...state, budgets: null };
     default:
       return { ...state };
   }
