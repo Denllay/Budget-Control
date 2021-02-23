@@ -5,7 +5,7 @@
 .list_item {
   display: flex;
   justify-content: space-between;
-  width: 220px;
+  width: 340px;
   margin: 8px 0px;
 }
 .block_color {
@@ -29,4 +29,8 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;
   font-size: 20px;
+}
+.procent_block {
+  display: flex;
+  align-items: center;
 }

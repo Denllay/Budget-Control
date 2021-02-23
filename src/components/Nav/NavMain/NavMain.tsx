@@ -20,10 +20,8 @@ export const NavMain: React.FC<IProps> = () => {
         </li>
         <Switch>
           <Route path="/main">
-            <li className={styles.list_item}>
-              <button className={styles.list_item_button} onClick={onChangeShowAdd}>
-                Add budget
-              </button>
+            <li className={styles.list_item} onClick={onChangeShowAdd}>
+              <span>Add budget</span>
             </li>
           </Route>
         </Switch>

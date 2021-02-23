@@ -2,16 +2,8 @@
   display: flex;
   margin-right: 20px;
 }
-.list_item a {
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 22px;
-  color: #fff;
-  position: relative;
-  z-index: 1;
-  padding: 5px 20px;
-}
-.list_item {
+.list_item a,
+.list_item span {
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-size: 22px;
@@ -22,7 +14,7 @@
 }
 
 .list_item a::after,
-.list_item_button:after {
+.list_item span:after {
   display: block;
   position: absolute;
   top: 0;
@@ -42,7 +34,7 @@
   border-radius: 5px;
 }
 .list_item a:hover:after,
-.list_item_button:hover:after {
+.list_item span:hover:after {
   opacity: 1;
   visibility: visible;
   height: 100%;

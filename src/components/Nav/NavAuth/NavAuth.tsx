@@ -1,6 +1,6 @@
 import React, { ContextType, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { NavContext } from '../../../context/nav';
+import { NavContext } from '../../../context/navContext';
 import styles from './NavAuth.module.scss';
 
 interface IProps {}

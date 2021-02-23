@@ -1,10 +1,11 @@
 import { Dispatch } from 'react';
-import { EnumActionBudget, TBudgetAction } from '../../types/Budget/Budget';
+import { EnumActionBudget, ICategoryData, TBudgetAction } from '../../types/Budget/Budget';
 import firebase, { auth } from '../../../Firebase/config';
+type ArrayCategory = [string, ICategoryData];
 export const GetDataBudget = () => {
   return async (dispath: Dispatch<TBudgetAction>) => {
     /*
-    ? В этом гавно файле я получаю данные с базы данных(если они есть) и форматирую их в вид, с которым мне удобно работать и пихаю его в redux
+    ? В этом файле я получаю данные с базы данных(если они есть) и форматирую их в вид, с которым мне удобно работать и пихаю его в redux
     */
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
@@ -30,7 +31,15 @@ export const GetDataBudget = () => {
             budgetId: el[0],
             category: [],
           };
-          Object.values(el[1]['category']).forEach((el) => data.category.push(el));
+          const categoryArrData = Object.entries(el[1]['category']).reduce((acc, el: ArrayCategory) => {
+            const dataCategory = {
+              categoryId: el[0],
+              ...el[1],
+            };
+            acc.push(dataCategory);
+            return acc;
+          }, []);
+          data.category = categoryArrData;
           acc.push(data);
           return acc;
         }, []);

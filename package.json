@@ -1,5 +1,5 @@
 {
-  "name": "Budget Control",
+  "name": "BudgetControl",
   "version": "1.0.1",
   "description": "application for control your budget(s)",
   "main": "src/index.tsx",

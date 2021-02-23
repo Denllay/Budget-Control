@@ -1,15 +1,17 @@
-import React from 'react';
-import { ICategoryData } from '../../../../store/types/Budget/Budget';
+import React, { useContext } from 'react';
+import { BudgetDataContext } from '../../../../context/BudgetDataContext';
+import { TBudgetStatus } from '../types/budget';
+import { ChangeBlock } from './ChangeBlock/ChangeBlock';
 import styles from './DataGraph.module.scss';
 
 interface IProps {
-  data: ICategoryData[];
   budgetSum: number;
+  budgetStatus: TBudgetStatus;
 }
-export const DataGraph: React.FC<IProps> = ({ data, budgetSum }) => {
+export const DataGraph: React.FC<IProps> = ({ budgetSum, budgetStatus }) => {
+  const { data } = useContext(BudgetDataContext);
   const procentValueData = budgetSum / 100;
-
-  const dataItemsGraph = data.map(({ name, color, value }, index) => {
+  const dataItemsGraph = data.map(({ name, color, value, categoryId }, index) => {
     const procent = (value / procentValueData).toFixed(1);
     const backgroundColorItem = { background: `#${color}` };
     const colorItem = { color: `#${color}` };
@@ -21,9 +23,14 @@ export const DataGraph: React.FC<IProps> = ({ data, budgetSum }) => {
             {name}
           </span>
         </div>
-        <span className={styles.procent_data} style={colorItem}>
-          {procent}%
-        </span>
+        <div className={styles.procent_block}>
+          <span className={styles.procent_data} style={colorItem}>
+            {procent}%
+          </span>
+          {budgetStatus === 'change' && name !== 'free' && (
+            <ChangeBlock categoryId={categoryId} categoryValue={value} />
+          )}
+        </div>
       </li>
     );
   });

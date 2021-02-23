@@ -1,0 +1,55 @@
+.list {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+.list_item {
+  cursor: pointer;
+  margin: 0px 5px;
+  background: #fff;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+.icon {
+  &_remove {
+    display: block;
+    width: 25px;
+    height: 25px;
+    position: relative;
+
+    &:before,
+    &:after {
+      display: block;
+      content: '';
+      position: absolute;
+      border-radius: 2px;
+      background: #535763;
+      transform: rotate(45deg);
+    }
+
+    &:before {
+      width: 3px;
+      height: 15px;
+      top: calc(50% - 7.5px);
+      left: calc(50% - 1.5px);
+    }
+
+    &:after {
+      width: 15px;
+      height: 3px;
+      top: calc(50% - 1.5px);
+      left: calc(50% - 7.5px);
+    }
+  }
+  &_change {
+    width: 13px;
+    height: 13px;
+    & path {
+      fill: #535763;
+    }
+  }
+}

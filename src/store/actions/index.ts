@@ -7,6 +7,7 @@ import * as AddBudgetActionCreators from './Budget/AddBudget';
 import * as GetDataBudgetActionCreators from './Budget/GetDataBudget';
 import * as RemoveBudgetActionCreators from './Budget/RemoveBudget';
 import * as AddCategoryBudgetActionCreators from './Budget/AddCategoryBudget';
+import * as DeleteCategoryBudgetActionCreators from './Budget/DeleteCategoryBudget';
 export default {
   ...AuthCheckActionCreators,
   ...AuthRegActionCreators,
@@ -17,4 +18,5 @@ export default {
   ...GetDataBudgetActionCreators,
   ...RemoveBudgetActionCreators,
   ...AddCategoryBudgetActionCreators,
+  ...DeleteCategoryBudgetActionCreators,
 };

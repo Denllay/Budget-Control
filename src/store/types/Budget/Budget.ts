@@ -17,6 +17,9 @@ export interface ICategoryData {
   value: number;
   currency: TCurrency;
 }
+export interface ICategoryFormatData extends ICategoryData {
+  categoryId: string;
+}
 ///
 export interface IBudgetAddAction {
   title: string;

@@ -10,7 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Main } from './components/Main/Main';
 import { Home } from './components/Home/Home';
 import { TModalAuth } from './types/ModalAuth';
-import { NavContext } from './context/nav';
+import { NavContext } from './context/navContext';
 export const App: React.FC = () => {
   const authStatus = useTypedSelector((state) => state.auth.status);
   const [modalAuthStatus, setModalAuthStatus] = useState<TModalAuth>(null);
