@@ -16,8 +16,6 @@ export const GetDataBudget = () => {
         .then((snapshot) => {
           if (snapshot.exists()) {
             return snapshot.val();
-          } else {
-            console.log('No data available'); //Change
           }
         })
         .catch((error) => {

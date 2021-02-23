@@ -8,9 +8,8 @@ import { TBudgetStatus } from '../types/budget';
 interface IProps {
   data: ICategoryFormatData[];
   budgetId: string;
-  setBudgetStatus: Dispatch<SetStateAction<TBudgetStatus>>;
 }
-export const BottomMenu: React.FC<IProps> = ({ data, budgetId, setBudgetStatus }) => {
+export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const [selectCurrency, setSelectCurrency] = useState<TCurrency>(EnumCurrency.RUB);
   const [budgetInput, setBudgetInput] = useState<string | number>('');
   const [nameInput, setNameInput] = useState<string>('');
@@ -24,8 +23,6 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId, setBudgetStatus }
 
   const onChangeInputBudget = (e: React.FormEvent<HTMLInputElement>) =>
     /^\d{0,13}$/.test(e.currentTarget.value) && setBudgetInput(e.currentTarget.value);
-
-  const setChangeStatusBudget = () => setBudgetStatus('change');
 
   const indexFreeCategory = data.findIndex((el) => el.name === 'free');
 
@@ -49,7 +46,6 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId, setBudgetStatus }
       );
       setNameInput('');
       setBudgetInput('');
-      setBudgetStatus('view');
     }
   };
   return (
@@ -86,12 +82,9 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId, setBudgetStatus }
         <div className={styles.icon_item} onClick={onClickRemove}>
           <div className={styles.icon_remove}></div>
         </div>
-        <div className={styles.icon_item} onClick={setChangeStatusBudget}>
+        <div className={styles.icon_item}>
           <IconChange className={styles.change_icon} />
         </div>
-        {/* <div className={styles.icon_item}>
-          <div className={styles.icon_plus}></div>
-        </div> */}
       </div>
     </div>
   );

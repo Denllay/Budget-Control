@@ -3,6 +3,7 @@ import styles from './Auth.module.scss';
 import { useActions } from '../../hooks/useActions';
 import { TModalAuth } from '../../types/ModalAuth';
 import Modal from 'react-modal';
+import './Modal.scss';
 interface IProps {
   statusModal: TModalAuth;
   setModal: Dispatch<SetStateAction<TModalAuth>>;
@@ -19,6 +20,9 @@ export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
     setConfirmPassword('');
     setModal(null);
   };
+  function afterOpenModal(e) {
+    // e.overlayEl.style.background = '#fff';
+  }
   //
   const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value);
   const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value);
@@ -43,8 +47,10 @@ export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
   return (
     <div className={styles.auth_modal}>
       <Modal
+        closeTimeoutMS={500}
         isOpen={!!statusModal}
         onRequestClose={closeModal}
+        onAfterOpen={afterOpenModal}
         style={{
           overlay: {
             position: 'fixed',
@@ -73,7 +79,7 @@ export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
         }}
       >
         <div className={styles.title}>
-          <h2>{statusModal === 'login' ? 'Login' : 'Registration'}</h2>
+          <h2>{statusModal === 'login' ? 'Login' : statusModal === 'reg' ? 'Registration' : 'Bye!!!!'}</h2>
         </div>
         <form className={styles.form} onSubmit={onSubmitForm}>
           <input type="email" className={styles.input} placeholder="Email" value={email} onChange={onChangeEmail} />

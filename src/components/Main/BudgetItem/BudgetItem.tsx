@@ -4,14 +4,12 @@ import { DataGraph } from './DataGraph/DataGraph';
 import { ICategoryFormatData } from '../../../store/types/Budget/Budget';
 import { BottomMenu } from './BottomMenu/BottomMenu';
 import { BudgetChart } from './BudgetChart/BudgetChart';
-import { TBudgetStatus } from './types/budget';
 import { BudgetDataContext } from '../../../context/BudgetDataContext';
 interface IProps {
   data: ICategoryFormatData[];
   budgetId: string;
 }
 export const BudgetItem: React.FC<IProps> = ({ data, budgetId }) => {
-  const [budgetStatus, setBudgetStatus] = useState<TBudgetStatus>('view');
   const budgetSum = data.reduce((acc, el) => acc + el.value, 0);
   return (
     <div className={styles.wrapper}>
@@ -25,10 +23,10 @@ export const BudgetItem: React.FC<IProps> = ({ data, budgetId }) => {
         <div className={styles.graph_block}>
           <BudgetChart data={data} />
           <BudgetDataContext.Provider value={{ budgetId, data }}>
-            <DataGraph budgetSum={budgetSum} budgetStatus={budgetStatus} />
+            <DataGraph budgetSum={budgetSum} />
           </BudgetDataContext.Provider>
         </div>
-        <BottomMenu data={data} budgetId={budgetId} setBudgetStatus={setBudgetStatus} />
+        <BottomMenu data={data} budgetId={budgetId} />
       </div>
     </div>
   );

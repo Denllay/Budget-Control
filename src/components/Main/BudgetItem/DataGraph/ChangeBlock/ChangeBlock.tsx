@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import styles from './ChangeBlock.module.scss';
-import ChangeIcon from '../../../../../assets/svg/changeIcon.svg';
 import { BudgetDataContext } from '../../../../../context/BudgetDataContext';
 import { useActions } from '../../../../../hooks/useActions';
 interface IProps {
@@ -18,9 +17,6 @@ export const ChangeBlock: React.FC<IProps> = ({ categoryId, categoryValue }) => 
   };
   return (
     <ul className={styles.list}>
-      <li className={styles.list_item}>
-        <ChangeIcon className={styles.icon_change} />
-      </li>
       <li className={styles.list_item} onClick={onClickRemoveCategory}>
         <div className={styles.icon_remove}></div>
       </li>
