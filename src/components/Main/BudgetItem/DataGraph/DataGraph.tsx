@@ -25,7 +25,7 @@ export const DataGraph: React.FC<IProps> = ({ budgetSum }) => {
           <span className={styles.procent_data} style={colorItem}>
             {procent}%
           </span>
-          {name !== 'free' && <ChangeBlock categoryId={categoryId} categoryValue={value} />}
+          {categoryId !== 'free' && <ChangeBlock categoryId={categoryId} categoryValue={value} />}
         </div>
       </li>
     );

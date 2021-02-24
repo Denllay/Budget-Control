@@ -3,8 +3,6 @@ import { GetDataBudget } from './GetDataBudget';
 export const RemoveBudget = (budgetId: string) => {
   return (dispatch) => {
     try {
-      console.log(budgetId);
-
       const uid = auth.currentUser && auth.currentUser.uid;
       firebase
         .database()

@@ -5,6 +5,8 @@ interface IProps {
   data: ICategoryFormatData[];
 }
 export const BudgetChart: React.FC<IProps> = ({ data }) => {
+  console.log(data);
+
   return (
     <div>
       <PieChart width={300} height={300}>

@@ -1,19 +1,20 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './BottomMenu.module.scss';
 import { useActions } from '../../../../hooks/useActions';
 import { EnumCurrency, TCurrency } from '../../../../types/Budget';
 import { ICategoryFormatData } from '../../../../store/types/Budget/Budget';
-import IconChange from '../../../../assets/svg/changeIcon.svg';
-import { TBudgetStatus } from '../types/budget';
+import { useTypedSelector } from '../../../../hooks/useTypedSelector';
 interface IProps {
   data: ICategoryFormatData[];
   budgetId: string;
 }
+// ? я тут чё-то хреного сделал, короче есть баг с отображением, надо подумать когда делить на валюту, а когда умножать и еще что бы разобраться надо в новый action getcoursecurrecybudget.ts
 export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const [selectCurrency, setSelectCurrency] = useState<TCurrency>(EnumCurrency.RUB);
   const [budgetInput, setBudgetInput] = useState<string | number>('');
   const [nameInput, setNameInput] = useState<string>('');
   const { AddCategoryBudget, RemoveBudget } = useActions();
+  const { RUB: currencyRub }: { RUB: number } = useTypedSelector((state) => state?.budget.currencyData || []);
 
   const onChangeSelectCurrency = (e: React.FormEvent<HTMLSelectElement>) =>
     setSelectCurrency(e.currentTarget.value as TCurrency);
@@ -29,20 +30,27 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const onClickRemove = () => RemoveBudget(budgetId);
   const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
+    const { value: valueFree, currency: currencyFree } = data[indexFreeCategory];
+    let newCategoryValue: number =
+      currencyFree === selectCurrency
+        ? Number.parseInt(budgetInput as string)
+        : currencyFree === EnumCurrency.RUB
+        ? (budgetInput as number) * currencyRub
+        : (budgetInput as number) / currencyRub;
+    ///
+    let freeCategoryValue = valueFree - newCategoryValue;
+    ///
     const sucsess =
       nameInput.trim().length >= 3 &&
       (budgetInput as string).length > 0 &&
       budgetInput !== '0' &&
-      budgetInput <= data[indexFreeCategory].value;
+      newCategoryValue <= valueFree;
     if (sucsess) {
-      const indexFreeCategory = data.findIndex((el) => el.name === 'free');
-      const freeCategoryValue = data[indexFreeCategory]['value'] - (budgetInput as number);
       AddCategoryBudget(
         budgetId,
         nameInput.trim(),
-        Number.parseInt(budgetInput as string),
-        selectCurrency,
-        freeCategoryValue
+        Number.parseInt(newCategoryValue.toFixed()),
+        Number.parseInt(freeCategoryValue.toFixed())
       );
       setNameInput('');
       setBudgetInput('');
@@ -72,7 +80,6 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
           <select className={styles.select} value={selectCurrency} onChange={onChangeSelectCurrency}>
             <option className={styles.option}>{EnumCurrency.RUB}</option>
             <option className={styles.option}>{EnumCurrency.USD}</option>
-            <option className={styles.option}>{EnumCurrency.EUR}</option>
           </select>
         </div>
         <input type="submit" value="Add" className={styles.submit} />
@@ -81,9 +88,6 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
       <div className={styles.icon_block}>
         <div className={styles.icon_item} onClick={onClickRemove}>
           <div className={styles.icon_remove}></div>
-        </div>
-        <div className={styles.icon_item}>
-          <IconChange className={styles.change_icon} />
         </div>
       </div>
     </div>

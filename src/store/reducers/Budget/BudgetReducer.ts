@@ -13,6 +13,8 @@ export const BudgetReducer = (state = InitialState, action: TBudgetAction) => {
       return { ...state, budgets: action.payload, loadStatus: EnumLoadBudgetAction.LOADED };
     case EnumActionBudget.BUDGET_CLEAR_DATA:
       return { ...state, budgets: null };
+    case EnumActionBudget.BUDGET_UPDATE_CURRENCY:
+      return { ...state, currencyData: action.payload };
     default:
       return { ...state };
   }

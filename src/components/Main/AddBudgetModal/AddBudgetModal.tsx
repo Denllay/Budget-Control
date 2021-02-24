@@ -47,7 +47,6 @@ export const AddBudgetModal: React.FC<IProps> = () => {
           <select className={styles.select} value={selectCurrency} onChange={onChangeSelectCurrency}>
             <option className={styles.option}>{EnumCurrency.RUB}</option>
             <option className={styles.option}>{EnumCurrency.USD}</option>
-            <option className={styles.option}>{EnumCurrency.EUR}</option>
           </select>
         </div>
 

@@ -12,13 +12,14 @@ import { Home } from './components/Home/Home';
 import { TModalAuth } from './types/ModalAuth';
 import { NavContext } from './context/NavContext';
 export const App: React.FC = () => {
-  const authStatus = useTypedSelector((state) => state.auth.status);
+  const { status } = useTypedSelector((state) => state.auth);
   const [modalAuthStatus, setModalAuthStatus] = useState<TModalAuth>(null);
   const { CheckAuth } = useActions();
   useEffect(() => {
     CheckAuth();
-    console.log(authStatus);
+    console.log(status);
   }, []);
+
   return (
     <div className={styles.wrapper}>
       <NavContext.Provider value={{ setModalAuthStatus }}>
@@ -27,7 +28,7 @@ export const App: React.FC = () => {
       <Switch>
         <PrivateRoute
           component={Main}
-          condition={authStatus}
+          condition={status}
           trueCondition={EnumAuthAction.AUTH_ENTERED}
           exact
           pathRedirect="/"

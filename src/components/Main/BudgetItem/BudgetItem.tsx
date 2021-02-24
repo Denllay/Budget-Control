@@ -16,7 +16,7 @@ export const BudgetItem: React.FC<IProps> = ({ data, budgetId }) => {
       <h2 className={styles.title_item}>
         Budget
         <span>
-          {budgetSum} {data[0].currency}
+          {budgetSum} {data[data.length - 1].currency}
         </span>
       </h2>
       <div className={styles.container}>

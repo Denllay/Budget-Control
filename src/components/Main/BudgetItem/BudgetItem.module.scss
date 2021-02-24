@@ -2,6 +2,9 @@
   font-family: 'Montserrat', sans-serif;
   color: #fff;
   font-size: 48px;
+  & span {
+    margin-left: 10px;
+  }
 }
 .title_item span {
   color: #535763;
@@ -132,11 +135,10 @@
   display: flex;
   align-items: center;
 }
-.change_icon{
+.change_icon {
   width: 18px;
   height: 18px;
-  & path{
-  fill: #535763;
+  & path {
+    fill: #535763;
   }
-
 }

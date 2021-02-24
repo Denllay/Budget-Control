@@ -20,9 +20,6 @@ export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
     setConfirmPassword('');
     setModal(null);
   };
-  function afterOpenModal(e) {
-    // e.overlayEl.style.background = '#fff';
-  }
   //
   const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value);
   const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value);
@@ -50,7 +47,6 @@ export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
         closeTimeoutMS={500}
         isOpen={!!statusModal}
         onRequestClose={closeModal}
-        onAfterOpen={afterOpenModal}
         style={{
           overlay: {
             position: 'fixed',
