@@ -1,5 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
   module: {
     rules: [
@@ -42,5 +43,7 @@ module.exports = {
   plugins: [
     // Очистка говна
     new CleanWebpackPlugin(),
+    // alias
+    new TsconfigPathsPlugin()
   ],
 };

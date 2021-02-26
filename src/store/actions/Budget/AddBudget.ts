@@ -1,11 +1,14 @@
 import { IBudgetAddAction, IBudgetAddData } from '../../types/Budget/Budget';
 import firebase, { auth } from '../../../Firebase/config';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { TRootReducer } from '../../reducers';
 import { GetDataBudget } from './GetDataBudget';
 export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
   /*
   ? Чтож тут у нас созается ячейка под определенный бюджет в базу данных
   */
-  return (dispatch) => {
+  return (dispatch: ThunkDispatch<TRootReducer, void, Action>) => {
     const uid = auth.currentUser && auth.currentUser.uid;
     const data: IBudgetAddData = {
       title,

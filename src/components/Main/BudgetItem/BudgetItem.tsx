@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './BudgetItem.module.scss';
 import { DataGraph } from './DataGraph/DataGraph';
 import { ICategoryFormatData } from '../../../store/types/Budget/Budget';

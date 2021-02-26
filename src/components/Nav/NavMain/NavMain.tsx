@@ -1,22 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './NavMain.module.scss';
-import { auth } from '../../../Firebase/config';
+import { auth } from '@/Firebase/config';
 import { Route, Switch } from 'react-router-dom';
-import { useActions } from '../../../hooks/useActions';
-import { NavMainProfileMenu } from './NavMainProfileMenu/NavMainProfileMenu';
+import { useActions } from '@/hooks/useActions';
+import { ProfModule } from './ProfModule/ProfModule';
 interface IProps {}
 export const NavMain: React.FC<IProps> = () => {
   const [profileMenu, setProfileMenu] = useState<boolean>(false);
   const { ShowAddBudget, SignOutAuth } = useActions();
+  //
   const email = auth.currentUser && auth.currentUser.email;
+  //
   const onClickEmail = () => setProfileMenu((prev) => !prev);
   const closeModalAuth = () => setProfileMenu(false);
   const onClickSignOut = () => SignOutAuth();
   const onChangeShowAdd = () => ShowAddBudget();
+  //
   return (
     <div className={styles.wrapper}>
-      <NavMainProfileMenu
+      <ProfModule
         profileMenu={profileMenu}
         onClickSignOut={onClickSignOut}
         email={email}

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BudgetDataContext } from '../../../../context/BudgetDataContext';
+import { BudgetDataContext } from '@/context/BudgetDataContext';
 import { ChangeBlock } from './ChangeBlock/ChangeBlock';
 import styles from './DataGraph.module.scss';
 

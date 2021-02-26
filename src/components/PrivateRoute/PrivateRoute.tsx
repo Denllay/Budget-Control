@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
-import { EnumAuthAction } from '../../store/types/Auth/Auth';
+import { EnumAuthAction } from '@/store/types/Auth/Auth';
 interface PrivateRouteProps extends RouteProps {
   component: any;
   condition: EnumAuthAction;

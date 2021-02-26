@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { EnumAuthAction } from '../../store/types/Auth/Auth';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { EnumAuthAction } from '@/store/types/Auth/Auth';
 import styles from './Nav.module.scss';
 import { NavAuth } from './NavAuth/NavAuth';
 import { NavLoader } from './NavLoader/NavLoader';
@@ -17,7 +17,7 @@ export const Nav: React.FC<IProps> = () => {
         {AuthStatus === EnumAuthAction.AUTH_LOGIN ? (
           <NavAuth />
         ) : AuthStatus === EnumAuthAction.AUTH_ENTERED ? (
-          <NavMain /> // Вместо null сделать preloader
+          <NavMain />
         ) : (
           <NavLoader />
         )}

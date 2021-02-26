@@ -1,9 +1,12 @@
 import { GetDataBudget } from './GetDataBudget';
 import { ICategoryData } from '../../types/Budget/Budget';
-import firebase, { auth } from '../../../Firebase/config';
-import { EnumCurrency, TCurrency } from '../../../types/Budget';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { TRootReducer } from '../../reducers';
+import firebase, { auth } from '@/Firebase/config';
+import { EnumCurrency } from '@/types/Budget';
 export const AddCategoryBudget = (budgetId: string, name: string, value: number, freeCategoryValue: number) => {
-  return (dispatch) => {
+  return (dispatch: ThunkDispatch<TRootReducer, void, Action>) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
       const newBudgetCollectionRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
@@ -13,7 +16,7 @@ export const AddCategoryBudget = (budgetId: string, name: string, value: number,
         name,
         value,
       };
-      firebase.database();
+
       newBudgetCollectionRef.child('free/value').set(freeCategoryValue, (error) => {
         if (error) {
           console.log(error);
@@ -24,10 +27,9 @@ export const AddCategoryBudget = (budgetId: string, name: string, value: number,
         if (error) {
           console.log(error);
         } else {
-          console.log(data);
+          dispatch(GetDataBudget());
         }
       });
-      dispatch(GetDataBudget());
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
-import React, { ContextType, useContext } from 'react';
-import { NavContext } from '../../../context/NavContext';
+import React, { useContext } from 'react';
+import { NavContext } from '@/context/NavContext';
 import styles from './NavAuth.module.scss';
 
 interface IProps {}

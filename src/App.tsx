@@ -25,6 +25,7 @@ export const App: React.FC = () => {
       <NavContext.Provider value={{ setModalAuthStatus }}>
         <Nav />
       </NavContext.Provider>
+
       <Switch>
         <PrivateRoute
           component={Main}
@@ -39,6 +40,7 @@ export const App: React.FC = () => {
           <Home />
         </Route>
       </Switch>
+
       <Auth statusModal={modalAuthStatus} setModal={setModalAuthStatus} />
     </div>
   );

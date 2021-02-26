@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styles from './Auth.module.scss';
-import { useActions } from '../../hooks/useActions';
-import { TModalAuth } from '../../types/ModalAuth';
+import { useActions } from '@/hooks/useActions';
+import { TModalAuth } from '@/types/ModalAuth';
 import Modal from 'react-modal';
 import './Modal.scss';
 interface IProps {

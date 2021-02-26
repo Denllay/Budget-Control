@@ -1,0 +1,17 @@
+.open_menu {
+  position: absolute;
+  top: 200%;
+  right: 7%;
+}
+.display_flex {
+  display: flex;
+}
+.email_block {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  margin: 0px 20px;
+  color: #fff;
+}

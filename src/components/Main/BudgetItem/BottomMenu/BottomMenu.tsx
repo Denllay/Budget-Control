@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styles from './BottomMenu.module.scss';
-import { useActions } from '../../../../hooks/useActions';
-import { EnumCurrency, TCurrency } from '../../../../types/Budget';
-import { ICategoryFormatData } from '../../../../store/types/Budget/Budget';
-import { useTypedSelector } from '../../../../hooks/useTypedSelector';
+import { useActions } from '@/hooks/useActions';
+import { EnumCurrency, TCurrency } from '@/types/Budget';
+import { ICategoryFormatData } from '@/store/types/Budget/Budget';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 interface IProps {
   data: ICategoryFormatData[];
   budgetId: string;
@@ -13,6 +13,7 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const [selectCurrency, setSelectCurrency] = useState<TCurrency>(EnumCurrency.RUB);
   const [budgetInput, setBudgetInput] = useState<string | number>('');
   const [nameInput, setNameInput] = useState<string>('');
+  //
   const { AddCategoryBudget, RemoveBudget } = useActions();
   const { RUB: currencyRub }: { RUB: number } = useTypedSelector((state) => state?.budget.currencyData || []);
 
@@ -30,28 +31,26 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const onClickRemove = () => RemoveBudget(budgetId);
   const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
+    //
     const { value: valueFree, currency: currencyFree } = data[indexFreeCategory];
-    let newCategoryValue: number =
+    const newCategoryValue: number =
       currencyFree === selectCurrency
         ? Number.parseInt(budgetInput as string)
         : currencyFree === EnumCurrency.RUB
         ? (budgetInput as number) * currencyRub
         : (budgetInput as number) / currencyRub;
     ///
-    let freeCategoryValue = valueFree - newCategoryValue;
+    const freeCategoryValue = valueFree - newCategoryValue;
     ///
     const sucsess =
       nameInput.trim().length >= 3 &&
       (budgetInput as string).length > 0 &&
       budgetInput !== '0' &&
       newCategoryValue <= valueFree;
+    console.log(newCategoryValue);
+
     if (sucsess) {
-      AddCategoryBudget(
-        budgetId,
-        nameInput.trim(),
-        Number.parseInt(newCategoryValue.toFixed()),
-        Number.parseInt(freeCategoryValue.toFixed())
-      );
+      AddCategoryBudget(budgetId, nameInput.trim(), Math.round(newCategoryValue), Math.round(freeCategoryValue));
       setNameInput('');
       setBudgetInput('');
     }

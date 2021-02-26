@@ -1,0 +1,56 @@
+.wrapper {
+  padding: 0px 0px 0px 15px;
+}
+.button {
+  &_back {
+    cursor: pointer;
+    background: transparent;
+    color: #000;
+    opacity: 0.2;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    border: 0;
+  }
+  &_block_item {
+    cursor: pointer;
+    margin: 3.5px 0px 3.5px 9px;
+    background: #282d3c;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #fff;
+    border: 0;
+    padding: 5px 5px;
+    &:hover {
+      background: #535763;
+      transition: all 0.5s;
+    }
+    &:not(:hover) {
+      transition: all 0.5s;
+    }
+  }
+}
+.list_container {
+  display: flex;
+}
+.email_block {
+  color: #282d3c;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  & span {
+    font-weight: 500;
+  }
+}
+.data_block_item {
+  color: #282d3c;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  display: flex;
+  margin: 9px 0px;
+  font-size: 20px;
+  & span {
+    font-weight: 500;
+  }
+}

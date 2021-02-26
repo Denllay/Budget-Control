@@ -9,6 +9,7 @@ import * as RemoveBudgetActionCreators from './Budget/RemoveBudget';
 import * as AddCategoryBudgetActionCreators from './Budget/AddCategoryBudget';
 import * as GetCourseCurrencyBudgetActionCreators from './Budget/GetCourseCurrencyBudget';
 import * as DeleteCategoryBudgetActionCreators from './Budget/DeleteCategoryBudget';
+import * as UpdatePasswordBudgetActionCreators from './Auth/UpdatePassword';
 export default {
   ...AuthCheckActionCreators,
   ...AuthRegActionCreators,
@@ -21,4 +22,5 @@ export default {
   ...AddCategoryBudgetActionCreators,
   ...DeleteCategoryBudgetActionCreators,
   ...GetCourseCurrencyBudgetActionCreators,
+  ...UpdatePasswordBudgetActionCreators,
 };
