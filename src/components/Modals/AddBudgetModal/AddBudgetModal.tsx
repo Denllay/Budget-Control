@@ -72,7 +72,7 @@ export const AddBudgetModal: React.FC<IProps> = ({ statusModal }) => {
             ref={register({ required: true, minLength: 3, maxLength: 13 })}
           />
           <div className={styles.block_input_budget}>
-            <input type="text" className={styles.input} placeholder="Budget" name="valueBudget" ref={register} />
+            <input type="number" className={styles.input} placeholder="Budget" name="valueBudget" ref={register} />
             <select
               className={styles.select}
               name="currency"

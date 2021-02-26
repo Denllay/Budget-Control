@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import styles from './BottomMenu.module.scss';
+import React from 'react';
 import { useActions } from '@/hooks/useActions';
 import { EnumCurrency, TCurrency } from '@/types/Budget';
 import { ICategoryFormatData } from '@/store/types/Budget/Budget';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { AutoAdd } from './AutoAdd/AutoAdd';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import styles from './BottomMenu.module.scss';
 interface IProps {
   data: ICategoryFormatData[];
   budgetId: string;
@@ -18,22 +19,24 @@ type TInputs = {
 export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const onClickRemove = () => RemoveBudget(budgetId);
   //
-  const { register, handleSubmit, setValue } = useForm<TInputs>();
+  const { register, handleSubmit, setValue, getValues } = useForm<TInputs>();
   const { AddCategoryBudget, RemoveBudget } = useActions();
   //
   const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue('currency', e.target.value);
+  const clearCategoryInput = () => {
+    setValue('nameCategory', '');
+    setValue('valueCategory', '');
+  };
+  const getNameInput = () => getValues('nameCategory') && getValues('nameCategory').trim();
   //
   const { RUB: currencyRub }: { RUB: number } = useTypedSelector((state) => state?.budget.currencyData || []);
   const indexFreeCategory = data.findIndex((el) => el.name === 'free');
+  const { value: valueFree, currency: currencyFree }: { value: number; currency: TCurrency } = data[indexFreeCategory];
   //
   const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
     const { nameCategory, valueCategory, currency } = dataForm;
     const numValueCategory = Number.parseInt(valueCategory);
     ///
-    const { value: valueFree, currency: currencyFree }: { value: number; currency: TCurrency } = data[
-      indexFreeCategory
-    ];
-
     const newCategoryValue: number =
       currencyFree === currency
         ? numValueCategory
@@ -47,15 +50,16 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
       numValueCategory !== 0 &&
       newCategoryValue <= valueFree;
 
-    sucsess &&
+    if (sucsess) {
       AddCategoryBudget(
         budgetId,
         nameCategory.trim(),
         Math.round(newCategoryValue),
         Math.round(valueFree - newCategoryValue)
       );
+      clearCategoryInput();
+    }
   };
-
   return (
     <div className={styles.bottom_container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -84,7 +88,12 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
         </div>
         <input type="submit" value="Add" className={styles.submit} />
       </form>
-
+      <AutoAdd
+        getNameInput={getNameInput}
+        budgetId={budgetId}
+        valueFree={valueFree}
+        clearCategoryInput={clearCategoryInput}
+      />
       <div className={styles.icon_block}>
         <div className={styles.icon_item} onClick={onClickRemove}>
           <div className={styles.icon_remove}></div>

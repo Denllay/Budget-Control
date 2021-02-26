@@ -1,3 +1,8 @@
+.default_text {
+  color: #282d3c;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
 .title_item span {
   color: #535763;
 }
@@ -87,10 +92,9 @@
   display: flex;
 }
 .form_title h2 {
-  color: #ffffff;
   font-size: 36px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
+  @extend .default_text;
+  color: #ffffff;
 }
 .input {
   background: transparent;
@@ -100,14 +104,14 @@
   padding: 9px 0px 9px 9px;
   color: rgba(255, 255, 255, 0.4);
   font-size: 24px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
+  @extend .default_text;
+  color: #fff;
   margin: 15px 0px;
+  width: 70%;
   &::placeholder {
-    color: rgba(255, 255, 255, 0.4);
     font-size: 24px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: bold;
+    @extend .default_text;
+    color: rgba(255, 255, 255, 0.4);
   }
   &_number::-webkit-outer-spin-button,
   &_number::-webkit-inner-spin-button {
@@ -119,10 +123,9 @@
   cursor: pointer;
   width: 110px;
   padding: 4px 29px;
-  color: #535763;
   font-size: 24px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
+  @extend .default_text;
+  color: #535763;
   border-radius: 5px;
   border: none;
   &:hover {
@@ -157,3 +160,4 @@
     fill: #535763;
   }
 }
+

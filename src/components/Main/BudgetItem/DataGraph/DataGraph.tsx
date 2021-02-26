@@ -8,9 +8,8 @@ interface IProps {
 }
 export const DataGraph: React.FC<IProps> = ({ budgetSum }) => {
   const { data } = useContext(BudgetDataContext);
-  const procentValueData = budgetSum / 100;
   const dataItemsGraph = data.map(({ name, color, value, categoryId }, index) => {
-    const procent = (value / procentValueData).toFixed(1);
+    const procent = (value / (budgetSum / 100)).toFixed(1);
     const backgroundColorItem = { background: `#${color}` };
     const colorItem = { color: `#${color}` };
     return (

@@ -23,7 +23,6 @@ export const Main: React.FC<IProps> = () => {
     budget.budgets.map(({ budgetId, category }) => {
       return <BudgetItem key={budgetId} data={category} budgetId={budgetId} />;
     })) || <h1 className={styles.title}>Add a new budget!</h1>;
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.grid_budget}>{budget.loadStatus === 'LOADING' ? <PreLoaderBudget /> : graphBudgets}</div>
