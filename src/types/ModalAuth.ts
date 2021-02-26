@@ -1,1 +1,1 @@
-export type TModalAuth = 'login' | 'reg' | null;
+export type TModalAuth = 'login' | 'reg';

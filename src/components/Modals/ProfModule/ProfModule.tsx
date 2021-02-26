@@ -5,14 +5,20 @@ import { TProfileView } from './types/profileMainTypes';
 import { ProfModuleShow } from './ProfModuleShow/ProfModuleShow';
 import { ProfModuleSettings } from './ProfModuleSettings/ProfModuleSettings';
 import { ProfileContext } from '@/context/ProfileContext';
+import { auth } from '@/Firebase/config';
+import { useActions } from '@/hooks/useActions';
 interface IProps {
-  profileMenu: boolean;
-  onClickSignOut(): void;
-  closeModalAuth(): void;
-  email: string;
+  statusModal: boolean;
 }
-export const ProfModule: React.FC<IProps> = ({ profileMenu, email, onClickSignOut, closeModalAuth }) => {
+export const ProfModule: React.FC<IProps> = ({ statusModal }) => {
   const [profileView, setProfileView] = useState<TProfileView>('view');
+  const { CloseModal, SignOutAuth } = useActions();
+  const onCloseModal = () => CloseModal();
+  const onClickSignOut = () => {
+    SignOutAuth();
+    CloseModal();
+  };
+  const email = auth.currentUser && auth.currentUser.email;
   //
   const styleWidth = profileView === 'view' ? '140px' : '300px';
   const styleHeight = profileView === 'view' ? '' : '250px';
@@ -22,8 +28,8 @@ export const ProfModule: React.FC<IProps> = ({ profileMenu, email, onClickSignOu
     <div className={styles.wrapper}>
       <Modal
         closeTimeoutMS={500}
-        isOpen={profileMenu}
-        onRequestClose={closeModalAuth}
+        isOpen={statusModal}
+        onRequestClose={onCloseModal}
         style={{
           overlay: {
             position: 'fixed',
@@ -51,7 +57,7 @@ export const ProfModule: React.FC<IProps> = ({ profileMenu, email, onClickSignOu
         {profileView === 'view' ? (
           <ProfModuleShow onClickSignOut={onClickSignOut} email={email} setProfileView={setProfileView} />
         ) : (
-          <ProfileContext.Provider value={{ email, setProfileView, closeModalAuth }}>
+          <ProfileContext.Provider value={{ email, setProfileView, onCloseModal }}>
             <ProfModuleSettings profileView={profileView} />
           </ProfileContext.Provider>
         )}

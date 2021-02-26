@@ -14,8 +14,7 @@ type TInputs = {
 };
 
 export const AddBudgetModal: React.FC<IProps> = ({ statusModal }) => {
-  const { ShowAddBudget, AddBudget } = useActions();
-  const onCloseMenu = () => ShowAddBudget();
+  const { CloseModal, AddBudget } = useActions();
   //
   const { register, handleSubmit, setValue } = useForm<TInputs>();
   const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue('currency', e.target.value);
@@ -24,17 +23,18 @@ export const AddBudgetModal: React.FC<IProps> = ({ statusModal }) => {
     const numValueBudget = Number.parseInt(valueBudget);
     if (nameBudet.trim() && numValueBudget > 0) {
       AddBudget({ title: nameBudet, value: numValueBudget, currency });
-      ShowAddBudget();
+      CloseModal();
     } else {
       console.log('Введите данные верно!'); //Change
     }
   };
+  Modal.setAppElement('#root');
   return (
     <div className={styles.wrapper}>
       <Modal
         closeTimeoutMS={500}
         isOpen={statusModal}
-        onRequestClose={onCloseMenu}
+        onRequestClose={CloseModal}
         style={{
           overlay: {
             position: 'fixed',

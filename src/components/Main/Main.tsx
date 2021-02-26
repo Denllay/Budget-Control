@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { AddBudgetModal } from './AddBudgetModal/AddBudgetModal';
 import { BudgetItem } from './BudgetItem/BudgetItem';
 import { PreLoaderBudget } from './PreLoaderBudget/PreLoaderBudget';
 import styles from './Main.module.scss';
@@ -28,7 +27,6 @@ export const Main: React.FC<IProps> = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.grid_budget}>{budget.loadStatus === 'LOADING' ? <PreLoaderBudget /> : graphBudgets}</div>
-      <AddBudgetModal statusModal={budget.showAddMenu} />
     </div>
   );
 };

@@ -1,47 +1,44 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { TModalAuth } from '@/types/ModalAuth';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useActions } from '@/hooks/useActions';
 import Modal from 'react-modal';
-import styles from './Auth.module.scss';
+import styles from './AuthModal.module.scss';
 import './Modal.scss';
 interface IProps {
   statusModal: TModalAuth;
-  setModal: Dispatch<SetStateAction<TModalAuth>>;
 }
 type IInput = {
   email: string;
   password: string;
   confirmPassword?: string;
 };
-export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
+export const AuthModal: React.FC<IProps> = ({ statusModal }) => {
   const { register, handleSubmit } = useForm<IInput>();
-  const { LoginAuth, RegAuth } = useActions();
+  const { LoginAuth, RegAuth, CloseModal } = useActions();
   const onSubmit: SubmitHandler<IInput> = (data) => {
     const { password, email, confirmPassword } = data;
     const sucsessEmail = /.+@.+\..+/i.test(email);
 
     if (statusModal === 'login' && sucsessEmail && password.trim()) {
       LoginAuth({ email, password });
-      closeModal();
+      CloseModal();
     } else if (statusModal === 'reg' && password.trim() === confirmPassword.trim() && password.trim() && sucsessEmail) {
       RegAuth({ password, email });
-      closeModal();
+      CloseModal();
     } else {
       console.log('Введите данные правильно');
     }
   };
   //
-  const closeModal = () => {
-    setModal(null);
-  };
+
   Modal.setAppElement('#root');
   return (
     <div className={styles.auth_modal}>
       <Modal
         closeTimeoutMS={500}
         isOpen={!!statusModal}
-        onRequestClose={closeModal}
+        onRequestClose={CloseModal}
         style={{
           overlay: {
             position: 'fixed',

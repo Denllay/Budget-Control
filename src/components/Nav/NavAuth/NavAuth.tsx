@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
-import { NavContext } from '@/context/NavContext';
+import { useActions } from '@/hooks/useActions';
+import React from 'react';
 import styles from './NavAuth.module.scss';
 
 interface IProps {}
 export const NavAuth: React.FC<IProps> = () => {
-  const { setModalAuthStatus } = useContext(NavContext);
+  const { ChangeViewAuthModal } = useActions();
   return (
     <ul className={styles.list}>
-      <li className={styles.list_item} onClick={() => setModalAuthStatus('login')}>
+      <li className={styles.list_item} onClick={() => ChangeViewAuthModal('login')}>
         <span>Login</span>
       </li>
-      <li className={styles.list_item} onClick={() => setModalAuthStatus('reg')}>
+      <li className={styles.list_item} onClick={() => ChangeViewAuthModal('reg')}>
         <span> Register</span>
       </li>
     </ul>
