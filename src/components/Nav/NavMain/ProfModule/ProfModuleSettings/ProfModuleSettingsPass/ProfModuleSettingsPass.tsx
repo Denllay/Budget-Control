@@ -9,12 +9,17 @@ type TInputs = {
   newPassword: string;
 };
 export const ProfModuleSettingsPass = () => {
-  const { setProfileView } = useContext(ProfileContext);
+  const { setProfileView, closeModalAuth } = useContext(ProfileContext);
   const { UpdatePassword } = useActions();
   const { register, handleSubmit } = useForm<TInputs>();
-  const onSubmit: SubmitHandler<TInputs> = (data) => {
-    const { currentPassword, newPassword, confirmPassword } = data;
-    newPassword.trim() === confirmPassword.trim() && UpdatePassword({ currentPassword, newPassword });
+  const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
+    const { currentPassword, newPassword, confirmPassword } = dataForm;
+    if (newPassword.trim() === confirmPassword.trim()) {
+      UpdatePassword({ currentPassword, newPassword });
+      closeModalAuth();
+    } else {
+      console.log('something went wrong'); //! Change
+    }
   };
 
   return (

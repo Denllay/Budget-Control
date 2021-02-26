@@ -1,44 +1,39 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import styles from './Auth.module.scss';
-import { useActions } from '@/hooks/useActions';
+import React, { Dispatch, SetStateAction } from 'react';
 import { TModalAuth } from '@/types/ModalAuth';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useActions } from '@/hooks/useActions';
 import Modal from 'react-modal';
+import styles from './Auth.module.scss';
 import './Modal.scss';
 interface IProps {
   statusModal: TModalAuth;
   setModal: Dispatch<SetStateAction<TModalAuth>>;
 }
+type IInput = {
+  email: string;
+  password: string;
+  confirmPassword?: string;
+};
 export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const { RegAuth, LoginAuth } = useActions();
-  //
-  const closeModal = () => {
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    setModal(null);
-  };
-  //
-  const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => setEmail(e.currentTarget.value);
-  const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value);
-  const onChangeConfirmPassword = (e: React.FormEvent<HTMLInputElement>) => setConfirmPassword(e.currentTarget.value);
-  //
-  const onSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
+  const { register, handleSubmit } = useForm<IInput>();
+  const { LoginAuth, RegAuth } = useActions();
+  const onSubmit: SubmitHandler<IInput> = (data) => {
+    const { password, email, confirmPassword } = data;
     const sucsessEmail = /.+@.+\..+/i.test(email);
-    const sucsessPassword = password.trim() === confirmPassword.trim() && password.trim();
 
     if (statusModal === 'login' && sucsessEmail && password.trim()) {
       LoginAuth({ email, password });
       closeModal();
-    } else if (statusModal === 'reg' && sucsessPassword && sucsessEmail) {
+    } else if (statusModal === 'reg' && password.trim() === confirmPassword.trim() && password.trim() && sucsessEmail) {
       RegAuth({ password, email });
       closeModal();
     } else {
       console.log('Введите данные правильно');
     }
+  };
+  //
+  const closeModal = () => {
+    setModal(null);
   };
   Modal.setAppElement('#root');
   return (
@@ -77,22 +72,28 @@ export const Auth: React.FC<IProps> = ({ statusModal, setModal }) => {
         <div className={styles.title}>
           <h2>{statusModal === 'login' ? 'Login' : statusModal === 'reg' ? 'Registration' : 'Bye!!!!'}</h2>
         </div>
-        <form className={styles.form} onSubmit={onSubmitForm}>
-          <input type="email" className={styles.input} placeholder="Email" value={email} onChange={onChangeEmail} />
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <input
+            type="email"
+            className={styles.input}
+            placeholder="Email"
+            name="email"
+            ref={register({ required: true })}
+          />
           <input
             type="password"
             className={styles.input}
             placeholder="Password"
-            value={password}
-            onChange={onChangePassword}
+            name="password"
+            ref={register({ required: true, minLength: 6, pattern: /^[A-Za-z0-9@\_\.]+$/i })}
           />
           {statusModal === 'reg' ? (
             <input
               type="password"
               className={styles.input}
               placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={onChangeConfirmPassword}
+              name="confirmPassword"
+              ref={register({ required: true, minLength: 6, pattern: /^[A-Za-z0-9@\_\.]+$/i })}
             />
           ) : null}
           <input type="submit" value="submit" className={styles.submit} />

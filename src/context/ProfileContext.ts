@@ -3,5 +3,6 @@ import { TProfileView } from '../components/Nav/NavMain/ProfModule/types/profile
 type TProfileContext = {
   email: string;
   setProfileView: Dispatch<SetStateAction<TProfileView>>;
+  closeModalAuth(): void;
 };
 export const ProfileContext = createContext({} as TProfileContext);

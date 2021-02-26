@@ -51,7 +51,7 @@ export const ProfModule: React.FC<IProps> = ({ profileMenu, email, onClickSignOu
         {profileView === 'view' ? (
           <ProfModuleShow onClickSignOut={onClickSignOut} email={email} setProfileView={setProfileView} />
         ) : (
-          <ProfileContext.Provider value={{ email, setProfileView }}>
+          <ProfileContext.Provider value={{ email, setProfileView, closeModalAuth }}>
             <ProfModuleSettings profileView={profileView} />
           </ProfileContext.Provider>
         )}

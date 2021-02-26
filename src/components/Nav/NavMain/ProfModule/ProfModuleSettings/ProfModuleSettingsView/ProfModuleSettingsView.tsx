@@ -1,9 +1,15 @@
 import React, { useContext } from 'react';
 import { ProfileContext } from '@/context/ProfileContext';
 import styles from './ProfModuleSettingsView.module.scss';
+import { useActions } from '@/hooks/useActions';
 interface IProps {}
 export const ProfModuleSettingsView: React.FC<IProps> = () => {
   const { setProfileView, email } = useContext(ProfileContext);
+  const { RemoveAllBudgets } = useActions();
+  const onClickRemoveBudgets = () => {
+    setProfileView('view');
+    RemoveAllBudgets();
+  };
   return (
     <div className={styles.wrapper}>
       <button className={styles.button_back} onClick={() => setProfileView('view')}>
@@ -30,7 +36,9 @@ export const ProfModuleSettingsView: React.FC<IProps> = () => {
               Change
             </button>
             <button className={styles.button_block_item}>Change theme</button>
-            <button className={styles.button_block_item}>Delete all</button>
+            <button className={styles.button_block_item} onClick={onClickRemoveBudgets}>
+              Delete all
+            </button>
           </div>
         </div>
       </div>

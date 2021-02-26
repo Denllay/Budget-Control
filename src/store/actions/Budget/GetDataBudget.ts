@@ -41,7 +41,6 @@ export const GetDataBudget = () => {
           acc.push(data);
           return acc;
         }, []);
-        console.log(formatData);
 
         dispath({ type: EnumActionBudget.BUDGET_GET_DATA, payload: formatData });
       } else {

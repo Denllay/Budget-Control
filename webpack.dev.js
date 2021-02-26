@@ -11,11 +11,6 @@ module.exports = {
     port: 8080,
     historyApiFallback: true,
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({

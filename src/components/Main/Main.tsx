@@ -28,7 +28,7 @@ export const Main: React.FC<IProps> = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.grid_budget}>{budget.loadStatus === 'LOADING' ? <PreLoaderBudget /> : graphBudgets}</div>
-      {budget.showAddMenu ? <AddBudgetModal /> : null}
+      <AddBudgetModal statusModal={budget.showAddMenu} />
     </div>
   );
 };
