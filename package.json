@@ -10,6 +10,7 @@
   "author": "Denlay",
   "license": "ISC",
   "devDependencies": {
+    "@types/react-color": "^3.0.4",
     "@types/node": "^14.14.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.11",
@@ -52,6 +53,7 @@
     "axios": "^0.21.1",
     "firebase": "^8.2.7",
     "react": "^16.14.0",
+    "react-color": "^2.19.3",
     "react-dom": "^16.14.0",
     "react-hook-form": "^6.15.4",
     "react-modal": "^3.12.1",

@@ -10,8 +10,8 @@ export const DataGraph: React.FC<IProps> = ({ budgetSum }) => {
   const { data } = useContext(BudgetDataContext);
   const dataItemsGraph = data.map(({ name, color, value, categoryId }, index) => {
     const procent = (value / (budgetSum / 100)).toFixed(1);
-    const backgroundColorItem = { background: `#${color}` };
-    const colorItem = { color: `#${color}` };
+    const backgroundColorItem = { background: `${color}` };
+    const colorItem = { color: `${color}` };
     return (
       <li className={styles.list_item} key={index}>
         <div className={styles.block_color}>

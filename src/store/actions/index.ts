@@ -14,6 +14,7 @@ import * as ChangeViewAddBudgetModalActionCreators from './Modal/ChangeViewAddBu
 import * as ChangeViewAuthModalActionCreators from './Modal/ChangeViewAuthModal';
 import * as ChangeViewProfModalActionCreators from './Modal/ChangeViewProfModal';
 import * as CloseModalActionCreators from './Modal/CloseModal';
+import * as GetBudgetsLengthActionCreators from './Budget/GetBudgetsLength';
 export default {
   ...AuthCheckActionCreators,
   ...AuthRegActionCreators,
@@ -31,4 +32,5 @@ export default {
   ...ChangeViewAuthModalActionCreators,
   ...ChangeViewProfModalActionCreators,
   ...CloseModalActionCreators,
+  ...GetBudgetsLengthActionCreators,
 };

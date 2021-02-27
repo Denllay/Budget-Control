@@ -5,13 +5,19 @@ import { ThunkDispatch } from 'redux-thunk';
 import { TRootReducer } from '../../reducers';
 import firebase, { auth } from '@/Firebase/config';
 import { EnumCurrency } from '@/types/Budget';
-export const AddCategoryBudget = (budgetId: string, name: string, value: number, freeCategoryValue: number) => {
+export const AddCategoryBudget = (
+  budgetId: string,
+  color: string,
+  name: string,
+  value: number,
+  freeCategoryValue: number
+) => {
   return (dispatch: ThunkDispatch<TRootReducer, void, Action>) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
       const newBudgetCollectionRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
       const data: ICategoryData = {
-        color: (((1 << 24) * Math.random()) | 0).toString(16),
+        color: color !== '#c4c4c4' ? color : `#${(((1 << 24) * Math.random()) | 0).toString(16)}`,
         currency: EnumCurrency.RUB,
         name,
         value,

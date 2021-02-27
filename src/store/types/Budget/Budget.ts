@@ -34,6 +34,7 @@ export const enum EnumActionBudget {
   BUDGET_REMOVE = 'BUDGET_REMOVE',
   BUDGET_CATEGORY_ADD = 'BUDGET_CATEGORY_ADD',
   BUDGET_UPDATE_CURRENCY = 'BUDGET_UPDATE_CURRENCY',
+  BUDGET_GET_LENGTH = 'BUDGET_GET_LENGTH',
 }
 export interface IBudgetShowMenuAction {
   type: EnumActionBudget.BUDGET_SHOW_ADD_MENU;
@@ -60,12 +61,17 @@ export interface IBudgetUpdateCurrency {
 export interface ICurrencyData {
   RUB: number;
 }
+export interface IBudgetGetLengthBudgets {
+  type: EnumActionBudget.BUDGET_GET_LENGTH;
+  payload: number;
+}
 export type TBudgetAction =
   | IBudgetShowMenuAction
   | IBudgetGetDataAction
   | IBudgetClearData
   | IBudgetRemove
-  | IBudgetUpdateCurrency;
+  | IBudgetUpdateCurrency
+  | IBudgetGetLengthBudgets;
 
 ///
 

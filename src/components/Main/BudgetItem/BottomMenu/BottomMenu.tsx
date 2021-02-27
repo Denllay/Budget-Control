@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { EnumCurrency, TCurrency } from '@/types/Budget';
 import { ICategoryFormatData } from '@/store/types/Budget/Budget';
@@ -6,6 +6,7 @@ import { AutoAdd } from './AutoAdd/AutoAdd';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import styles from './BottomMenu.module.scss';
+import { ColorBlock } from './ColorBlock/ColorBlock';
 interface IProps {
   data: ICategoryFormatData[];
   budgetId: string;
@@ -17,6 +18,9 @@ type TInputs = {
 };
 
 export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
+  const [color, setColor] = useState<string>('#c4c4c4');
+  const onChangeColor = ({ hex }: { hex: string }) => setColor(hex);
+  //
   const onClickRemove = () => RemoveBudget(budgetId);
   //
   const { register, handleSubmit, setValue, getValues } = useForm<TInputs>();
@@ -26,6 +30,7 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
   const clearCategoryInput = () => {
     setValue('nameCategory', '');
     setValue('valueCategory', '');
+    setColor('#c4c4c4');
   };
   const getNameInput = () => getValues('nameCategory') && getValues('nameCategory').trim();
   //
@@ -53,6 +58,7 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
     if (sucsess) {
       AddCategoryBudget(
         budgetId,
+        color,
         nameCategory.trim(),
         Math.round(newCategoryValue),
         Math.round(valueFree - newCategoryValue)
@@ -60,19 +66,23 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
       clearCategoryInput();
     }
   };
+
   return (
     <div className={styles.bottom_container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form_title}>
           <h2>Add new Category</h2>
         </div>
-        <input
-          type="text"
-          placeholder="Name of category"
-          name="nameCategory"
-          className={styles.input}
-          ref={register({ required: true, minLength: 3, maxLength: 9 })}
-        />
+        <div className={styles.block_input_name}>
+          <input
+            type="text"
+            placeholder="Name of category"
+            name="nameCategory"
+            className={styles.input}
+            ref={register({ required: true, minLength: 3, maxLength: 9 })}
+          />
+          <ColorBlock color={color} onChangeColor={onChangeColor} />
+        </div>
         <div className={styles.block_input_number}>
           <input
             type="number"
@@ -89,6 +99,7 @@ export const BottomMenu: React.FC<IProps> = ({ data, budgetId }) => {
         <input type="submit" value="Add" className={styles.submit} />
       </form>
       <AutoAdd
+        color={color}
         getNameInput={getNameInput}
         budgetId={budgetId}
         valueFree={valueFree}

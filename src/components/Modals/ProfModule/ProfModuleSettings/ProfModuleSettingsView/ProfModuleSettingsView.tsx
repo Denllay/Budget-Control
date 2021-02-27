@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ProfileContext } from '@/context/ProfileContext';
 import styles from './ProfModuleSettingsView.module.scss';
 import { useActions } from '@/hooks/useActions';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 interface IProps {}
 export const ProfModuleSettingsView: React.FC<IProps> = () => {
   const { setProfileView, email } = useContext(ProfileContext);
-  const { RemoveAllBudgets } = useActions();
+  const { RemoveAllBudgets, GetBudgetsLength } = useActions();
+  const budgetsLength = useTypedSelector((state) => state?.budget?.budgetsLength);
   const onClickRemoveBudgets = () => {
     setProfileView('view');
     RemoveAllBudgets();
   };
+  useEffect(() => {
+    GetBudgetsLength();
+    console.log(budgetsLength);
+  }, [budgetsLength]);
   return (
     <div className={styles.wrapper}>
       <button className={styles.button_back} onClick={() => setProfileView('view')}>
@@ -28,7 +34,7 @@ export const ProfModuleSettingsView: React.FC<IProps> = () => {
               Theme: <span> black</span>
             </li>
             <li className={styles.data_block_item}>
-              Budgets: <span> 10</span>
+              Budgets: <span> {budgetsLength}</span>
             </li>
           </ul>
           <div className={styles.list_container_button_block}>

@@ -19,7 +19,7 @@ export const BudgetChart: React.FC<IProps> = ({ data }) => {
           paddingAngle={1}
         >
           {data.map(({ color }, index) => (
-            <Cell key={`cell-${index}`} fill={`#${color}`} />
+            <Cell key={`cell-${index}`} fill={`${color}`} />
           ))}
         </Pie>
       </PieChart>

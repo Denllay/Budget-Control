@@ -11,7 +11,7 @@ export const GetDataBudget = () => {
       const uid = auth.currentUser && auth.currentUser.uid;
       const data = await firebase
         .database()
-        .ref(`users/${uid}`)
+        .ref(`users/${uid}/Budgets`)
         .get()
         .then((snapshot) => {
           if (snapshot.exists()) {
@@ -23,7 +23,7 @@ export const GetDataBudget = () => {
         });
 
       if (!!data) {
-        const formatData = Object.entries(data.Budgets).reduce((acc, el) => {
+        const formatData = Object.entries(data).reduce((acc, el) => {
           const data = {
             title: el[1]['title'],
             budgetId: el[0],

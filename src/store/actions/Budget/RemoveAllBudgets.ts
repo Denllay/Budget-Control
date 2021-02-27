@@ -1,5 +1,6 @@
 import firebase, { auth } from '../../../Firebase/config';
 import { GetDataBudget } from './GetDataBudget';
+import { GetBudgetsLength } from './GetBudgetsLength';
 import { ThunkDispatch } from 'redux-thunk';
 import { TRootReducer } from '../../reducers';
 import { Action } from 'redux';
@@ -11,9 +12,11 @@ export const RemoveAllBudgets = () => {
         .database()
         .ref(`users/${uid}/Budgets/`)
         .remove()
-        .then(() => dispatch(GetDataBudget()))
+        .then(() => {
+          dispatch(GetDataBudget());
+          dispatch(GetBudgetsLength());
+        })
         .catch((error) => console.log(error));
-      console.log('all budgets has been deleted');
     } catch (error) {
       console.log(error);
     }

@@ -1,9 +1,9 @@
 import { IBudgetAddAction, IBudgetAddData } from '../../types/Budget/Budget';
-import firebase, { auth } from '../../../Firebase/config';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { TRootReducer } from '../../reducers';
 import { GetDataBudget } from './GetDataBudget';
+import firebase, { auth } from '../../../Firebase/config';
 export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
   /*
   ? Чтож тут у нас созается ячейка под определенный бюджет в базу данных
@@ -16,7 +16,7 @@ export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
         free: {
           value,
           currency,
-          color: 'e4e4e4',
+          color: '#e4e4e4',
           name: 'free',
         },
       },
@@ -32,6 +32,7 @@ export const AddBudget = ({ title, value, currency }: IBudgetAddAction) => {
       .catch((error) => {
         console.log('Storing Error', error);
       });
+    dispatch(GetDataBudget());
     dispatch(GetDataBudget());
     try {
     } catch (error) {

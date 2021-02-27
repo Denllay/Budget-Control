@@ -6,8 +6,9 @@ interface IProps {
   budgetId: string;
   valueFree: number;
   clearCategoryInput(): void;
+  color: string;
 }
-export const AutoAdd: React.FC<IProps> = ({ getNameInput, budgetId, valueFree, clearCategoryInput }) => {
+export const AutoAdd: React.FC<IProps> = ({ getNameInput, budgetId, valueFree, clearCategoryInput, color }) => {
   const { AddCategoryBudget } = useActions();
   const onClickAutoAdd = (procent: number) => {
     const nameInput = getNameInput();
@@ -15,19 +16,19 @@ export const AutoAdd: React.FC<IProps> = ({ getNameInput, budgetId, valueFree, c
       switch (procent) {
         case 100:
           {
-            AddCategoryBudget(budgetId, nameInput, valueFree, 0);
+            AddCategoryBudget(budgetId, color, nameInput, valueFree, 0);
             clearCategoryInput();
           }
           break;
         case 50:
           {
-            AddCategoryBudget(budgetId, nameInput, valueFree / 2, valueFree / 2);
+            AddCategoryBudget(budgetId, color, nameInput, valueFree / 2, valueFree / 2);
             clearCategoryInput();
           }
           break;
         case 25:
           {
-            AddCategoryBudget(budgetId, nameInput, valueFree / 4, valueFree - valueFree / 4);
+            AddCategoryBudget(budgetId, color, nameInput, valueFree / 4, valueFree - valueFree / 4);
             clearCategoryInput();
           }
           break;
