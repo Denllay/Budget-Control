@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
-import { AuthReducer } from './Auth/AuthReducer';
-import { BudgetReducer } from './Budget/BudgetReducer';
-import { ModalReducer } from './Modal/ModalReducer';
-export const RootReducer = combineReducers({ auth: AuthReducer, budget: BudgetReducer, modal: ModalReducer });
+import { AuthReducer } from './AuthReducer';
+import { BudgetReducer } from './BudgetReducer';
+import { ModalReducer } from './ModalReducer';
+export const RootReducer = combineReducers({
+  auth: AuthReducer,
+  modal: ModalReducer,
+  budget: BudgetReducer,
+});
 export type TRootReducer = ReturnType<typeof RootReducer>;

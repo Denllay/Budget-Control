@@ -4,22 +4,20 @@ import { EnumModalAction } from '@/store/types/Modal/Modal';
 import { AddBudgetModal } from './AddBudgetModal/AddBudgetModal';
 import { AuthModal } from './AuthModal/AuthModal';
 import { ProfModule } from './ProfModule/ProfModule';
+import { TModalAuth } from '@/types/ModalAuth';
 
 export const Modals: React.FC = () => {
-  const { modalStatus, currentModalStatus = null } = useTypedSelector((state) => state?.modal);
-  let modal;
+  const { modalStatus, currentModalStatus } = useTypedSelector((state) => state?.modal);
   switch (modalStatus) {
     case EnumModalAction.SHOW_ADD_BUDGET_MODAL:
-      modal = <AddBudgetModal statusModal={!!modalStatus} />;
-      break;
+      return <AddBudgetModal statusModal={!!modalStatus} />;
+
     case EnumModalAction.SHOW_AUTH_MODAL:
-      modal = <AuthModal statusModal={currentModalStatus} />;
-      break;
+      return <AuthModal statusModal={currentModalStatus as TModalAuth} />;
+
     case EnumModalAction.SHOW_PROF_MODAL:
-      modal = <ProfModule statusModal={!!modalStatus} />;
-      break;
+      return <ProfModule statusModal={!!modalStatus} />;
     default:
-      modal = null;
+      return null;
   }
-  return <>{modal}</>;
 };

@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin: 5px 0px;
+}
+.block {
+  &_name {
+    display: flex;
+  }
+}
+.color {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+.input_name {
+  outline: none;
+  background: transparent;
+  border: 0;
+  font-size: 22px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  margin-left: 10px;
+  width: 90%;
+}
+.block_procent span {
+  font-size: 22px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}

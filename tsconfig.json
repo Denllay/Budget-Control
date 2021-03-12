@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "alwaysStrict": true,
     "target": "ES5",
     "module": "CommonJS",
     "esModuleInterop": true,
@@ -9,6 +11,7 @@
     "baseUrl" : "src" ,
     "paths": {
       "@/*": ["*"]
-    }
+    },
+    
   }
 }

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProfModule.module.scss';
 import Modal from 'react-modal';
 import { TProfileView } from './types/profileMainTypes';
 import { ProfModuleShow } from './ProfModuleShow/ProfModuleShow';
 import { ProfModuleSettings } from './ProfModuleSettings/ProfModuleSettings';
 import { ProfileContext } from '@/context/ProfileContext';
-import { auth } from '@/Firebase/config';
 import { useActions } from '@/hooks/useActions';
+import { auth } from '@/firebase/config';
 interface IProps {
   statusModal: boolean;
 }
@@ -17,12 +17,15 @@ export const ProfModule: React.FC<IProps> = ({ statusModal }) => {
   const onClickSignOut = () => {
     SignOutAuth();
     CloseModal();
+    //
   };
-  const email = auth.currentUser && auth.currentUser.email;
-  //
   const styleWidth = profileView === 'view' ? '140px' : '300px';
   const styleHeight = profileView === 'view' ? '' : '250px';
   //
+  const email = !!auth.currentUser ? (auth.currentUser.email as string) : 'null';
+  useEffect(() => {
+    // GetBudgetsLength();
+  }, []);
   Modal.setAppElement('#root');
   return (
     <div className={styles.wrapper}>
@@ -57,7 +60,7 @@ export const ProfModule: React.FC<IProps> = ({ statusModal }) => {
         {profileView === 'view' ? (
           <ProfModuleShow onClickSignOut={onClickSignOut} email={email} setProfileView={setProfileView} />
         ) : (
-          <ProfileContext.Provider value={{ email, setProfileView, onCloseModal }}>
+          <ProfileContext.Provider value={{ setProfileView, onCloseModal }}>
             <ProfModuleSettings profileView={profileView} />
           </ProfileContext.Provider>
         )}

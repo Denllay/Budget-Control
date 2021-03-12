@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './NavMain.module.scss';
-import { auth } from '@/Firebase/config';
+import { auth } from '@/firebase/config';
 import { Route, Switch } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 export const NavMain: React.FC = () => {
   const { ChangeViewProfModal, ChangeViewAddBudgetModal } = useActions();
-  const email = auth.currentUser && auth.currentUser.email;
+  const email = !!auth.currentUser && auth.currentUser.email;
   return (
     <div className={styles.wrapper}>
       <ul className={styles.list}>

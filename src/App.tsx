@@ -6,7 +6,7 @@ import { Nav } from './components/Nav/Nav';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { EnumAuthAction } from './store/types/Auth/Auth';
 import { Route, Switch } from 'react-router-dom';
-import { Main } from './components/Main/Main';
+import { Budgets } from './components/Budgets/Budgets';
 import { Home } from './components/Home/Home';
 import { Modals } from './components/Modals/Modals';
 export const App: React.FC = () => {
@@ -14,15 +14,14 @@ export const App: React.FC = () => {
   const { CheckAuth } = useActions();
   useEffect(() => {
     CheckAuth();
-    console.log(status);
-  }, []);
+  }, [useActions, status]);
 
   return (
     <div className={styles.wrapper}>
-      <Nav />
+      <Nav authStatus={status} />
       <Switch>
         <PrivateRoute
-          component={Main}
+          component={Budgets}
           condition={status}
           trueCondition={EnumAuthAction.AUTH_ENTERED}
           exact

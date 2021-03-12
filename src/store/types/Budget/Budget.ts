@@ -1,84 +1,27 @@
-import { TCurrency } from '../../../types/Budget';
-export const enum EnumLoadBudgetAction {
-  LOADING = 'LOADING',
-  LOADED = 'LOADED',
-}
-type TLoadBudgetAction = EnumLoadBudgetAction.LOADED | EnumLoadBudgetAction.LOADING;
-export interface IBudgetInitialState {
-  showAddMenu: boolean;
-  budgets: null;
-  loadStatus: TLoadBudgetAction;
+import { IBudgetFormatData, TStatus } from '@/types/Budget/Budget';
+
+export enum EnumBudgetAction {
+  GET_DATA_BUDGET = 'GET_DATA_BUDGET',
+  CHANGE_BUDGET_ITEM_STATUS = 'CHANGE_BUDGET_ITEM_STATUS',
+  SET_INPUT_CHANGE = 'SET_INPUT_CHANGE',
 }
 
-///
-export interface ICategoryData {
-  color: string;
-  name: string;
-  value: number;
-  currency: TCurrency;
+export interface IBudgetState {
+  status: TStatus;
+  budgetItems: Array<never> | IBudgetFormatData[];
 }
-export interface ICategoryFormatData extends ICategoryData {
-  categoryId: string;
+interface IGetDataBudget {
+  type: EnumBudgetAction.GET_DATA_BUDGET;
+  payload: IBudgetFormatData[] | Array<never>;
 }
-///
-export interface IBudgetAddAction {
-  title: string;
-  value: number;
-  currency: TCurrency;
+interface IChangeBudgetItemStatus {
+  type: EnumBudgetAction.CHANGE_BUDGET_ITEM_STATUS;
 }
-///
-export const enum EnumActionBudget {
-  BUDGET_SHOW_ADD_MENU = 'BUDGET_SHOW_ADD_MENU',
-  BUDGET_GET_DATA = 'BUDGET_GET_DATA',
-  BUDGET_CLEAR_DATA = 'BUDGET_CLEAR_DATA',
-  BUDGET_REMOVE = 'BUDGET_REMOVE',
-  BUDGET_CATEGORY_ADD = 'BUDGET_CATEGORY_ADD',
-  BUDGET_UPDATE_CURRENCY = 'BUDGET_UPDATE_CURRENCY',
-  BUDGET_GET_LENGTH = 'BUDGET_GET_LENGTH',
+interface ISetInputChange {
+  type: EnumBudgetAction.SET_INPUT_CHANGE;
+  payload: {
+    indexItem: number;
+  };
 }
-export interface IBudgetShowMenuAction {
-  type: EnumActionBudget.BUDGET_SHOW_ADD_MENU;
-}
-export interface IBudgetGetDataAction {
-  type: EnumActionBudget.BUDGET_GET_DATA;
-  payload: IBudgetsData[];
-}
-interface IBudgetsData {
-  title: string;
-  category: ICategoryData[];
-}
-export interface IBudgetClearData {
-  type: EnumActionBudget.BUDGET_CLEAR_DATA;
-}
-export interface IBudgetRemove {
-  type: EnumActionBudget.BUDGET_REMOVE;
-  budgetId: string;
-}
-export interface IBudgetUpdateCurrency {
-  type: EnumActionBudget.BUDGET_UPDATE_CURRENCY;
-  payload: ICurrencyData;
-}
-export interface ICurrencyData {
-  RUB: number;
-}
-export interface IBudgetGetLengthBudgets {
-  type: EnumActionBudget.BUDGET_GET_LENGTH;
-  payload: number;
-}
-export type TBudgetAction =
-  | IBudgetShowMenuAction
-  | IBudgetGetDataAction
-  | IBudgetClearData
-  | IBudgetRemove
-  | IBudgetUpdateCurrency
-  | IBudgetGetLengthBudgets;
 
-///
-
-export interface IBudgetAddData {
-  title: string;
-  category: IBudgetAddDataCategory;
-}
-interface IBudgetAddDataCategory {
-  free: ICategoryData;
-}
+export type TBudgetActions = IGetDataBudget | IChangeBudgetItemStatus | ISetInputChange;

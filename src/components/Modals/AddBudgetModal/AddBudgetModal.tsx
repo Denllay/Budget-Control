@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useActions } from '../../../hooks/useActions';
-import { TCurrency, EnumCurrency } from '../../../types/Budget';
+import { TCurrency, EnumCurrency } from '../../../types/Budget/Budget';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Modal from 'react-modal';
 import styles from './AddBudgetModal.module.scss';

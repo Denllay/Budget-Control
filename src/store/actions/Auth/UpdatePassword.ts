@@ -1,4 +1,4 @@
-import firebase, { app } from '../../../Firebase/config';
+import firebase, { app, auth } from '../../../firebase/config';
 interface IData {
   currentPassword: string;
   newPassword: string;
@@ -6,8 +6,9 @@ interface IData {
 export const UpdatePassword = ({ currentPassword, newPassword }: IData) => {
   return () => {
     try {
-      const user = app.auth().currentUser;
-      const cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+      const email = !!auth.currentUser ? (auth.currentUser.email as string) : 'null';
+      const user = app.auth().currentUser as firebase.User;
+      const cred = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
       user
         .reauthenticateWithCredential(cred)
         .then(() => {

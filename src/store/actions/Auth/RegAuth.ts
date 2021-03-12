@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { auth } from '../../../Firebase/config';
+import { auth } from '../../../firebase/config';
 import { EnumAuthAction, IAuthPayload, TAuthAction } from '../../types/Auth/Auth';
 
 export const RegAuth = ({ password, email }: IAuthPayload) => {

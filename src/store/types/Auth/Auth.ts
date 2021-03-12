@@ -1,14 +1,15 @@
-export const enum EnumAuthAction {
+export enum EnumAuthAction {
   AUTH_PENDING = 'AUTH_PENDING',
   AUTH_LOGIN = 'AUTH_LOGIN',
   AUTH_ENTERED = 'AUTH_ENTERED',
 }
+export type TAuthStatus = EnumAuthAction.AUTH_ENTERED | EnumAuthAction.AUTH_LOGIN | EnumAuthAction.AUTH_PENDING;
+export interface IAuthState {
+  status: TAuthStatus;
+}
 export interface IAuthPayload {
   email: string;
   password: string;
-}
-export interface IAuthInitialState {
-  status: EnumAuthAction.AUTH_PENDING;
 }
 interface IAuthPendingAction {
   type: EnumAuthAction.AUTH_PENDING;

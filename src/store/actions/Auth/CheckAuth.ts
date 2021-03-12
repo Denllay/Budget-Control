@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { app } from '../../../Firebase/config';
+import { app } from '../../../firebase/config';
 import { EnumAuthAction, TAuthAction } from '../../types/Auth/Auth';
 
 export const CheckAuth = () => {

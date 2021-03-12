@@ -23,7 +23,12 @@ export const AuthModal: React.FC<IProps> = ({ statusModal }) => {
     if (statusModal === 'login' && sucsessEmail && password.trim()) {
       LoginAuth({ email, password });
       CloseModal();
-    } else if (statusModal === 'reg' && password.trim() === confirmPassword.trim() && password.trim() && sucsessEmail) {
+    } else if (
+      statusModal === 'reg' &&
+      password.trim() === (confirmPassword as string).trim() &&
+      password.trim() &&
+      sucsessEmail
+    ) {
       RegAuth({ password, email });
       CloseModal();
     } else {

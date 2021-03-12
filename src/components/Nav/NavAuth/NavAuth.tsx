@@ -11,7 +11,7 @@ export const NavAuth: React.FC<IProps> = () => {
         <span>Login</span>
       </li>
       <li className={styles.list_item} onClick={() => ChangeViewAuthModal('reg')}>
-        <span> Register</span>
+        <span>Register</span>
       </li>
     </ul>
   );

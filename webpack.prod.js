@@ -1,10 +1,10 @@
-const path = require('path');
-
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-  mode: 'production',
+  mode: "production",
   devtool: false,
   performance: {
     hints: false,
@@ -12,23 +12,24 @@ module.exports = {
     maxAssetSize: 512000,
   },
   output: {
-    filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: "[name].[contenthash].js",
+    path: path.resolve(__dirname, "dist"),
   },
   optimization: {
-    minimizer: [new OptimizeCssAssetsPlugin()],
+    minimize: true,
+    minimizer: [new OptimizeCssAssetsPlugin(),new TerserPlugin()],
     runtimeChunk: {
-      name: 'manifest',
+      name: "manifest",
     },
-    runtimeChunk: 'single',
+    runtimeChunk: "single",
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
     },
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
+    new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, './public', 'index.html'),
+      template: path.join(__dirname, "./public", "index.html"),
       minify: {
         removeAttributeQuotes: true,
         collapseWhitespace: true,
@@ -37,9 +38,9 @@ module.exports = {
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.optimize\.css$/g,
-      cssProcessor: require('cssnano'),
+      cssProcessor: require("cssnano"),
       cssProcessorPluginOptions: {
-        preset: ['default', { discardComments: { removeAll: true } }],
+        preset: ["default", { discardComments: { removeAll: true } }],
       },
       canPrint: true,
     }),
@@ -53,13 +54,13 @@ module.exports = {
             test: /\.module\.s?css$/,
             use: [
               MiniCssExtractPlugin.loader,
-              'css-loader',
+              "css-loader",
               {
-                loader: 'sass-loader',
+                loader: "sass-loader",
                 options: {
                   sourceMap: true,
                   sassOptions: {
-                    outputStyle: 'compressed',
+                    outputStyle: "compressed",
                     modules: true,
                   },
                 },
@@ -67,7 +68,7 @@ module.exports = {
             ],
           },
           {
-            use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
           },
         ],
       },

@@ -10,9 +10,9 @@
   "author": "Denlay",
   "license": "ISC",
   "devDependencies": {
-    "@types/react-color": "^3.0.4",
     "@types/node": "^14.14.0",
     "@types/react": "^16.9.53",
+    "@types/react-color": "^3.0.4",
     "@types/react-dom": "^16.9.11",
     "@types/react-modal": "^3.12.0",
     "@types/react-router-dom": "^5.1.7",
@@ -25,6 +25,7 @@
     "copy-webpack-plugin": "^7.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.2",
+    "csstype": "^3.0.7",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-babel": "^5.3.1",
@@ -50,6 +51,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^5.5.0",
+    "@types/react-redux": "^7.1.16",
     "axios": "^0.21.1",
     "firebase": "^8.2.7",
     "react": "^16.14.0",
@@ -62,6 +64,7 @@
     "recharts": "^2.0.6",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "terser-webpack-plugin": "^5.1.1"
   }
 }

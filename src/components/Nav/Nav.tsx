@@ -1,25 +1,25 @@
 import React from 'react';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { EnumAuthAction } from '@/store/types/Auth/Auth';
+import { EnumAuthAction, TAuthStatus } from '@/store/types/Auth/Auth';
 import { NavAuth } from './NavAuth/NavAuth';
-import { NavLoader } from './NavLoader/NavLoader';
+import { PreLoader } from '@/components/PreLoader/PreLoader';
 import { NavMain } from './NavMain/NavMain';
 import styles from './Nav.module.scss';
-
-export const Nav: React.FC = () => {
-  const AuthStatus = useTypedSelector((state) => state.auth.status);
+interface IProps {
+  authStatus: TAuthStatus;
+}
+export const Nav: React.FC<IProps> = ({ authStatus }) => {
   return (
     <div className={styles.header_inner}>
       <div className={styles.logo_block}>
         <h1 className={styles.logo}>Budget Control</h1>
       </div>
       <nav className={styles.nav}>
-        {AuthStatus === EnumAuthAction.AUTH_LOGIN ? (
+        {authStatus === EnumAuthAction.AUTH_LOGIN ? (
           <NavAuth />
-        ) : AuthStatus === EnumAuthAction.AUTH_ENTERED ? (
+        ) : authStatus === EnumAuthAction.AUTH_ENTERED ? (
           <NavMain />
         ) : (
-          <NavLoader />
+          <PreLoader statusStyle="nav" />
         )}
       </nav>
     </div>

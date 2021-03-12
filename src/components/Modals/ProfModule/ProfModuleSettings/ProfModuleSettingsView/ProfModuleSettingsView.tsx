@@ -1,21 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { ProfileContext } from '@/context/ProfileContext';
+import { auth } from '@/firebase/config';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import styles from './ProfModuleSettingsView.module.scss';
 import { useActions } from '@/hooks/useActions';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
-interface IProps {}
-export const ProfModuleSettingsView: React.FC<IProps> = () => {
-  const { setProfileView, email } = useContext(ProfileContext);
-  const { RemoveAllBudgets, GetBudgetsLength } = useActions();
-  const budgetsLength = useTypedSelector((state) => state?.budget?.budgetsLength);
+
+export const ProfModuleSettingsView: React.FC = () => {
+  const { setProfileView } = useContext(ProfileContext);
+  const budgetLength = useTypedSelector((state) => state?.budget?.budgetItems || []).length;
+  const { DeleteAllBudgets } = useActions();
+
   const onClickRemoveBudgets = () => {
     setProfileView('view');
-    RemoveAllBudgets();
+    DeleteAllBudgets();
   };
-  useEffect(() => {
-    GetBudgetsLength();
-    console.log(budgetsLength);
-  }, [budgetsLength]);
+  const email = !!auth.currentUser ? (auth.currentUser.email as string) : 'null';
   return (
     <div className={styles.wrapper}>
       <button className={styles.button_back} onClick={() => setProfileView('view')}>
@@ -34,7 +33,7 @@ export const ProfModuleSettingsView: React.FC<IProps> = () => {
               Theme: <span> black</span>
             </li>
             <li className={styles.data_block_item}>
-              Budgets: <span> {budgetsLength}</span>
+              Budgets: <span>{budgetLength}</span>
             </li>
           </ul>
           <div className={styles.list_container_button_block}>
