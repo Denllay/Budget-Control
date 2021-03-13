@@ -5,6 +5,7 @@ import { AddCategoryColor } from './AddCategoryColor/AddCategoryColor';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useActions } from '@/hooks/useActions';
 import styles from './BudgetAddCategory.module.scss';
+import useConfirmationDialog from '@/hooks/useConfirmDialog';
 
 type TInputs = {
   nameCategory: string;
@@ -13,6 +14,11 @@ type TInputs = {
 };
 
 export const BudgetAddCategory: React.FC = () => {
+  const { Dialog, onOpen } = useConfirmationDialog({
+    headerText: 'Do u confirm delete budget',
+    onConfirmClick: onDeleteConfirm,
+  });
+  ///
   const { register, handleSubmit, setValue } = useForm<TInputs>();
   const { category, budgetId } = useContext(BudgetBlockContext);
   const { AddCategoryBudget, DeleteBudget } = useActions();
@@ -54,7 +60,9 @@ export const BudgetAddCategory: React.FC = () => {
       setColor('#c4c4c4');
     }
   };
-
+  function onDeleteConfirm() {
+    DeleteBudget(budgetId);
+  }
   return (
     <div className={styles.bottom_container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -87,10 +95,11 @@ export const BudgetAddCategory: React.FC = () => {
         <input type="submit" value="Add" className={styles.submit} />
       </form>
       <div className={styles.icon_block}>
-        <div className={styles.icon_item} onClick={() => DeleteBudget(budgetId)}>
+        <div className={styles.icon_item} onClick={() => onOpen()}>
           <div className={styles.icon_remove}></div>
         </div>
       </div>
+      <Dialog />
     </div>
   );
 };

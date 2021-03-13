@@ -4,16 +4,23 @@ import { auth } from '@/firebase/config';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import styles from './ProfModuleSettingsView.module.scss';
 import { useActions } from '@/hooks/useActions';
+import useConfirmationDialog from '@/hooks/useConfirmDialog';
 
 export const ProfModuleSettingsView: React.FC = () => {
   const { setProfileView } = useContext(ProfileContext);
   const budgetLength = useTypedSelector((state) => state?.budget?.budgetItems || []).length;
   const { DeleteAllBudgets } = useActions();
 
-  const onClickRemoveBudgets = () => {
+  const { Dialog, onOpen } = useConfirmationDialog({
+    headerText: 'Do you confirm delete all budgets?',
+    onConfirmClick: onClickRemoveBudgets,
+  });
+
+  function onClickRemoveBudgets() {
     setProfileView('view');
     DeleteAllBudgets();
-  };
+  }
+
   const email = !!auth.currentUser ? (auth.currentUser.email as string) : 'null';
   return (
     <div className={styles.wrapper}>
@@ -41,12 +48,13 @@ export const ProfModuleSettingsView: React.FC = () => {
               Change
             </button>
             <button className={styles.button_block_item}>Change theme</button>
-            <button className={styles.button_block_item} onClick={onClickRemoveBudgets}>
+            <button className={styles.button_block_item} onClick={() => onOpen()}>
               Delete all
             </button>
           </div>
         </div>
       </div>
+      <Dialog />
     </div>
   );
 };

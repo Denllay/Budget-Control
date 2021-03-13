@@ -23,9 +23,6 @@ export const ProfModule: React.FC<IProps> = ({ statusModal }) => {
   const styleHeight = profileView === 'view' ? '' : '250px';
   //
   const email = !!auth.currentUser ? (auth.currentUser.email as string) : 'null';
-  useEffect(() => {
-    // GetBudgetsLength();
-  }, []);
   Modal.setAppElement('#root');
   return (
     <div className={styles.wrapper}>

@@ -2,8 +2,8 @@ import { GetDataBudget } from './GetDataBudget';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { TRootReducer } from '../../reducers';
-import firebase, { auth } from '@/firebase/config';
 import { EnumCurrency } from '@/types/Budget/Budget';
+import firebase, { auth } from '@/firebase/config';
 interface IDataAction {
   budgetId: string;
   name: string;
