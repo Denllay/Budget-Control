@@ -1,22 +1,25 @@
 import React from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { EnumModalAction } from '@/store/types/Modal/Modal';
 import { AddBudgetModal } from './AddBudgetModal/AddBudgetModal';
 import { AuthModal } from './AuthModal/AuthModal';
 import { ProfModule } from './ProfModule/ProfModule';
-import { TModalAuth } from '@/types/ModalAuth';
-
+import { EnumModalAction, TModalAuthStatus } from '@/types/Modal';
+import { AlertModal } from './AlertModal/AlertModal';
 export const Modals: React.FC = () => {
-  const { modalStatus, currentModalStatus } = useTypedSelector((state) => state?.modal);
+  const { modalStatus, dataModal } = useTypedSelector((state) => state?.modal);
   switch (modalStatus) {
-    case EnumModalAction.SHOW_ADD_BUDGET_MODAL:
+    case EnumModalAction.SHOW_ADD_BUDGET_MODAL: {
       return <AddBudgetModal statusModal={!!modalStatus} />;
-
-    case EnumModalAction.SHOW_AUTH_MODAL:
-      return <AuthModal statusModal={currentModalStatus as TModalAuth} />;
-
-    case EnumModalAction.SHOW_PROF_MODAL:
+    }
+    case EnumModalAction.SHOW_AUTH_MODAL: {
+      return <AuthModal statusModal={dataModal as TModalAuthStatus} />;
+    }
+    case EnumModalAction.SHOW_PROF_MODAL: {
       return <ProfModule statusModal={!!modalStatus} />;
+    }
+    case EnumModalAction.ALERT_MODAL: {
+      return <AlertModal headerText={dataModal as string} />;
+    }
     default:
       return null;
   }

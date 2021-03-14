@@ -1,12 +1,12 @@
 import React from 'react';
-import { TModalAuth } from '@/types/ModalAuth';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useActions } from '@/hooks/useActions';
 import Modal from 'react-modal';
 import styles from './AuthModal.module.scss';
 import './Modal.scss';
+import { TModalAuthStatus } from '@/types/Modal';
 interface IProps {
-  statusModal: TModalAuth;
+  statusModal: TModalAuthStatus;
 }
 type IInput = {
   email: string;
@@ -16,17 +16,17 @@ type IInput = {
 export const AuthModal: React.FC<IProps> = ({ statusModal }) => {
   const { register, handleSubmit } = useForm<IInput>();
   const { LoginAuth, RegAuth, CloseModal } = useActions();
+
   const onSubmit: SubmitHandler<IInput> = (data) => {
     const { password, email, confirmPassword } = data;
     const sucsessEmail = /.+@.+\..+/i.test(email);
 
-    if (statusModal === 'login' && sucsessEmail && password.trim()) {
+    if (statusModal === 'login' && sucsessEmail) {
       LoginAuth({ email, password });
       CloseModal();
     } else if (
       statusModal === 'reg' &&
       password.trim() === (confirmPassword as string).trim() &&
-      password.trim() &&
       sucsessEmail
     ) {
       RegAuth({ password, email });

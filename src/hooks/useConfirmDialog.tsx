@@ -1,5 +1,6 @@
+import { ConfirmationDialog } from '@/components/global/ConfirmationDialog/ConfirmationDialog';
 import React, { useCallback, useState } from 'react';
-import { ConfirmationDialog } from '../components/ConfirmationDialog/ConfirmationDialog';
+
 interface IProps {
   headerText: string;
   onConfirmClick(): void;

@@ -15,7 +15,6 @@ export const ProfModuleSettingsView: React.FC = () => {
     headerText: 'Do you confirm delete all budgets?',
     onConfirmClick: onClickRemoveBudgets,
   });
-
   function onClickRemoveBudgets() {
     setProfileView('view');
     DeleteAllBudgets();

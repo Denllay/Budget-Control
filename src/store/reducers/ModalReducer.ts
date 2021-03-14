@@ -1,4 +1,5 @@
-import { EnumModalAction, IModalState, TModalAction } from '@/store/types/Modal/Modal';
+import { IModalState, TModalAction } from '@/store/types/Modal/Modal';
+import { EnumModalAction } from '@/types/Modal';
 
 const initialState: IModalState = {
   modalStatus: null,
@@ -9,10 +10,13 @@ export const ModalReducer = (state = initialState, action: TModalAction): IModal
       return { ...state, modalStatus: EnumModalAction.SHOW_ADD_BUDGET_MODAL };
     }
     case EnumModalAction.SHOW_AUTH_MODAL: {
-      return { ...state, modalStatus: EnumModalAction.SHOW_AUTH_MODAL, currentModalStatus: action.payload };
+      return { ...state, modalStatus: EnumModalAction.SHOW_AUTH_MODAL, dataModal: action.payload };
     }
     case EnumModalAction.SHOW_PROF_MODAL: {
       return { ...state, modalStatus: EnumModalAction.SHOW_PROF_MODAL };
+    }
+    case EnumModalAction.ALERT_MODAL: {
+      return { ...state, modalStatus: EnumModalAction.ALERT_MODAL, dataModal: action.payload };
     }
     case EnumModalAction.CLOSE_MODAL: {
       return { ...state, modalStatus: null };
