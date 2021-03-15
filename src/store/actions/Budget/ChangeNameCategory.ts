@@ -8,7 +8,7 @@ interface IDataAction {
   categoryId: string;
   budgetId: string;
 }
-export const ChangeCategory = ({ name, categoryId, budgetId }: IDataAction) => {
+export const ChangeNameCategory = ({ name, categoryId, budgetId }: IDataAction) => {
   /*
   ? Чтож тут у нас созается ячейка под определенный бюджет в базу данных
   */

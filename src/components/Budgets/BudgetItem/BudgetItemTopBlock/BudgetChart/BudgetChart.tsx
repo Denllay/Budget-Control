@@ -1,30 +1,28 @@
-import { BudgetBlockContext } from '@/context/BudgetBlockContext';
-import React, { useContext, useEffect } from 'react';
+import React, { memo } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
-
-export const BudgetChart: React.FC = () => {
-  const { category: data } = useContext(BudgetBlockContext);
-  useEffect(() => {
-    console.log('render');
-  });
+import { ICategoryFormatData } from '@/types/Budget/Budget';
+interface IProps {
+  categoryData: ICategoryFormatData[];
+}
+export const BudgetChart: React.FC<IProps> = memo(({ categoryData }) => {
   return (
     <div>
       <PieChart width={300} height={300}>
         <Pie
           dataKey="value"
           stroke="none"
-          data={data}
+          data={categoryData}
           isAnimationActive={false}
           innerRadius={110}
           outerRadius={140}
           label={false}
           paddingAngle={1}
         >
-          {data.map(({ color }, index) => (
-            <Cell key={`cell-${index}`} fill={`${color}`} />
+          {categoryData.map(({ color, categoryId }) => (
+            <Cell key={categoryId} fill={`${color}`} />
           ))}
         </Pie>
       </PieChart>
     </div>
   );
-};
+});

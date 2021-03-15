@@ -19,9 +19,3 @@ export interface ICategoryFormatData {
   value: number;
   categoryId: string;
 }
-export interface IBudgetItemDataStatus {
-  isChange: boolean;
-  categoryChangeId: null | string;
-  inputValue: string;
-  startValue: string;
-}

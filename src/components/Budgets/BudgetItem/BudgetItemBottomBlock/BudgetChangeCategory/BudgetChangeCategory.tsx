@@ -1,20 +1,26 @@
-import React, { useContext } from 'react';
-import { BudgetBlockContext } from '@/context/BudgetBlockContext';
+import React from 'react';
+
 import { useActions } from '@/hooks/useActions';
 import styles from './BudgetChangeCategory.module.scss';
-
-export const BudgetChangeCategory: React.FC = () => {
-  const { setBudgetStatus, budgetId, budgetStatus } = useContext(BudgetBlockContext);
-  const { inputValue, categoryChangeId, startValue } = budgetStatus;
-  const { ChangeCategory } = useActions();
-
-  const onClickCancel = () =>
-    setBudgetStatus({ isChange: false, inputValue: '', startValue: '', categoryChangeId: null });
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+interface IProps {
+  budgetId: string;
+}
+export const BudgetChangeCategory: React.FC<IProps> = ({ budgetId }) => {
+  const { ChangeNameCategory, ClearVolatileData } = useActions();
+  const { volatileInputStartValue, volatileInputValue, volatileCategoryId } = useTypedSelector(
+    (state) => state?.volatileBudgets[budgetId]
+  );
+  const clearBudgetVolatileData = () => ClearVolatileData(budgetId);
 
   const onConfirm = () => {
-    if (inputValue !== startValue && inputValue.length >= 3) {
-      ChangeCategory({ budgetId, categoryId: categoryChangeId as string, name: inputValue });
-      setBudgetStatus({ ...budgetStatus, isChange: false });
+    if (volatileInputValue !== volatileInputStartValue && (volatileInputValue as string).length >= 3) {
+      ChangeNameCategory({
+        budgetId,
+        categoryId: volatileCategoryId as string,
+        name: volatileInputValue as string,
+      });
+      clearBudgetVolatileData();
     }
   };
   return (
@@ -23,7 +29,7 @@ export const BudgetChangeCategory: React.FC = () => {
         <button className={styles.button_item} onClick={onConfirm}>
           Confirm
         </button>
-        <button className={`${styles.button_item} ${styles.button_cancel}`} onClick={onClickCancel}>
+        <button className={`${styles.button_item} ${styles.button_cancel}`} onClick={clearBudgetVolatileData}>
           Cancel
         </button>
       </div>

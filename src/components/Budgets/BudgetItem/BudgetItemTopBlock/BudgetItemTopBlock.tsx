@@ -1,12 +1,12 @@
 import React from 'react';
+import { BudgetChartContainer } from '@/containers/BudgetChartContainer';
 import { BudgetCategory } from './BudgetCategory/BudgetCategory';
-import { BudgetChart } from './BudgetChart/BudgetChart';
 import styles from './BudgetItemTopBlock.module.scss';
-interface IProps {}
-export const BudgetItemTopBlock: React.FC<IProps> = () => {
+
+export const BudgetItemTopBlock: React.FC = () => {
   return (
     <div className={styles.wrapper}>
-      <BudgetChart />
+      <BudgetChartContainer />
       <BudgetCategory />
     </div>
   );

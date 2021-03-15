@@ -5,16 +5,15 @@ import styles from './BudgetCategoryButton.module.scss';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useActions } from '@/hooks/useActions';
 interface IProps {
-  isChange: boolean;
   name: string;
   categoryId: string;
   value: number;
 }
-export const BudgetCategoryButton: React.FC<IProps> = ({ categoryId, name, isChange, value }) => {
-  const { category, setBudgetStatus, budgetId } = useContext(BudgetBlockContext);
-  const { DeleteCategory } = useActions();
+export const BudgetCategoryButton: React.FC<IProps> = ({ categoryId, name, value }) => {
+  const { category, budgetId } = useContext(BudgetBlockContext);
+  const { DeleteCategory, SetVolatileInitialData } = useActions();
   const onClickChangeHandler = () =>
-    setBudgetStatus({ isChange: !isChange, categoryChangeId: categoryId, inputValue: name, startValue: name });
+    SetVolatileInitialData({ volatileInputValue: name, volatileCategoryId: categoryId, budgetId });
 
   const onClickDeleteHandler = () =>
     DeleteCategory({
