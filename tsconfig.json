@@ -8,10 +8,15 @@
     "jsx": "react",
     "removeComments": true,
     "sourceMap": true,
-    "baseUrl" : "src" ,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "incremental": true,
+    "baseUrl" : "src",
     "paths": {
       "@/*": ["*"]
     },
-    
   }
 }

@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
-import { BudgetBlockContext } from '@/context/BudgetBlockContext';
-import { BudgetCategoryItem } from './BudgetCategoryItem/BudgetCategoryItem';
+import React, { memo, useContext, useMemo } from 'react';
 import styles from './BudgetCategory.module.scss';
-interface IProps {}
-export const BudgetCategory: React.FC<IProps> = () => {
+import { ICategoryFormatData } from '@/types/Budget/Budget';
+import { BudgetCategoryItemContainer } from '@/containers/Budget/BudgetCategoryItemContainer';
+import { BudgetBlockContext } from '@/context/BudgetBlockContext';
+
+export const BudgetCategory: React.FC = () => {
   const { category } = useContext(BudgetBlockContext);
-  const categoryList = category.map((dataCategory) => (
-    <BudgetCategoryItem key={dataCategory.categoryId} data={dataCategory} />
-  ));
+  const categoryList = useMemo(
+    () =>
+      category.map((dataCategory) => (
+        <BudgetCategoryItemContainer key={dataCategory.categoryId} categoryData={dataCategory} />
+      )),
+    [category]
+  );
   return <div className={styles.wrapper}>{categoryList}</div>;
 };

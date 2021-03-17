@@ -8,13 +8,13 @@ interface IVolatileBudgetItemData {
   volatileInputStartValue: null | string;
 }
 export enum EnumVolatileBudgetAction {
-  SET_VOLATILE_INITIAL_DATA = 'SET_VOLATILE_INITIAL_DATA',
+  SET_VOLATILE_DATA = 'SET_VOLATILE_DATA',
   CHANGE_VOLATILE_INPUT = 'CHANGE_VOLATILE_INPUT',
   CLEAR_VOLATILE_DATA = 'CLEAR_VOLATILE_DATA',
 }
 
 interface ISetVolatileBudgetData {
-  type: EnumVolatileBudgetAction.SET_VOLATILE_INITIAL_DATA;
+  type: EnumVolatileBudgetAction.SET_VOLATILE_DATA;
   payload: ISetVolatileBudgetDataAction;
 }
 //
@@ -33,6 +33,8 @@ export interface ISetVolatileBudgetDataAction {
 //
 interface IClearVolatileData {
   type: EnumVolatileBudgetAction.CLEAR_VOLATILE_DATA;
-  payload: string;
+  payload: {
+    budgetId: string;
+  };
 }
 export type TVolatileBudgetAction = ISetVolatileBudgetData | IChangeVolatileInput | IClearVolatileData;

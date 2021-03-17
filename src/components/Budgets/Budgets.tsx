@@ -1,22 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { useActions } from '@/hooks/useActions';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { IBudgetFormatData, TStatus } from '@/types/Budget/Budget';
 import { BudgetItem } from './BudgetItem/BudgetItem';
-import styles from './Budgets.module.scss';
 import { PreLoader } from '../PreLoader/PreLoader';
-interface IProps {}
-export const Budgets: React.FC<IProps> = () => {
+import { IBudgetFormatData, TBudgetLoadingStatus } from '@/types/Budget/Budget';
+import styles from './Budgets.module.scss';
+interface IProps {
+  budgetsData: IBudgetFormatData[];
+  budgetsLoadingStatus: TBudgetLoadingStatus;
+}
+export const Budgets: React.FC<IProps> = memo(({ budgetsData, budgetsLoadingStatus }) => {
   const { GetDataBudget } = useActions();
-  const {
-    budgetItems: budgetItemsData,
-    status,
-  }: { budgetItems: IBudgetFormatData[]; status: TStatus } = useTypedSelector((state) => state?.budget || []);
-
-  const budgetItems = budgetItemsData.map((dataItem) => (
-    <BudgetItem key={dataItem.budgetId} data={dataItem} />
+  const budgetItems = budgetsData.map((dataItem, index) => (
+    <BudgetItem key={dataItem.budgetId} data={dataItem} budgetIndex={index} />
   ));
-  const budget = budgetItems.length ? budgetItems : <h1 className={styles.title}>No budgets</h1>;
+  const budgetList = budgetItems.length ? budgetItems : <h1 className={styles.title}>No budgets</h1>;
 
   useEffect(() => {
     GetDataBudget();
@@ -25,6 +22,8 @@ export const Budgets: React.FC<IProps> = () => {
     console.log('render budgets');
   });
   return (
-    <div className={styles.wrapper}>{status === 'LOADED' ? budget : <PreLoader statusStyle="budget" />}</div>
+    <div className={styles.wrapper}>
+      {budgetsLoadingStatus === 'LOADED' ? budgetList : <PreLoader preloaderStatus="budget" />}
+    </div>
   );
-};
+});

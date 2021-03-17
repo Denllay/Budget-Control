@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './ConfirmationDialog.module.scss';
 interface IProps {
   headerText: string;
@@ -9,7 +9,9 @@ interface IProps {
 export const ConfirmationDialog: React.FC<IProps> = ({ headerText, isOpen, onConfirmClick, onClose }) => {
   const onCloseConfirmDialog = (e: React.MouseEvent<HTMLDivElement>) =>
     (e.target as HTMLDivElement).id === 'close' && onClose();
-
+  useEffect(() => {
+    document.body.style.overflowY = `${isOpen ? 'hidden' : 'unset'}`;
+  }, [isOpen]);
   return isOpen ? (
     <div className={styles.wrapper} id="close" onClick={onCloseConfirmDialog}>
       <div className={styles.container}>

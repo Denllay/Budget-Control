@@ -1,5 +1,5 @@
-import { ConfirmationDialog } from '@/components/global/ConfirmationDialog/ConfirmationDialog';
 import React, { useCallback, useState } from 'react';
+import { ConfirmationDialog } from '@/components/global/ConfirmationDialog/ConfirmationDialog';
 
 interface IProps {
   headerText: string;
@@ -8,12 +8,9 @@ interface IProps {
 export default function useConfirmationDialog({ headerText, onConfirmClick }: IProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const onOpen = () => {
-    setIsOpen(true);
-  };
-  const onClose = () => {
-    setIsOpen(false);
-  };
+  const onOpen = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
+
   const Dialog = useCallback(
     () => (
       <ConfirmationDialog

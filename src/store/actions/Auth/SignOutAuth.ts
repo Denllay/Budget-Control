@@ -5,12 +5,8 @@ import { EnumAuthAction, TAuthAction } from '../../types/Auth/Auth';
 export const SignOutAuth = () => {
   return async (dispatch: Dispatch<TAuthAction>) => {
     try {
-      auth
-        .signOut()
-        .then(() => {
-          dispatch({ type: EnumAuthAction.AUTH_LOGIN });
-        })
-        .catch(console.log);
+      auth.signOut();
+      dispatch({ type: EnumAuthAction.AUTH_UNAUTHORIZED });
     } catch (error) {
       console.log(error);
     }

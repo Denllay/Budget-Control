@@ -15,8 +15,8 @@ export const ModalReducer = (state = initialState, action: TModalAction): IModal
     case EnumModalAction.SHOW_PROF_MODAL: {
       return { ...state, modalStatus: EnumModalAction.SHOW_PROF_MODAL };
     }
-    case EnumModalAction.ALERT_MODAL: {
-      return { ...state, modalStatus: EnumModalAction.ALERT_MODAL, dataModal: action.payload };
+    case EnumModalAction.SHOW_ALERT_MODAL: {
+      return { ...state, modalStatus: EnumModalAction.SHOW_ALERT_MODAL, dataModal: action.payload };
     }
     case EnumModalAction.CLOSE_MODAL: {
       return { ...state, modalStatus: null };

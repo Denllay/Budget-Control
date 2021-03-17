@@ -1,27 +1,69 @@
-import { IBudgetFormatData, TStatus } from '@/types/Budget/Budget';
+import { IBudgetFormatData, ICategoryFormatData, TBudgetLoadingStatus } from '@/types/Budget/Budget';
 
 export enum EnumBudgetAction {
   GET_DATA_BUDGET = 'GET_DATA_BUDGET',
-  CHANGE_BUDGET_ITEM_STATUS = 'CHANGE_BUDGET_ITEM_STATUS',
-  SET_INPUT_CHANGE = 'SET_INPUT_CHANGE',
+  DELETE_BUDGET = 'DELETE_BUDGET',
+  ADD_BUDGET = 'ADD_BUDGET',
+  DELETE_CATEGORY = 'DELETE_CATEGORY',
+  CHANGE_NAME_CATEGORY = 'CHANGE_NAME_CATEGORY',
+  ADD_CATEGORY = 'ADD_CATEGORY',
+  DELETE_ALL_BUDGETS = 'DELETE_ALL_BUDGETS',
 }
 
 export interface IBudgetState {
-  status: TStatus;
-  budgetItems: Array<never> | IBudgetFormatData[];
+  budgetsLoadingStatus: TBudgetLoadingStatus;
+  budgetsData: Array<never> | IBudgetFormatData[];
 }
 interface IGetDataBudget {
   type: EnumBudgetAction.GET_DATA_BUDGET;
   payload: IBudgetFormatData[] | Array<never>;
 }
-interface IChangeBudgetItemStatus {
-  type: EnumBudgetAction.CHANGE_BUDGET_ITEM_STATUS;
-}
-interface ISetInputChange {
-  type: EnumBudgetAction.SET_INPUT_CHANGE;
+//
+interface IDeleteBudget {
+  type: EnumBudgetAction.DELETE_BUDGET;
   payload: {
-    indexItem: number;
+    budgetId: string;
+  };
+}
+interface IAddBudget {
+  type: EnumBudgetAction.ADD_BUDGET;
+  payload: IBudgetFormatData;
+}
+interface IDeleteCategory {
+  type: EnumBudgetAction.DELETE_CATEGORY;
+  payload: {
+    categoryDeleteId: string;
+    budgetIndex: number;
+    categoryFreeId: string;
+    categoryFreeValue: number;
   };
 }
 
-export type TBudgetActions = IGetDataBudget | IChangeBudgetItemStatus | ISetInputChange;
+interface IChangeNameCategory {
+  type: EnumBudgetAction.CHANGE_NAME_CATEGORY;
+  payload: {
+    budgetIndex: number;
+    volatileCategoryId: string;
+    newCategoryName: string;
+  };
+}
+
+interface IAddCategory {
+  type: EnumBudgetAction.ADD_CATEGORY;
+  payload: {
+    newCategoryData: ICategoryFormatData;
+    budgetIndex: number;
+  };
+}
+
+interface IDeleteAllBudgets {
+  type: EnumBudgetAction.DELETE_ALL_BUDGETS;
+}
+export type TBudgetActions =
+  | IGetDataBudget
+  | IDeleteBudget
+  | IAddBudget
+  | IDeleteCategory
+  | IChangeNameCategory
+  | IAddCategory
+  | IDeleteAllBudgets;

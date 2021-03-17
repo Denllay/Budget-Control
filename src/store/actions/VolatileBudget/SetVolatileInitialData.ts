@@ -7,5 +7,5 @@ import { Dispatch } from 'react';
 
 export const SetVolatileInitialData = (data: ISetVolatileBudgetDataAction) => {
   return (dispatch: Dispatch<TVolatileBudgetAction>) =>
-    dispatch({ type: EnumVolatileBudgetAction.SET_VOLATILE_INITIAL_DATA, payload: data });
+    dispatch({ type: EnumVolatileBudgetAction.SET_VOLATILE_DATA, payload: data });
 };

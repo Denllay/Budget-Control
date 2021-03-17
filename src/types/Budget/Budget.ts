@@ -3,7 +3,7 @@ export const enum EnumCurrency {
   USD = 'USD',
 }
 export type TCurrency = EnumCurrency.RUB | EnumCurrency.USD;
-export type TStatus = 'LOADING' | 'LOADED';
+export type TBudgetLoadingStatus = 'LOADING' | 'LOADED';
 
 export interface IBudgetFormatData {
   budgetId: string;

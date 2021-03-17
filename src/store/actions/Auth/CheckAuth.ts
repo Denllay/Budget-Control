@@ -10,7 +10,7 @@ export const CheckAuth = () => {
           // При не авторизованном юзере user = null, а авторизованный user = object
           dispatch({ type: EnumAuthAction.AUTH_ENTERED });
         } else {
-          dispatch({ type: EnumAuthAction.AUTH_LOGIN });
+          dispatch({ type: EnumAuthAction.AUTH_UNAUTHORIZED });
         }
       });
     } catch (error) {

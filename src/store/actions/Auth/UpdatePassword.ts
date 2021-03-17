@@ -15,11 +15,11 @@ export const UpdatePassword = ({ currentPassword, newPassword }: IData) => {
       .then(() => {
         user
           .updatePassword(newPassword)
-          .then(() => dispatch({ type: EnumModalAction.ALERT_MODAL, payload: 'Password updated!' }));
+          .then(() => dispatch({ type: EnumModalAction.SHOW_ALERT_MODAL, payload: 'Password updated!' }));
       })
       .catch(({ code, message }) => {
         code === 'auth/wrong-password'
-          ? dispatch({ type: EnumModalAction.ALERT_MODAL, payload: 'Wrong password!' })
+          ? dispatch({ type: EnumModalAction.SHOW_ALERT_MODAL, payload: 'Wrong password!' })
           : console.error(message);
       });
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './ProfModule.module.scss';
 import Modal from 'react-modal';
 import { TProfileView } from './types/profileMainTypes';
@@ -7,10 +7,8 @@ import { ProfModuleSettings } from './ProfModuleSettings/ProfModuleSettings';
 import { ProfileContext } from '@/context/ProfileContext';
 import { useActions } from '@/hooks/useActions';
 import { auth } from '@/firebase/config';
-interface IProps {
-  statusModal: boolean;
-}
-export const ProfModule: React.FC<IProps> = ({ statusModal }) => {
+
+export const ProfModule: React.FC = () => {
   const [profileView, setProfileView] = useState<TProfileView>('view');
   const { CloseModal, SignOutAuth } = useActions();
   const onCloseModal = () => CloseModal();
@@ -28,7 +26,7 @@ export const ProfModule: React.FC<IProps> = ({ statusModal }) => {
     <div className={styles.wrapper}>
       <Modal
         closeTimeoutMS={500}
-        isOpen={statusModal}
+        isOpen={true}
         onRequestClose={onCloseModal}
         style={{
           overlay: {

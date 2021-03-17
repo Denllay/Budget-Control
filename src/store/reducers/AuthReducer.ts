@@ -4,8 +4,8 @@ const initialState: IAuthState = {
 };
 export const AuthReducer = (state = initialState, action: TAuthAction): IAuthState => {
   switch (action.type) {
-    case EnumAuthAction.AUTH_LOGIN:
-      return { ...state, status: EnumAuthAction.AUTH_LOGIN };
+    case EnumAuthAction.AUTH_UNAUTHORIZED:
+      return { ...state, status: EnumAuthAction.AUTH_UNAUTHORIZED };
     case EnumAuthAction.AUTH_ENTERED:
       return { ...state, status: EnumAuthAction.AUTH_ENTERED };
     default:

@@ -1,19 +1,12 @@
 import firebase, { auth } from '@/firebase/config';
-import { GetDataBudget } from './GetDataBudget';
-import { ThunkDispatch } from 'redux-thunk';
-import { TRootReducer } from '../../reducers';
-import { Action } from 'redux';
+import { Dispatch } from 'react';
+import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 export const DeleteAllBudgets = () => {
-  return (dispatch: ThunkDispatch<TRootReducer, void, Action>) => {
+  return (dispatch: Dispatch<TBudgetActions>) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
-      firebase
-        .database()
-        .ref(`users/${uid}/Budgets/`)
-        .remove()
-        .then(() => dispatch(GetDataBudget()))
-        .catch((error) => console.log(error));
-      console.log('all budgets has been deleted');
+      firebase.database().ref(`users/${uid}/Budgets/`).remove();
+      dispatch({ type: EnumBudgetAction.DELETE_ALL_BUDGETS });
     } catch (error) {
       console.log(error);
     }

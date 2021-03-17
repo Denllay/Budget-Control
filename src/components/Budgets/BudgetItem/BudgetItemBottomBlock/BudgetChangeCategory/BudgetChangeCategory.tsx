@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { useActions } from '@/hooks/useActions';
 import styles from './BudgetChangeCategory.module.scss';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 interface IProps {
   budgetId: string;
 }
 export const BudgetChangeCategory: React.FC<IProps> = ({ budgetId }) => {
   const { ChangeNameCategory, ClearVolatileData } = useActions();
+  const { budgetIndex } = useContext(BudgetBlockContext);
   const { volatileInputStartValue, volatileInputValue, volatileCategoryId } = useTypedSelector(
     (state) => state?.volatileBudgets[budgetId]
   );
@@ -17,8 +19,9 @@ export const BudgetChangeCategory: React.FC<IProps> = ({ budgetId }) => {
     if (volatileInputValue !== volatileInputStartValue && (volatileInputValue as string).length >= 3) {
       ChangeNameCategory({
         budgetId,
-        categoryId: volatileCategoryId as string,
-        name: volatileInputValue as string,
+        volatileCategoryId: volatileCategoryId as string,
+        newCategoryName: volatileInputValue as string,
+        budgetIndex,
       });
       clearBudgetVolatileData();
     }

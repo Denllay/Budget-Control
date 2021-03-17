@@ -7,13 +7,12 @@ export interface IBudgetDataFromFirebase {
   category: IBudgetListCategoryDataFromFirebase;
 }
 export interface IBudgetListCategoryDataFromFirebase {
-  [key: string]: IBudgetCategoryItemDataFromFirebase;
+  [key: string]: IBudgetCategoryItemFromFirebase;
 }
-export interface IBudgetCategoryItemDataFromFirebase {
+export interface IBudgetCategoryItemFromFirebase {
   color: string;
   currency: TCurrency;
   name: string;
   value: number;
   categoryId: string;
 }
-export type TBudgetItemDataFromFirebase = [string, IBudgetDataFromFirebase];

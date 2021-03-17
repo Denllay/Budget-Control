@@ -14,12 +14,12 @@ export const Nav: React.FC<IProps> = ({ authStatus }) => {
         <h1 className={styles.logo}>Budget Control</h1>
       </div>
       <nav className={styles.nav}>
-        {authStatus === EnumAuthAction.AUTH_LOGIN ? (
+        {authStatus === EnumAuthAction.AUTH_UNAUTHORIZED ? (
           <NavAuth />
         ) : authStatus === EnumAuthAction.AUTH_ENTERED ? (
           <NavMain />
         ) : (
-          <PreLoader statusStyle="nav" />
+          <PreLoader preloaderStatus="nav" />
         )}
       </nav>
     </div>

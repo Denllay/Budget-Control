@@ -1,31 +1,29 @@
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { TRootReducer } from '../../reducers';
-import { GetDataBudget } from './GetDataBudget';
+import { Dispatch } from 'react';
 import firebase, { auth } from '@/firebase/config';
+import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 interface IDataAction {
-  name: string;
-  categoryId: string;
+  newCategoryName: string;
+  volatileCategoryId: string;
   budgetId: string;
+  budgetIndex: number;
 }
-export const ChangeNameCategory = ({ name, categoryId, budgetId }: IDataAction) => {
-  /*
-  ? Чтож тут у нас созается ячейка под определенный бюджет в базу данных
-  */
-  return (dispatch: ThunkDispatch<TRootReducer, void, Action>) => {
-    const uid = auth.currentUser && auth.currentUser.uid;
-    firebase
-      .database()
-      .ref(`users/${uid}/Budgets/${budgetId}/category/${categoryId}`)
-      .update({ name })
-      .then(() => {
-        console.log('Saved Data'); // Change
-      })
-      .catch((error) => {
-        console.log('Storing Error', error);
-      });
-    dispatch(GetDataBudget());
+export const ChangeNameCategory = ({
+  newCategoryName,
+  volatileCategoryId,
+  budgetId,
+  budgetIndex,
+}: IDataAction) => {
+  return (dispatch: Dispatch<TBudgetActions>) => {
     try {
+      const uid = auth.currentUser && auth.currentUser.uid;
+      firebase
+        .database()
+        .ref(`users/${uid}/Budgets/${budgetId}/category/${volatileCategoryId}`)
+        .update({ name: newCategoryName });
+      dispatch({
+        type: EnumBudgetAction.CHANGE_NAME_CATEGORY,
+        payload: { budgetIndex, volatileCategoryId, newCategoryName },
+      });
     } catch (error) {
       console.log(error);
     }

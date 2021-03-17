@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import firebase, { auth } from '@/firebase/config';
 import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
-import { IBudgetCategoryItemDataFromFirebase, IBudgetDataFromFirebase } from '@/store/types/Budget/BudgetGetData';
+import { IBudgetCategoryItemFromFirebase, IBudgetDataFromFirebase } from '@/store/types/Budget/BudgetGetData';
 import { IBudgetFormatData } from '@/types/Budget/Budget';
 export const GetDataBudget = () => {
   return async (dispath: Dispatch<TBudgetActions>) => {
@@ -18,31 +18,25 @@ export const GetDataBudget = () => {
           if (snapshot.exists()) {
             return snapshot.val();
           }
-        })
-        .catch((error) => {
-          console.error(error);
         });
 
       const formatData = !!data
         ? Object.entries(data).reduce((acc: IBudgetFormatData[], el: [string, IBudgetDataFromFirebase]) => {
-            const [budgetId, { currency, budgetSum, title, category }] = el;
-            //
+            const [budgetId, { category, ...budgetHeaderData }] = el;
             const data: IBudgetFormatData = {
+              ...budgetHeaderData,
               budgetId,
-              budgetSum,
-              currency,
-              title,
-              category: Object.entries(category).reduce((acc: IBudgetCategoryItemDataFromFirebase[], [_, el]) => {
+              category: Object.entries(category).reduce((acc: IBudgetCategoryItemFromFirebase[], [_, el]) => {
                 acc.push(el);
                 return acc;
               }, []),
             };
-            ///
+
             acc.push(data);
             return acc;
           }, [])
         : [];
-      //
+
       dispath({ type: EnumBudgetAction.GET_DATA_BUDGET, payload: formatData });
     } catch (error) {
       console.log(error);

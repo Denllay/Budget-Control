@@ -9,15 +9,15 @@ export const Modals: React.FC = () => {
   const { modalStatus, dataModal } = useTypedSelector((state) => state?.modal);
   switch (modalStatus) {
     case EnumModalAction.SHOW_ADD_BUDGET_MODAL: {
-      return <AddBudgetModal statusModal={!!modalStatus} />;
+      return <AddBudgetModal />;
     }
     case EnumModalAction.SHOW_AUTH_MODAL: {
       return <AuthModal statusModal={dataModal as TModalAuthStatus} />;
     }
     case EnumModalAction.SHOW_PROF_MODAL: {
-      return <ProfModule statusModal={!!modalStatus} />;
+      return <ProfModule />;
     }
-    case EnumModalAction.ALERT_MODAL: {
+    case EnumModalAction.SHOW_ALERT_MODAL: {
       return <AlertModal headerText={dataModal as string} />;
     }
     default:

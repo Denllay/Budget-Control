@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './PreLoader.module.scss';
 import CSS from 'csstype';
 interface IProps {
-  statusStyle: TStatysStyle;
+  preloaderStatus: TpreloaderStatus;
 }
-type TStatysStyle = 'budget' | 'nav';
+type TpreloaderStatus = 'budget' | 'nav';
 interface IStyles {
   [key: string]: CSS.Properties;
 }
-export const PreLoader: React.FC<IProps> = ({ statusStyle }) => {
+export const PreLoader: React.FC<IProps> = ({ preloaderStatus }) => {
   const style: IStyles = {
     nav: {
       position: 'relative',
@@ -28,7 +28,7 @@ export const PreLoader: React.FC<IProps> = ({ statusStyle }) => {
     },
   };
   return (
-    <div style={style[statusStyle]}>
+    <div style={style[preloaderStatus]}>
       <div className={styles.loader}></div>
     </div>
   );

@@ -10,7 +10,7 @@ export const VolatileBudgetsReducer = (
   action: TVolatileBudgetAction
 ): IVolatileBudgetsData => {
   switch (action.type) {
-    case EnumVolatileBudgetAction.SET_VOLATILE_INITIAL_DATA: {
+    case EnumVolatileBudgetAction.SET_VOLATILE_DATA: {
       const { volatileCategoryId, volatileInputValue, budgetId } = action.payload;
       return {
         ...state,
@@ -25,7 +25,7 @@ export const VolatileBudgetsReducer = (
     case EnumVolatileBudgetAction.CLEAR_VOLATILE_DATA: {
       return {
         ...state,
-        [action.payload]: {
+        [action.payload.budgetId]: {
           budgetIsChange: false,
           volatileCategoryId: null,
           volatileInputValue: null,

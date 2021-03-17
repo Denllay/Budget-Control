@@ -6,7 +6,7 @@ import { VolatileBudgetsReducer } from './VolatileBudgetsReducer';
 export const RootReducer = combineReducers({
   auth: AuthReducer,
   modal: ModalReducer,
-  budget: BudgetReducer,
+  budgets: BudgetReducer,
   volatileBudgets: VolatileBudgetsReducer,
 });
 export type TRootReducer = ReturnType<typeof RootReducer>;

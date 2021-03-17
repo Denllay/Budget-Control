@@ -8,7 +8,7 @@ import useConfirmationDialog from '@/hooks/useConfirmDialog';
 
 export const ProfModuleSettingsView: React.FC = () => {
   const { setProfileView } = useContext(ProfileContext);
-  const budgetLength = useTypedSelector((state) => state?.budget?.budgetItems || []).length;
+  const budgetLength = useTypedSelector((state) => state?.budgets?.budgetsData).length;
   const { DeleteAllBudgets } = useActions();
 
   const { Dialog, onOpen } = useConfirmationDialog({

@@ -4,16 +4,14 @@ import { TCurrency, EnumCurrency } from '../../../types/Budget/Budget';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Modal from 'react-modal';
 import styles from './AddBudgetModal.module.scss';
-interface IProps {
-  statusModal: boolean;
-}
+
 type TInputs = {
   nameBudet: string;
   valueBudget: string;
   currency: TCurrency;
 };
 
-export const AddBudgetModal: React.FC<IProps> = ({ statusModal }) => {
+export const AddBudgetModal: React.FC = () => {
   const { CloseModal, AddBudget } = useActions();
   //
   const { register, handleSubmit, setValue } = useForm<TInputs>();
@@ -33,7 +31,7 @@ export const AddBudgetModal: React.FC<IProps> = ({ statusModal }) => {
     <div className={styles.wrapper}>
       <Modal
         closeTimeoutMS={500}
-        isOpen={statusModal}
+        isOpen={true}
         onRequestClose={CloseModal}
         style={{
           overlay: {
@@ -72,7 +70,13 @@ export const AddBudgetModal: React.FC<IProps> = ({ statusModal }) => {
             ref={register({ required: true, minLength: 3, maxLength: 13 })}
           />
           <div className={styles.block_input_budget}>
-            <input type="number" className={styles.input} placeholder="Budget" name="valueBudget" ref={register} />
+            <input
+              type="number"
+              className={styles.input}
+              placeholder="Budget"
+              name="valueBudget"
+              ref={register}
+            />
             <select
               className={styles.select}
               name="currency"

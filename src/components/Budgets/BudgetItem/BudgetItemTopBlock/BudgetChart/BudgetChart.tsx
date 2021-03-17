@@ -1,10 +1,13 @@
-import React, { memo } from 'react';
+import React, { useEffect, memo } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { ICategoryFormatData } from '@/types/Budget/Budget';
 interface IProps {
   categoryData: ICategoryFormatData[];
 }
 export const BudgetChart: React.FC<IProps> = memo(({ categoryData }) => {
+  useEffect(() => {
+    console.log('RENDER CHART');
+  });
   return (
     <div>
       <PieChart width={300} height={300}>

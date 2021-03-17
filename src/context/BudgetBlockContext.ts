@@ -4,5 +4,6 @@ type TBudgetBlockContext = {
   category: ICategoryFormatData[];
   budgetSum: number;
   budgetId: string;
+  budgetIndex: number;
 };
 export const BudgetBlockContext = createContext({} as TBudgetBlockContext);
