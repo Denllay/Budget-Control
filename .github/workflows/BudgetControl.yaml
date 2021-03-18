@@ -34,11 +34,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-        env:
-          ssh_key: ${{ secrets.SHH_PRIVATE_KEY }}
+      - shell: bash
+        env: # Or as an environment variable
+          ssh_key: ${{ secrets.SSH_PRIV_KEY }}
           origin: git@github.com:Denllay/Budget-Control.git
           branch: githubio
-        shell: bash
         run: |
           eval $(ssh-agent)
           ssh-add <(echo "$ssh_key" | base64 -d)
