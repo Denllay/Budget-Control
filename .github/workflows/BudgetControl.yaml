@@ -31,6 +31,7 @@ jobs:
   push_github_pages:
     name: push_github_pages
     needs: [build]
+    runs-on: ubuntu-latest
     steps:
       - name: push_github
         uses: actions/download-artifact@v2
