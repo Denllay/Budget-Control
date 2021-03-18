@@ -1,1 +1,0 @@
-# Wepback template for react
