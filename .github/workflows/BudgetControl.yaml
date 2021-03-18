@@ -1,7 +1,8 @@
 name: Node.js CI
 
 on:
-  workflow_dispatch 
+  workflow_dispatch:
+    branches: [$default-branch]
   push:
     branches: [$default-branch]
 
