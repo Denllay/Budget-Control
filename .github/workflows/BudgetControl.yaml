@@ -1,0 +1,45 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [$default-branch]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+      node-version: [10.x, 12.x, 14.x, 15.x]
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - shell: bash
+        run: |
+          npm ci
+          npm run build --if-present
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: ./dist
+
+  push_github_pages:
+    name: push_github_pages
+    needs: [build]
+    steps:
+      - name: push_github
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+        env:
+          ssh_key: ${{ secrets.SHH_PRIVATE_KEY }}
+          origin: git@github.com:Denllay/Budget-Control.git
+          branch: githubio
+        shell: bash
+        run: |
+          eval $(ssh-agent)
+          ssh-add <(echo "$ssh_key" | base64 -d)
+          git push -f $origin $branch
