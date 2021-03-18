@@ -36,7 +36,7 @@ jobs:
           name: build
       - shell: bash
         env: # Or as an environment variable
-          ssh_key: ${{ secrets.SSH_PRIV_KEY }}
+          ssh_key: ${{ secrets.SHH_PRIVATE_KEY }}
           origin: git@github.com:Denllay/Budget-Control.git
           branch: githubio
         run: |
