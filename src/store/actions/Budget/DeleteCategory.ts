@@ -1,6 +1,3 @@
-import { Action } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { TRootReducer } from '../../reducers';
 import firebase, { auth } from '@/firebase/config';
 import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 import { Dispatch } from 'react';
@@ -8,26 +5,26 @@ interface IActionData {
   budgetId: string;
   categoryDeleteId: string;
   budgetIndex: number;
-  categoryFreeValue: number;
+  availableMoneyCategory: number;
 }
 export const DeleteCategory = ({
   budgetId,
   categoryDeleteId,
   budgetIndex,
-  categoryFreeValue,
+  availableMoneyCategory,
 }: IActionData) => {
   return (dispatch: Dispatch<TBudgetActions>) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
-      const categoryFreeId = 'free';
+      const availableIdCategory = 'AvailableMoney';
       const deleteCategoryRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
-      deleteCategoryRef.child('free').update({ value: categoryFreeValue });
+      deleteCategoryRef.child(availableIdCategory).update({ value: availableMoneyCategory });
 
       firebase.database();
-      deleteCategoryRef.child(`${categoryDeleteId}`).remove();
+      deleteCategoryRef.child(categoryDeleteId).remove();
       dispatch({
         type: EnumBudgetAction.DELETE_CATEGORY,
-        payload: { categoryDeleteId, budgetIndex, categoryFreeId, categoryFreeValue },
+        payload: { categoryDeleteId, budgetIndex, availableIdCategory, availableMoneyCategory },
       });
     } catch (error) {
       console.log(error);

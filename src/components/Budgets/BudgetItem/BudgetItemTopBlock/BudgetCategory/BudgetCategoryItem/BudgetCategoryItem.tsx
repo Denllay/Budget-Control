@@ -22,6 +22,7 @@ export const BudgetCategoryItem: React.FC<IProps> = ({
   const { color, name, value, categoryId } = categoryData;
   const { ChangeVolatileInput } = useActions();
   const isChangeCategory = categoryId === volatileCategoryId;
+  const availableIdCategory = 'AvailableMoney';
 
   const procentCategory = (value / (budgetSum / 100)).toFixed(1);
   const onChangeInputName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +49,7 @@ export const BudgetCategoryItem: React.FC<IProps> = ({
         <span style={{ color }}>{`${procentCategory}%`}</span>
       </div>
 
-      {!budgetIsChange && categoryId !== 'free' && (
+      {!budgetIsChange && categoryId !== availableIdCategory && (
         <BudgetCategoryButton categoryId={categoryId} name={name} value={value} />
       )}
     </div>

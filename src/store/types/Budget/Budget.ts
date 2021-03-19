@@ -34,8 +34,8 @@ interface IDeleteCategory {
   payload: {
     categoryDeleteId: string;
     budgetIndex: number;
-    categoryFreeId: string;
-    categoryFreeValue: number;
+    availableIdCategory: string;
+    availableMoneyCategory: number;
   };
 }
 
@@ -53,6 +53,8 @@ interface IAddCategory {
   payload: {
     newCategoryData: ICategoryFormatData;
     budgetIndex: number;
+    availableIdCategory: string;
+    availableMoneyCategory: number;
   };
 }
 

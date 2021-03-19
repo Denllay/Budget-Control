@@ -1,24 +1,24 @@
-import React, { useState, memo, useEffect, useCallback } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { EnumCurrency, TCurrency } from '@/types/Budget/Budget';
 import { AddCategoryColor } from './AddCategoryColor/AddCategoryColor';
 import { useActions } from '@/hooks/useActions';
-import styles from './BudgetAddCategory.module.scss';
 import useConfirmationDialog from '@/hooks/useConfirmDialog';
+import {
+  ICountNewCategoryMoneyConsideringCurrency,
+  IDiscoverSucsessForm,
+  TInputs,
+} from '@/types/Budget/AddBudget';
+import styles from './BudgetAddCategory.module.scss';
 interface IProps {
-  valueCategoryFree: number;
-  currencyCategoryFree: TCurrency;
+  availableMoneyCategory: number;
+  mainBudgetCurrency: TCurrency;
   budgetId: string;
   budgetIndex: number;
 }
-type TInputs = {
-  nameCategory: string;
-  valueCategory: string;
-  currency: TCurrency;
-};
 
 export const BudgetAddCategory: React.FC<IProps> = memo(
-  ({ valueCategoryFree, currencyCategoryFree, budgetId, budgetIndex }) => {
+  ({ availableMoneyCategory, mainBudgetCurrency, budgetId, budgetIndex }) => {
     const { AddCategoryBudget, DeleteBudget } = useActions();
     const onDeleteBudget = () => DeleteBudget(budgetId);
     const { Dialog, onOpen } = useConfirmationDialog({
@@ -33,37 +33,54 @@ export const BudgetAddCategory: React.FC<IProps> = memo(
 
     const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue('currency', e.target.value);
 
+    const countNewCategoryMoneyConsideringCurrency = ({
+      mainBudgetCurrency,
+      newCategoryCurrency,
+      newCategoryMoney,
+    }: ICountNewCategoryMoneyConsideringCurrency): number => {
+      if (newCategoryCurrency === mainBudgetCurrency) return newCategoryMoney;
+      return mainBudgetCurrency === EnumCurrency.RUB ? newCategoryMoney * 74 : newCategoryMoney / 74;
+    };
+
+    const discoverSucsessForm = ({
+      newCategoryMoneyWithCountCurrency,
+      newCategoryName,
+    }: IDiscoverSucsessForm) =>
+      newCategoryName.trim().length >= 3 &&
+      newCategoryMoneyWithCountCurrency !== 0 &&
+      newCategoryMoneyWithCountCurrency <= availableMoneyCategory;
+
     const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
-      const { nameCategory, valueCategory, currency } = dataForm;
-      const numValueCategory = Number.parseInt(valueCategory);
+      const {
+        nameCategory: newCategoryName,
+        valueCategory: newCategoryMoney,
+        currency: newCategoryCurrency,
+      } = dataForm;
 
-      const newCategoryValue =
-        currencyCategoryFree === currency
-          ? numValueCategory
-          : currencyCategoryFree === EnumCurrency.RUB
-          ? numValueCategory * 74
-          : numValueCategory / 74;
+      const newCategoryMoneyWithCountCurrency = countNewCategoryMoneyConsideringCurrency({
+        mainBudgetCurrency,
+        newCategoryCurrency,
+        newCategoryMoney: Number.parseInt(newCategoryMoney),
+      });
 
-      const sucsess =
-        nameCategory.trim().length >= 3 &&
-        valueCategory.length > 0 &&
-        numValueCategory !== 0 &&
-        newCategoryValue <= valueCategoryFree;
+      const sucsess = discoverSucsessForm({ newCategoryMoneyWithCountCurrency, newCategoryName });
 
       if (sucsess) {
         AddCategoryBudget({
           color,
           budgetId,
           budgetIndex,
-          name: nameCategory.trim(),
-          value: Math.round(newCategoryValue),
-          freeCategoryValue: Math.round(valueCategoryFree - newCategoryValue),
+          name: newCategoryName.trim(),
+          value: Math.round(newCategoryMoneyWithCountCurrency),
+          availableMoneyCategory: Math.round(availableMoneyCategory - newCategoryMoneyWithCountCurrency),
         });
+
         setValue('nameCategory', '');
         setValue('valueCategory', '');
         setColor('#c4c4c4');
       }
     };
+
     return (
       <div className={styles.bottom_container}>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

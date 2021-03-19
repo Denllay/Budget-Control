@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { IBudgetFormatData } from '@/types/Budget/Budget';
 import { BudgetItemBottomBlock } from './BudgetItemBottomBlock/BudgetItemBottomBlock';

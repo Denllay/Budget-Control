@@ -33,32 +33,37 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
     }
 
     case EnumBudgetAction.ADD_CATEGORY: {
-      const { newCategoryData, budgetIndex } = action.payload;
+      const { newCategoryData, budgetIndex, availableMoneyCategory, availableIdCategory } = action.payload;
       const newBudgetsData = [...state.budgetsData];
 
-      newBudgetsData[budgetIndex].category = [...newBudgetsData[budgetIndex].category, newCategoryData];
+      const changeAvailableMoneyCategory = (): ICategoryFormatData[] =>
+        newBudgetsData[budgetIndex].category.map((el) => {
+          if (el.categoryId === availableIdCategory) el.value = availableMoneyCategory;
+          return el;
+        });
+
+      newBudgetsData[budgetIndex].category = [...changeAvailableMoneyCategory(), newCategoryData];
       return { ...state, budgetsData: newBudgetsData };
     }
-
     case EnumBudgetAction.CHANGE_NAME_CATEGORY: {
       const { volatileCategoryId, budgetIndex, newCategoryName } = action.payload;
       const newBudgetsData = [...state.budgetsData];
       newBudgetsData[budgetIndex].category.map((el) =>
         el.categoryId === volatileCategoryId ? (el.name = newCategoryName) : el
       );
-      console.log(newBudgetsData);
       return { ...state, budgetsData: newBudgetsData };
     }
 
     case EnumBudgetAction.DELETE_CATEGORY: {
-      const { budgetIndex, categoryDeleteId, categoryFreeId, categoryFreeValue } = action.payload;
+      const { budgetIndex, categoryDeleteId, availableIdCategory, availableMoneyCategory } = action.payload;
       const newBudgetsData = [...state.budgetsData];
+
       const newCategoryArray = state.budgetsData[budgetIndex].category.reduce(
         (acc: ICategoryFormatData[], el) => {
           if (el.categoryId === categoryDeleteId) return acc;
 
-          if (el.categoryId === categoryFreeId) {
-            acc.push({ ...el, value: categoryFreeValue });
+          if (el.categoryId === availableIdCategory) {
+            acc.push({ ...el, value: availableMoneyCategory });
             return acc;
           }
           acc.push(el);

@@ -11,15 +11,16 @@ interface IProps {
 }
 export const BudgetCategoryButton: React.FC<IProps> = ({ categoryId, name, value }) => {
   const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
+  const availableIdCategory = 'AvailableMoney';
   const { DeleteCategory, SetVolatileInitialData } = useActions();
   const onClickChangeHandler = () =>
     SetVolatileInitialData({ volatileInputValue: name, volatileCategoryId: categoryId, budgetId });
-
   const onClickDeleteHandler = () =>
     DeleteCategory({
       budgetId,
       categoryDeleteId: categoryId,
-      categoryFreeValue: (category.find((el) => el.name === 'free')?.value as number) + value,
+      availableMoneyCategory:
+        (category.find((el) => el.categoryId === availableIdCategory)?.value as number) + value,
       budgetIndex,
     });
 

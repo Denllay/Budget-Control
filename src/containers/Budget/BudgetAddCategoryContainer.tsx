@@ -5,11 +5,14 @@ import React, { useContext } from 'react';
 
 export const BudgetAddCategoryContainer: React.FC = () => {
   const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
-  const { value, currency } = category.find(({ categoryId }) => categoryId === 'free') as ICategoryFormatData;
+  const availableIdCategory = 'AvailableMoney';
+  const { value, currency } = category.find(
+    ({ categoryId }) => categoryId === availableIdCategory
+  ) as ICategoryFormatData;
   return (
     <BudgetAddCategory
-      valueCategoryFree={value}
-      currencyCategoryFree={currency}
+      availableMoneyCategory={value}
+      mainBudgetCurrency={currency}
       budgetId={budgetId}
       budgetIndex={budgetIndex}
     />

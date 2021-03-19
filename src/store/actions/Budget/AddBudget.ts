@@ -19,9 +19,9 @@ export const AddBudget = ({ title, value, currency }: IDataAction) => {
       const categoryData = {
         value,
         currency,
-        categoryId: 'free',
+        categoryId: 'AvailableMoney',
         color: '#e4e4e4',
-        name: 'free',
+        name: 'Available Money',
       };
 
       const budgetHeaderData = {
@@ -43,7 +43,7 @@ export const AddBudget = ({ title, value, currency }: IDataAction) => {
       const firebaseData = {
         ...budgetHeaderData,
         category: {
-          free: {
+          AvailableMoney: {
             ...categoryData,
           },
         },
