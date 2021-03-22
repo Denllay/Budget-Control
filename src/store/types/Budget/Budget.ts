@@ -5,7 +5,7 @@ export enum EnumBudgetAction {
   DELETE_BUDGET = 'DELETE_BUDGET',
   ADD_BUDGET = 'ADD_BUDGET',
   DELETE_CATEGORY = 'DELETE_CATEGORY',
-  CHANGE_NAME_CATEGORY = 'CHANGE_NAME_CATEGORY',
+  CHANGE_DATA_CATEGORY = 'CHANGE_DATA_CATEGORY',
   ADD_CATEGORY = 'ADD_CATEGORY',
   DELETE_ALL_BUDGETS = 'DELETE_ALL_BUDGETS',
 }
@@ -39,12 +39,16 @@ interface IDeleteCategory {
   };
 }
 
-interface IChangeNameCategory {
-  type: EnumBudgetAction.CHANGE_NAME_CATEGORY;
+interface IChangeDataCategory {
+  type: EnumBudgetAction.CHANGE_DATA_CATEGORY;
   payload: {
     budgetIndex: number;
     volatileCategoryId: string;
     newCategoryName: string;
+    availableIdCategory: string;
+    newCategoryMoney: number;
+    newcategoryAvailableMoney: number;
+    newCategoryColor: string;
   };
 }
 
@@ -66,6 +70,6 @@ export type TBudgetActions =
   | IDeleteBudget
   | IAddBudget
   | IDeleteCategory
-  | IChangeNameCategory
+  | IChangeDataCategory
   | IAddCategory
   | IDeleteAllBudgets;

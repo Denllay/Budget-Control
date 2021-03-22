@@ -11,14 +11,21 @@ export const VolatileBudgetsReducer = (
 ): IVolatileBudgetsData => {
   switch (action.type) {
     case EnumVolatileBudgetAction.SET_VOLATILE_DATA: {
-      const { volatileCategoryId, volatileInputValue, budgetId } = action.payload;
+      const {
+        volatileCategoryId,
+        volatileCategoryValue,
+        volatileCategoryColor,
+        volatileCategoryMoney,
+        budgetId,
+      } = action.payload;
       return {
         ...state,
         [budgetId]: {
           budgetIsChange: true,
+          volatileCategoryValue,
+          volatileCategoryColor,
           volatileCategoryId,
-          volatileInputValue,
-          volatileInputStartValue: volatileInputValue,
+          volatileCategoryMoney,
         },
       };
     }
@@ -27,19 +34,10 @@ export const VolatileBudgetsReducer = (
         ...state,
         [action.payload.budgetId]: {
           budgetIsChange: false,
-          volatileCategoryId: null,
-          volatileInputValue: null,
-          volatileInputStartValue: null,
-        },
-      };
-    }
-    case EnumVolatileBudgetAction.CHANGE_VOLATILE_INPUT: {
-      const { volatileInputValue, budgetId } = action.payload;
-      return {
-        ...state,
-        [budgetId]: {
-          ...state[budgetId],
-          volatileInputValue,
+          volatileCategoryId: '',
+          volatileCategoryValue: '',
+          volatileCategoryColor: '',
+          volatileCategoryMoney: 0,
         },
       };
     }

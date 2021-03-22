@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { IBudgetFormatData } from '@/types/Budget/Budget';
 import { BudgetItemBottomBlock } from './BudgetItemBottomBlock/BudgetItemBottomBlock';
@@ -11,6 +11,9 @@ interface IProps {
 
 export const BudgetItem: React.FC<IProps> = ({ data, budgetIndex }) => {
   const { budgetSum, title, category, budgetId, currency } = data;
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>

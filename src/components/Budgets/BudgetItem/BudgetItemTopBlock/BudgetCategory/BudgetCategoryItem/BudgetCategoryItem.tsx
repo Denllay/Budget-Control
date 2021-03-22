@@ -1,35 +1,16 @@
-import React, { memo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ICategoryFormatData } from '@/types/Budget/Budget';
 import styles from './BudgetCategoryItem.module.scss';
 import { BudgetCategoryButton } from './BudgetCategoryButton/BudgetCategoryButton';
-import { useActions } from '@/hooks/useActions';
 interface IProps {
   budgetSum: number;
-  budgetId: string;
   categoryData: ICategoryFormatData;
   budgetIsChange: boolean;
-  volatileCategoryId: null | string;
-  volatileInputValue: null | string;
 }
-export const BudgetCategoryItem: React.FC<IProps> = ({
-  categoryData,
-  budgetId,
-  budgetSum,
-  volatileCategoryId,
-  budgetIsChange,
-  volatileInputValue,
-}) => {
+export const BudgetCategoryItem: React.FC<IProps> = ({ categoryData, budgetSum, budgetIsChange }) => {
   const { color, name, value, categoryId } = categoryData;
-  const { ChangeVolatileInput } = useActions();
-  const isChangeCategory = categoryId === volatileCategoryId;
   const availableIdCategory = 'AvailableMoney';
-
   const procentCategory = (value / (budgetSum / 100)).toFixed(1);
-  const onChangeInputName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    budgetIsChange &&
-      /^[\wа-я0-9]{0,13}$/i.test(e.target.value) &&
-      ChangeVolatileInput({ volatileInputValue: e.target.value, budgetId });
-  };
   useEffect(() => {
     console.log('RENDER CATEGORYITEM');
   });
@@ -37,20 +18,16 @@ export const BudgetCategoryItem: React.FC<IProps> = ({
     <div className={styles.wrapper}>
       <div className={styles.block_name}>
         <div className={styles.color} style={{ background: color }}></div>
-        <input
-          className={styles.input_name}
-          disabled={!isChangeCategory}
-          value={isChangeCategory ? (volatileInputValue as string) : name}
-          style={{ color }}
-          onChange={onChangeInputName}
-        />
+        <span className={styles.name} style={{ color }}>
+          {name}
+        </span>
       </div>
       <div className={styles.block_procent}>
         <span style={{ color }}>{`${procentCategory}%`}</span>
       </div>
 
       {!budgetIsChange && categoryId !== availableIdCategory && (
-        <BudgetCategoryButton categoryId={categoryId} name={name} value={value} />
+        <BudgetCategoryButton categoryId={categoryId} name={name} color={color} value={value} />
       )}
     </div>
   );

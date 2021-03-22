@@ -36,21 +36,44 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
       const { newCategoryData, budgetIndex, availableMoneyCategory, availableIdCategory } = action.payload;
       const newBudgetsData = [...state.budgetsData];
 
-      const changeAvailableMoneyCategory = (): ICategoryFormatData[] =>
-        newBudgetsData[budgetIndex].category.map((el) => {
-          if (el.categoryId === availableIdCategory) el.value = availableMoneyCategory;
-          return el;
-        });
+      const newCategoryArray = newBudgetsData[budgetIndex].category.map((el) => {
+        el.categoryId === availableIdCategory && (el.value = availableMoneyCategory);
+        return el;
+      });
 
-      newBudgetsData[budgetIndex].category = [...changeAvailableMoneyCategory(), newCategoryData];
+      newBudgetsData[budgetIndex].category = [...newCategoryArray, newCategoryData];
       return { ...state, budgetsData: newBudgetsData };
     }
-    case EnumBudgetAction.CHANGE_NAME_CATEGORY: {
-      const { volatileCategoryId, budgetIndex, newCategoryName } = action.payload;
+
+    case EnumBudgetAction.CHANGE_DATA_CATEGORY: {
+      const {
+        volatileCategoryId,
+        budgetIndex,
+        newCategoryName,
+        newCategoryMoney,
+        availableIdCategory,
+        newcategoryAvailableMoney,
+        newCategoryColor,
+      } = action.payload;
+
       const newBudgetsData = [...state.budgetsData];
-      newBudgetsData[budgetIndex].category.map((el) =>
-        el.categoryId === volatileCategoryId ? (el.name = newCategoryName) : el
+      const newCategoryArray = newBudgetsData[budgetIndex].category.reduce(
+        (acc: ICategoryFormatData[], el) => {
+          if (el.categoryId === volatileCategoryId) {
+            el.name = newCategoryName;
+            el.value = newCategoryMoney;
+            el.color = newCategoryColor;
+          }
+          el.categoryId === availableIdCategory && (el.value = newcategoryAvailableMoney);
+
+          acc.push(el);
+          return acc;
+        },
+        []
       );
+
+      newBudgetsData[budgetIndex].category = newCategoryArray;
+
       return { ...state, budgetsData: newBudgetsData };
     }
 

@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { SketchPicker } from 'react-color';
-import styles from './AddCategoryColor.module.scss';
+import styles from './CategoryColorPick.module.scss';
 interface IProps {
   color: string;
   setColor: Dispatch<SetStateAction<string>>;
 }
-export const AddCategoryColor: React.FC<IProps> = ({ setColor, color }) => {
+export const CategoryColorPick: React.FC<IProps> = ({ setColor, color }) => {
   const [displayColor, setDisplayColor] = useState(false);
   const onChangeColor = ({ hex }: { hex: string }) => {
     setColor(hex);

@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { EnumCurrency, TCurrency } from '@/types/Budget/Budget';
-import { AddCategoryColor } from './AddCategoryColor/AddCategoryColor';
+import { CategoryColorPick } from '../CategoryColorPick/CategoryColorPick';
 import { useActions } from '@/hooks/useActions';
 import useConfirmationDialog from '@/hooks/useConfirmDialog';
 import {
@@ -90,17 +90,17 @@ export const BudgetAddCategory: React.FC<IProps> = memo(
           <div className={styles.block_input_name}>
             <input
               type="text"
-              placeholder="Name of category"
+              placeholder="Category name"
               name="nameCategory"
               className={styles.input}
               ref={register({ required: true, minLength: 3, maxLength: 9 })}
             />
-            <AddCategoryColor color={color} setColor={setColor} />
+            <CategoryColorPick color={color} setColor={setColor} />
           </div>
           <div className={styles.block_input_number}>
             <input
               type="number"
-              placeholder="Category budget"
+              placeholder="Category money"
               name="valueCategory"
               className={`${styles.input} ${styles.input_number}`}
               ref={register({ required: true, minLength: 1, maxLength: 13 })}

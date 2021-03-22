@@ -8,17 +8,8 @@ interface IProps {
 }
 export const BudgetCategoryItemContainer: React.FC<IProps> = ({ categoryData }) => {
   const { budgetSum, budgetId } = useContext(BudgetBlockContext);
-  const { budgetIsChange, volatileCategoryId, volatileInputValue } = useTypedSelector(
-    (state) => state?.volatileBudgets[budgetId] || {}
-  );
+  const { budgetIsChange } = useTypedSelector((state) => state?.volatileBudgets[budgetId] || {});
   return (
-    <BudgetCategoryItem
-      budgetIsChange={budgetIsChange}
-      volatileCategoryId={volatileCategoryId}
-      volatileInputValue={volatileInputValue}
-      budgetSum={budgetSum}
-      budgetId={budgetId}
-      categoryData={categoryData}
-    />
+    <BudgetCategoryItem budgetIsChange={budgetIsChange} budgetSum={budgetSum} categoryData={categoryData} />
   );
 };
