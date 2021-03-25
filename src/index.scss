@@ -367,3 +367,23 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+body::-webkit-scrollbar {
+  width: 0.4em;
+  scrollbar-color: red;
+}
+body::-webkit-scrollbar-track {
+  background: #383c49;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: #fff;
+}

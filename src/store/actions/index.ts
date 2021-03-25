@@ -10,8 +10,6 @@ import * as DeleteBudget from './Budget/DeleteBudget';
 import * as DeleteCategory from './Budget/DeleteCategory';
 import * as DeleteAllBudgets from './Budget/DeleteAllBudgets';
 import * as UpdatePassword from './Auth/UpdatePassword';
-import * as ChangeViewModal from './Modal/ChangeViewModal';
-import * as CloseModal from './Modal/CloseModal';
 import * as ClearVolatileData from './VolatileBudget/ClearVolatileData';
 import * as SetVolatileInitialData from './VolatileBudget/SetVolatileInitialData';
 export default {
@@ -27,8 +25,6 @@ export default {
   ...DeleteCategory,
   ...DeleteAllBudgets,
   ...UpdatePassword,
-  ...ChangeViewModal,
-  ...CloseModal,
   ...ClearVolatileData,
   ...SetVolatileInitialData,
 };

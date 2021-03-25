@@ -1,0 +1,73 @@
+.content {
+  background: #fff;
+  position: relative;
+  border-radius: 5px;
+  width: 450px;
+  height: 270px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+.block {
+  &_title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    color: #282d3c;
+  }
+  &_form {
+    display: flex;
+    flex-direction: column;
+    &_input {
+      outline: none;
+      border: 2px solid #282d3c;
+      padding: 10px 0px 10px 10px;
+      width: 350px;
+      color: #282d3c;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      border-radius: 5px;
+      margin: 15px 0px;
+    }
+    &_select {
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 5px;
+      height: 40px;
+      background: #282d3c;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      color: #fff;
+    }
+  }
+}
+
+.button {
+  position: absolute;
+  bottom: 15px;
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  border: 0;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  padding: 5px 20px;
+  width: 150px;
+  text-align: center;
+  background: #00ec34;
+  &:hover {
+    background: #00ab26;
+    transition: 0.3s;
+  }
+  &:not(:hover) {
+    transition: 0.3s;
+  }
+}
+.option {
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}

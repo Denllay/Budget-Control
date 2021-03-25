@@ -1,8 +1,15 @@
-export enum EnumModalAction {
-  SHOW_AUTH_MODAL = 'SHOW_AUTH_MODAL',
-  SHOW_ADD_BUDGET_MODAL = 'SHOW_ADD_BUDGET_MODAL',
-  SHOW_PROF_MODAL = 'SHOW_PROF_MODAL',
-  SHOW_ALERT_MODAL = ' SHOW_ALERT_MODAL',
-  CLOSE_MODAL = 'CLOSE_MODAL',
+interface IPropsDefaultModal {
+  closeModal(): void;
+  dataModal: string;
 }
-export type TModalAuthStatus = 'login' | 'reg';
+export interface IPropsAlertModal {
+  closeModal(): void;
+  dataModal: TAlertModalData;
+}
+export enum EnumAlertModalData {
+  SUCCESSFUL = 'SUCCESSFUL',
+  ERROR = 'ERROR',
+}
+type TAlertModalData = EnumAlertModalData.ERROR | EnumAlertModalData.SUCCESSFUL;
+
+export type IPropsModalComponent = IPropsAlertModal | IPropsDefaultModal;

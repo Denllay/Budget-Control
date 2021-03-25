@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 import { ICategoryFormatData } from '@/types/Budget/Budget';
 interface IProps {
   categoryData: ICategoryFormatData[];
 }
-export const BudgetChart: React.FC<IProps> = ({ categoryData }) => {
+export const BudgetChart: React.FC<IProps> = memo(({ categoryData }) => {
   return (
     <div>
       <PieChart width={300} height={300}>
         <Pie
-          dataKey={'value'}
+          dataKey="value"
           stroke="none"
           data={categoryData}
           isAnimationActive={false}
@@ -25,4 +25,4 @@ export const BudgetChart: React.FC<IProps> = ({ categoryData }) => {
       </PieChart>
     </div>
   );
-};
+});

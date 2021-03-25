@@ -3,13 +3,14 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { EnumCurrency, TCurrency } from '@/types/Budget/Budget';
 import { CategoryColorPick } from '../CategoryColorPick/CategoryColorPick';
 import { useActions } from '@/hooks/useActions';
-import useConfirmationDialog from '@/hooks/useConfirmDialog';
+
 import {
   ICountNewCategoryMoneyConsideringCurrency,
   IDiscoverSucsessForm,
   TInputs,
 } from '@/types/Budget/AddBudget';
 import styles from './BudgetAddCategory.module.scss';
+import { CreateConfirmDialogModal } from '@/utilities/ConfirmDialogModal/CreateConfirmDialogModal';
 interface IProps {
   availableMoneyCategory: number;
   mainBudgetCurrency: TCurrency;
@@ -21,13 +22,12 @@ export const BudgetAddCategory: React.FC<IProps> = memo(
   ({ availableMoneyCategory, mainBudgetCurrency, budgetId, budgetIndex }) => {
     const { AddCategoryBudget, DeleteBudget } = useActions();
     const onDeleteBudget = () => DeleteBudget(budgetId);
-    const { Dialog, onOpen } = useConfirmationDialog({
-      headerText: 'Do u confirm delete budget',
+
+    const { toggleModal, ConfirmDialogModal } = CreateConfirmDialogModal({
+      titleText: 'Delete budget',
       onConfirmClick: onDeleteBudget,
     });
-    useEffect(() => {
-      console.log('RENDER ADD CATEGORY');
-    }, [onOpen]);
+
     const { register, handleSubmit, setValue } = useForm<TInputs>();
     const [color, setColor] = useState('#c4c4c4');
 
@@ -113,11 +113,11 @@ export const BudgetAddCategory: React.FC<IProps> = memo(
           <input type="submit" value="Add" className={styles.submit} />
         </form>
         <div className={styles.icon_block}>
-          <div className={styles.icon_item} onClick={() => onOpen()}>
+          <div className={styles.icon_item} onClick={toggleModal}>
             <div className={styles.icon_remove}></div>
           </div>
         </div>
-        <Dialog />
+        {ConfirmDialogModal}
       </div>
     );
   }

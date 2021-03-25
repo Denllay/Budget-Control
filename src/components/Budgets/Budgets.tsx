@@ -18,9 +18,6 @@ export const Budgets: React.FC<IProps> = memo(({ budgetsData, budgetsLoadingStat
   useEffect(() => {
     GetDataBudget();
   }, [useActions]);
-  useEffect(() => {
-    console.log('render budgets');
-  });
   return (
     <div className={styles.wrapper}>
       {budgetsLoadingStatus === 'LOADED' ? budgetList : <PreLoader preloaderStatus="budget" />}

@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 import styles from './NavMain.module.scss';
 import { auth } from '@/firebase/config';
 import { Route, Switch } from 'react-router-dom';
-import { useActions } from '@/hooks/useActions';
-import { EnumModalAction } from '@/types/Modal';
+import { AddBudgetModal } from '@/components/global/Modals/AddBudgetModal/AddBudgetModal';
+import { ProfileModal } from '@/components/global/Modals/ProfileModal/ProfileModal';
+import { CreateModal } from '@/utilities/CreateModal/CreateModal';
 export const NavMain: React.FC = () => {
-  const { ChangeViewModal } = useActions();
-  const onClickModalHandler = (
-    typeModal: EnumModalAction.SHOW_PROF_MODAL | EnumModalAction.SHOW_ADD_BUDGET_MODAL
-  ) => ChangeViewModal({ type: typeModal });
-
+  const { toggleModal: toggleModalAddBudget, ModalComponent: AddBudgetModalComponent } = CreateModal({
+    component: AddBudgetModal,
+  });
+  const { toggleModal: toggleModalProfile, ModalComponent: ProfileModalComponent } = CreateModal({
+    component: ProfileModal,
+  });
   const email = !!auth.currentUser && auth.currentUser.email;
   return (
     <div className={styles.wrapper}>
@@ -20,21 +22,17 @@ export const NavMain: React.FC = () => {
         </li>
         <Switch>
           <Route path="/main">
-            <li
-              className={styles.list_item}
-              onClick={() => onClickModalHandler(EnumModalAction.SHOW_ADD_BUDGET_MODAL)}
-            >
+            <li className={styles.list_item} onClick={toggleModalAddBudget}>
               <span>Add budget</span>
             </li>
           </Route>
         </Switch>
       </ul>
-      <div
-        className={styles.email_block}
-        onClick={() => onClickModalHandler(EnumModalAction.SHOW_PROF_MODAL)}
-      >
+      <div className={styles.email_block} onClick={toggleModalProfile}>
         {email}
       </div>
+      {AddBudgetModalComponent}
+      {ProfileModalComponent}
     </div>
   );
 };

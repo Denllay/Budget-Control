@@ -11,9 +11,6 @@ interface IProps {
 
 export const BudgetItem: React.FC<IProps> = ({ data, budgetIndex }) => {
   const { budgetSum, title, category, budgetId, currency } = data;
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>

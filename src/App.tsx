@@ -6,7 +6,6 @@ import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { EnumAuthAction } from './store/types/Auth/Auth';
 import { Route, Switch } from 'react-router-dom';
 import { Home } from './components/Home/Home';
-import { Modals } from './components/Modals/Modals';
 import { BudgetContainer } from './containers/Budget/BudgetContainer';
 import styles from './App.module.scss';
 
@@ -33,7 +32,6 @@ export const App: React.FC = () => {
           <Home />
         </Route>
       </Switch>
-      <Modals />
     </div>
   );
 };

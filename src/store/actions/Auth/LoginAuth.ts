@@ -5,8 +5,9 @@ import { EnumAuthAction, IAuthPayload, TAuthAction } from '../../types/Auth/Auth
 export const LoginAuth = ({ password, email }: IAuthPayload) => {
   return (dispatch: Dispatch<TAuthAction>) => {
     try {
+      const animationDuration = 300;
       auth.signInWithEmailAndPassword(email, password);
-      dispatch({ type: EnumAuthAction.AUTH_ENTERED });
+      setTimeout(() => dispatch({ type: EnumAuthAction.AUTH_ENTERED }), animationDuration);
     } catch (error) {
       console.log(error);
     }
