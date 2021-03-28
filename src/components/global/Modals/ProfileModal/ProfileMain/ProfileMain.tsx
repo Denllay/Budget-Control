@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { CreateConfirmDialogModal } from '@/utilities/ConfirmDialogModal/CreateConfirmDialogModal';
+import { CreateConfirmDialogModal } from '@/utilities/CreateConfirmDialogModal/CreateConfirmDialogModal';
 import { TProfileView } from '../types/profileTypes';
 import styles from './ProfileMain.module.scss';
 import { useActions } from '@/hooks/useActions';
@@ -11,7 +11,10 @@ interface IProps {
 }
 export const ProfileMain: React.FC<IProps> = ({ email, setProfileView, onClickSignOut }) => {
   const budgetsLength = useTypedSelector((state) => state.budgets.budgetsData).length;
+  const [budgetsButtonPromptStatus, setBudgetsButtonPromptStatus] = useState(false);
+
   const { DeleteAllBudgets } = useActions();
+
   const {
     toggleModal: toggleSignOutDialog,
     ConfirmDialogModal: ConfirmDialogSignOut,
@@ -19,6 +22,7 @@ export const ProfileMain: React.FC<IProps> = ({ email, setProfileView, onClickSi
     titleText: 'Сonfirm exit',
     onConfirmClick: onClickSignOut,
   });
+
   const {
     toggleModal: toggleDeleteAllBudgetDialog,
     ConfirmDialogModal: ConfirmDialogDeleteAllBudget,
@@ -26,9 +30,14 @@ export const ProfileMain: React.FC<IProps> = ({ email, setProfileView, onClickSi
     titleText: 'Delete budgets',
     onConfirmClick: DeleteAllBudgets,
   });
+
   const onClickHandlerDeleteBudgets = () => {
-    budgetsLength ? toggleDeleteAllBudgetDialog : console.log(`you haven't budgets`); //! Change
+    if (budgetsLength) {
+      toggleDeleteAllBudgetDialog();
+      setBudgetsButtonPromptStatus(false);
+    } else setBudgetsButtonPromptStatus(true);
   };
+
   return (
     <div className={styles.content}>
       <div className={styles.block_title}>
@@ -37,10 +46,14 @@ export const ProfileMain: React.FC<IProps> = ({ email, setProfileView, onClickSi
       <div className={styles.block_statistics}>
         <ul className={styles.list}>
           <li className={styles.list_item}>
-            Password: <span> ***</span>
+            <div>
+              Password: <span> ***</span>
+            </div>
           </li>
           <li className={styles.list_item}>
-            Budgets: <span>{budgetsLength}</span>
+            <div>
+              Budgets: <span>{budgetsLength}</span>
+            </div>
           </li>
         </ul>
         <div className={styles.block_button}>
@@ -57,6 +70,7 @@ export const ProfileMain: React.FC<IProps> = ({ email, setProfileView, onClickSi
           Sign Out
         </button>
       </div>
+      {budgetsButtonPromptStatus && <span className={styles.text_alert}>You don't have budgets!</span>}
       {ConfirmDialogSignOut}
       {ConfirmDialogDeleteAllBudget}
     </div>

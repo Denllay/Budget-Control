@@ -10,6 +10,7 @@ interface IProps {
   value: number;
   color: string;
 }
+
 export const BudgetCategoryButton: React.FC<IProps> = ({ categoryId, name, value, color }) => {
   const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
   const availableIdCategory = 'AvailableMoney';

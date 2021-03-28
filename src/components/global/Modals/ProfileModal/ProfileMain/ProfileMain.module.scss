@@ -72,6 +72,8 @@
 }
 .list {
   &_item {
+    display: flex;
+    flex-direction: column;
     margin: 5px 0px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -79,5 +81,12 @@
     & span {
       font-weight: 500;
     }
+  }
+}
+.text {
+  &_alert {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: #e72d2d;
   }
 }

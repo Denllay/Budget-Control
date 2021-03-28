@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './BudgetItemTopBlock.module.scss';
 import { BudgetCategory } from './BudgetCategory/BudgetCategory';
 import { BudgetChartContainer } from '@/containers/Budget/BudgetChartContainer';

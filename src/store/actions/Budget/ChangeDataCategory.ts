@@ -25,10 +25,13 @@ export const ChangeDataCategory = ({
       const budgetCategoryRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category/`);
       const availableIdCategory = 'AvailableMoney';
       const { volatileCategoryId, newCategoryName, newCategoryMoney, newCategoryColor } = newCategoryData;
+
       budgetCategoryRef
         .child(volatileCategoryId)
         .update({ name: newCategoryName, value: newCategoryMoney, color: newCategoryColor });
+
       budgetCategoryRef.child(availableIdCategory).update({ value: newcategoryAvailableMoney });
+
       dispatch({
         type: EnumBudgetAction.CHANGE_DATA_CATEGORY,
         payload: {

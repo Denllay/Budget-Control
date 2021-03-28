@@ -1,29 +1,34 @@
-import { LoginModal } from '@/components/global/Modals/AuthModal/LoginModal';
-import { RegisterModal } from '@/components/global/Modals/AuthModal/RegisterModal';
+import { AuthModal } from '@/components/global/Modals/AuthModal/AuthModal';
 import { CreateModal } from '@/utilities/CreateModal/CreateModal';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './NavAuth.module.scss';
 
-interface IProps {}
-export const NavAuth: React.FC<IProps> = () => {
-  const { toggleModal: toggleLoginModal, ModalComponent: LoginModalComponent } = CreateModal({
-    component: LoginModal,
+type TdataModalEnumKey = 'LOGIN' | 'REGISTRATION';
+
+export const NavAuth: React.FC = () => {
+  const [muttableModalData, setMuttableModalData] = useState<TdataModalEnumKey | null>(null);
+
+  const onClickOpenModalHandler = (modalData: TdataModalEnumKey) => {
+    setMuttableModalData(modalData);
+    toggleModal();
+  };
+
+  const { toggleModal, ModalComponent } = CreateModal({
+    component: AuthModal,
+    dataModal: muttableModalData as TdataModalEnumKey,
   });
-  const { toggleModal: toggleRegisterModal, ModalComponent: RegisterModalComponent } = CreateModal({
-    component: RegisterModal,
-  });
+
   return (
     <>
       <ul className={styles.list}>
-        <li className={styles.list_item} onClick={toggleLoginModal}>
+        <li className={styles.list_item} onClick={() => onClickOpenModalHandler('LOGIN')}>
           <span>Login</span>
         </li>
-        <li className={styles.list_item} onClick={toggleRegisterModal}>
+        <li className={styles.list_item} onClick={() => onClickOpenModalHandler('REGISTRATION')}>
           <span>Register</span>
         </li>
       </ul>
-      {LoginModalComponent}
-      {RegisterModalComponent}
+      {ModalComponent}
     </>
   );
 };

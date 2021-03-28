@@ -13,7 +13,7 @@ type TInputs = {
 
 export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) => {
   const { AddBudget } = useActions();
-  const { register: budget, handleSubmit, setValue } = useForm<TInputs>();
+  const { register: budgetRef, handleSubmit, setValue, errors } = useForm<TInputs>();
 
   const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue('currency', e.target.value);
 
@@ -39,8 +39,19 @@ export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) =
           placeholder="Title"
           name="nameBudet"
           autoComplete="off"
-          ref={budget({ required: true, minLength: 3, maxLength: 13 })}
+          ref={budgetRef({
+            required: true,
+            minLength: {
+              value: 3,
+              message: '⚠ Name must be at least 3 characters long',
+            },
+            maxLength: 13,
+            pattern: /^[\w\S]+$/i,
+          })}
         />
+
+        {errors.nameBudet && <p className={styles.text_alert}>{errors.nameBudet.message}</p>}
+
         <div className={styles.block_input_budget}>
           <input
             type="number"
@@ -48,13 +59,16 @@ export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) =
             placeholder="Budget"
             name="valueBudget"
             autoComplete="off"
-            ref={budget}
+            ref={budgetRef({
+              required: true,
+              minLength: 1,
+            })}
           />
           <select
             className={styles.block_form_select}
             name="currency"
             onChange={selectChange}
-            ref={budget({ required: true, maxLength: 13 })}
+            ref={budgetRef({ required: true })}
           >
             <option className={styles.option}>{EnumCurrency.RUB}</option>
             <option className={styles.option}>{EnumCurrency.USD}</option>

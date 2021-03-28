@@ -1,15 +1,8 @@
-import { Dispatch } from 'react';
 import { auth } from '../../../firebase/config';
-import { EnumAuthAction, IAuthPayload, TAuthAction } from '../../types/Auth/Auth';
+import { IAuthPayload } from '../../types/Auth/Auth';
 
-export const LoginAuth = ({ password, email }: IAuthPayload) => {
-  return (dispatch: Dispatch<TAuthAction>) => {
-    try {
-      const animationDuration = 300;
-      auth.signInWithEmailAndPassword(email, password);
-      setTimeout(() => dispatch({ type: EnumAuthAction.AUTH_ENTERED }), animationDuration);
-    } catch (error) {
-      console.log(error);
-    }
+export const LoginAuth = ({ password, email, toggleModalError }: IAuthPayload) => {
+  return async () => {
+    auth.signInWithEmailAndPassword(email, password).catch(() => toggleModalError());
   };
 };

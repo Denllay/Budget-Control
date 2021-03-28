@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './NavMain.module.scss';
 import { auth } from '@/firebase/config';
 import { Route, Switch } from 'react-router-dom';
 import { AddBudgetModal } from '@/components/global/Modals/AddBudgetModal/AddBudgetModal';
 import { ProfileModal } from '@/components/global/Modals/ProfileModal/ProfileModal';
 import { CreateModal } from '@/utilities/CreateModal/CreateModal';
+import styles from './NavMain.module.scss';
+
 export const NavMain: React.FC = () => {
   const { toggleModal: toggleModalAddBudget, ModalComponent: AddBudgetModalComponent } = CreateModal({
     component: AddBudgetModal,

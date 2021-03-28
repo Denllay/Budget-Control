@@ -10,7 +10,7 @@ import {
   TInputs,
 } from '@/types/Budget/AddBudget';
 import styles from './BudgetAddCategory.module.scss';
-import { CreateConfirmDialogModal } from '@/utilities/ConfirmDialogModal/CreateConfirmDialogModal';
+import { CreateConfirmDialogModal } from '@/utilities/CreateConfirmDialogModal/CreateConfirmDialogModal';
 interface IProps {
   availableMoneyCategory: number;
   mainBudgetCurrency: TCurrency;

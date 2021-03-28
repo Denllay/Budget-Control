@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction, useContext } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useActions } from '@/hooks/useActions';
 import styles from './ProfileChangePassword.module.scss';
 import { TProfileView } from '../types/profileTypes';
 import { CreateModal } from '@/utilities/CreateModal/CreateModal';
 import { AlertModal } from '../../AlertModal/AlertModal';
-import { EnumAlertModalData } from '@/types/Modal';
+import { TAlertModalData } from '@/types/Modal';
 type TInputs = {
   currentPassword: string;
   confirmPassword: string;
@@ -16,31 +16,30 @@ interface IProps {
 }
 export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
   const { UpdatePassword } = useActions();
-  const { register: password, handleSubmit } = useForm<TInputs>();
+  const [muttableModalData, setMuttableModalData] = useState<TAlertModalData | null>(null);
 
-  const { toggleModal: toggleSuccessfulModal, ModalComponent: ModalSuccessful } = CreateModal({
+  const { register: passwordRef, handleSubmit, reset, watch, errors } = useForm<TInputs>();
+  const password = useRef({});
+  password.current = watch('newPassword', '');
+
+  const { toggleModal: toggleAlertModal, ModalComponent } = CreateModal({
     component: AlertModal,
-    dataModal: EnumAlertModalData.SUCCESSFUL,
+    dataModal: muttableModalData as TAlertModalData,
   });
 
-  const { toggleModal: toggleErrorModal, ModalComponent: ModalError } = CreateModal({
-    component: AlertModal,
-    dataModal: EnumAlertModalData.ERROR,
-  });
+  const openAlertModal = (modalData: TAlertModalData) => {
+    setMuttableModalData(modalData);
+    toggleAlertModal();
+  };
 
   const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
-    const { currentPassword, newPassword, confirmPassword } = dataForm;
-
-    if (newPassword.trim() === confirmPassword.trim()) {
-      UpdatePassword({
-        currentPassword,
-        newPassword,
-        openSuccessfulModal: toggleSuccessfulModal,
-        openErrorModal: toggleErrorModal,
-      });
-    } else {
-      console.log('something went wrong'); //! Change
-    }
+    const { currentPassword, newPassword } = dataForm;
+    UpdatePassword({
+      currentPassword,
+      newPassword,
+      openAlertModal,
+    });
+    reset();
   };
 
   return (
@@ -54,27 +53,51 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
           name="currentPassword"
           placeholder="Current password"
           autoComplete="off"
-          ref={password({ required: true })}
+          ref={passwordRef({
+            required: true,
+            minLength: {
+              value: 6,
+              message: '⚠ Password must have at least 6 characters',
+            },
+            pattern: /^[A-Za-z0-9@\_\.]+$/i,
+          })}
           className={styles.block_form_input}
         />
+
+        {errors.currentPassword && <p className={styles.text_alert}>{errors.currentPassword.message}</p>}
+
         <input
           name="newPassword"
           placeholder="New password"
           autoComplete="off"
-          ref={password({ required: true, minLength: 6, pattern: /^[A-Za-z0-9]+$/i })}
+          ref={passwordRef({
+            required: true,
+            minLength: {
+              value: 6,
+              message: '⚠ Password must have at least 6 characters',
+            },
+            pattern: /^[A-Za-z0-9@\_\.]+$/i,
+          })}
           className={styles.block_form_input}
         />
+
+        {errors.newPassword && <p className={styles.text_alert}>{errors.newPassword.message}</p>}
+
         <input
           name="confirmPassword"
           placeholder="Confirm password"
           autoComplete="off"
-          ref={password({ required: true, minLength: 6, pattern: /^[A-Za-z0-9]+$/i })}
+          ref={passwordRef({
+            validate: (value) => value === password.current || '⚠ The passwords do not match',
+          })}
           className={styles.block_form_input}
         />
+
+        {errors.confirmPassword && <p className={styles.text_alert}>{errors.confirmPassword.message}</p>}
+
         <input type="submit" className={styles.submit} value="Change" />
       </form>
-      {ModalSuccessful}
-      {ModalError}
+      {ModalComponent}
     </div>
   );
 };

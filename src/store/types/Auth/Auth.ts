@@ -13,6 +13,8 @@ export interface IAuthState {
 export interface IAuthPayload {
   email: string;
   password: string;
+  toggleModalError(): void;
+  closeModal(): void;
 }
 interface IAuthPendingAction {
   type: EnumAuthAction.AUTH_PENDING;

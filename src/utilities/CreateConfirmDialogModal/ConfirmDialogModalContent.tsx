@@ -25,6 +25,10 @@ export const ConfirmDialogModalContent: React.FC<IProps> = ({
   });
 
   return transitionContentModal((props, item) => {
+    const onClickConfirmHandler = () => {
+      onConfirmClick();
+      onCloseModal();
+    };
     return (
       item && (
         <animated.div style={{ ...props, outline: 'none' }} ref={parentDiv} tabIndex={0}>
@@ -36,7 +40,7 @@ export const ConfirmDialogModalContent: React.FC<IProps> = ({
               <h2>{titleText}</h2>
             </div>
             <div className={styles.button_block}>
-              <button className={styles.button} onClick={onConfirmClick}>
+              <button className={styles.button} onClick={onClickConfirmHandler}>
                 Yes
               </button>
               <button className={`${styles.button} ${styles.button_cancel}`} onClick={onCloseModal}>
