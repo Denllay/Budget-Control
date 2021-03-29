@@ -1,7 +1,6 @@
 import { TCurrency } from './Budget';
 
 export interface ICountNewCategoryMoneyConsideringCurrency {
-  mainBudgetCurrency: TCurrency;
   newCategoryCurrency: TCurrency;
   newCategoryMoney: number;
 }
@@ -10,7 +9,7 @@ export interface IDiscoverSucsessForm {
   newCategoryName: string;
 }
 export type TInputs = {
-  nameCategory: string;
-  valueCategory: string;
-  currency: TCurrency;
+  newCategoryName: string;
+  moneyCategory: string;
+  currencyCategory: TCurrency;
 };

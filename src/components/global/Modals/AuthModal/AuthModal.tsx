@@ -33,7 +33,7 @@ export const AuthModal: React.FC<IPropsModalComponent> = ({ closeModal, dataModa
       </div>
       <form className={styles.block_form} onSubmit={handleSubmit(onSubmit)}>
         <input
-          type="password"
+          type="text"
           className={styles.block_form_input}
           placeholder="Email"
           name="email"
