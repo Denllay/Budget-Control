@@ -4,14 +4,14 @@ import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 import { EnumCurrency, ICategoryFormatData } from '@/types/Budget/Budget';
 interface IDataAction {
   budgetId: string;
-  name: string;
-  value: number;
-  availableMoneyCategory: number;
-  color: string;
+  categoryName: string;
+  categoryMoney: number;
+  categoryAvailableMoney: number;
+  categoryColor: string;
   budgetIndex: number;
 }
 export const AddCategoryBudget = ({
-  availableMoneyCategory,
+  categoryAvailableMoney,
   budgetId,
   budgetIndex,
   ...dataCategory
@@ -21,19 +21,18 @@ export const AddCategoryBudget = ({
       const uid = auth.currentUser && auth.currentUser.uid;
       const newBudgetCollectionRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
       const categoryId = `id_${Math.random() * Date.now()}`.replace(/\./gi, '');
-      const availableIdCategory = 'AvailableMoney';
+      const categoryAvaibleId = 'AvailableMoney';
       const data: ICategoryFormatData = {
-        currency: EnumCurrency.RUB,
+        categoryCurrency: EnumCurrency.RUB,
         categoryId,
         ...dataCategory,
       };
 
-      newBudgetCollectionRef.child(availableIdCategory).update({ value: availableMoneyCategory });
+      newBudgetCollectionRef.child(categoryAvaibleId).update({ categoryMoney: categoryAvailableMoney });
       newBudgetCollectionRef.child(categoryId).set(data);
-
       dispatch({
         type: EnumBudgetAction.ADD_CATEGORY,
-        payload: { newCategoryData: data, budgetIndex, availableIdCategory, availableMoneyCategory },
+        payload: { categoryData: data, budgetIndex, categoryAvaibleId, categoryAvailableMoney },
       });
     } catch (error) {
       console.log(error);

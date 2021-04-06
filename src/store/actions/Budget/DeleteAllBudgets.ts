@@ -6,6 +6,7 @@ export const DeleteAllBudgets = () => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
       firebase.database().ref(`users/${uid}/Budgets/`).remove();
+      firebase.database().ref(`users/${uid}/BudgetsLength`).set(0);
       dispatch({ type: EnumBudgetAction.DELETE_ALL_BUDGETS });
     } catch (error) {
       console.log(error);

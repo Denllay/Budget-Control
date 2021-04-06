@@ -1,4 +1,5 @@
-import { TAuthAction, EnumAuthAction, IAuthState } from '../types/Auth/Auth';
+import { EnumAuthAction } from '@/types/Auth';
+import { TAuthAction, IAuthState } from '../types/Auth/Auth';
 const initialState: IAuthState = {
   status: EnumAuthAction.AUTH_PENDING,
 };

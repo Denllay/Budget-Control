@@ -8,20 +8,17 @@ interface IDataAction {
   currency: TCurrency;
 }
 export const AddBudget = ({ title, value, currency }: IDataAction) => {
-  /*
-  ? Чтож тут у нас созается ячейка бюджета в базу данных
-  */
   return (dispatch: Dispatch<TBudgetActions>) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
       const budgetId = `id_${Math.random() * Date.now()}`.replace(/\./g, '');
 
       const categoryData = {
-        value,
-        currency,
+        categoryMoney: value,
+        categoryCurrency: currency,
         categoryId: 'AvailableMoney',
-        color: '#e4e4e4',
-        name: 'Available Money',
+        categoryColor: '#e4e4e4',
+        categoryName: 'Available Money',
       };
 
       const budgetHeaderData = {
@@ -48,7 +45,12 @@ export const AddBudget = ({ title, value, currency }: IDataAction) => {
           },
         },
       };
-
+      firebase
+        .database()
+        .ref(`users/${uid}/BudgetsLength`)
+        .transaction(function (value) {
+          return (value || 0) + 1;
+        });
       firebase.database().ref(`users/${uid}/Budgets/${budgetId}`).set(firebaseData);
       dispatch({ type: EnumBudgetAction.ADD_BUDGET, payload: budgetData });
     } catch (error) {

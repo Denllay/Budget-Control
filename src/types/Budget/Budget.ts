@@ -13,9 +13,9 @@ export interface IBudgetFormatData {
   title: string;
 }
 export interface ICategoryFormatData {
-  color: string;
-  currency: TCurrency;
-  name: string;
-  value: number;
+  categoryColor: string;
+  categoryCurrency: TCurrency;
+  categoryName: string;
+  categoryMoney: number;
   categoryId: string;
 }

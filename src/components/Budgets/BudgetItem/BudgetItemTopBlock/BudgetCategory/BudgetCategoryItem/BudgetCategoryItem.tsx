@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ICategoryFormatData } from '@/types/Budget/Budget';
 import styles from './BudgetCategoryItem.module.scss';
 import { BudgetCategoryButton } from './BudgetCategoryButton/BudgetCategoryButton';
@@ -8,26 +8,31 @@ interface IProps {
   budgetIsChange: boolean;
 }
 export const BudgetCategoryItem: React.FC<IProps> = ({ categoryData, budgetSum, budgetIsChange }) => {
-  const { color, name, value, categoryId } = categoryData;
+  const { categoryColor, categoryName, categoryMoney, categoryId, categoryCurrency } = categoryData;
+
   const availableIdCategory = 'AvailableMoney';
-  const procentCategory = (value / (budgetSum / 100)).toFixed(1);
-  useEffect(() => {
-    console.log('RENDER CATEGORYITEM');
-  });
+  const procentCategory = (categoryMoney / (budgetSum / 100)).toFixed(1);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.block_name}>
-        <div className={styles.color} style={{ background: color }}></div>
-        <span className={styles.name} style={{ color }}>
-          {name}
+        <div className={styles.color} style={{ background: categoryColor }}></div>
+        <span className={styles.name} style={{ color: categoryColor }}>
+          {categoryName}
         </span>
       </div>
       <div className={styles.block_procent}>
-        <span style={{ color }}>{`${procentCategory}%`}</span>
+        <span style={{ color: categoryColor }}>{`${procentCategory}%`}</span>
       </div>
 
       {!budgetIsChange && categoryId !== availableIdCategory && (
-        <BudgetCategoryButton categoryId={categoryId} name={name} color={color} value={value} />
+        <BudgetCategoryButton
+          categoryId={categoryId}
+          categoryName={categoryName}
+          categoryColor={categoryColor}
+          categoryMoney={categoryMoney}
+          categoryCurrency={categoryCurrency}
+        />
       )}
     </div>
   );

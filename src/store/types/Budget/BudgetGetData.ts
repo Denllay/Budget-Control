@@ -4,15 +4,13 @@ export interface IBudgetDataFromFirebase {
   budgetSum: number;
   currency: TCurrency;
   title: string;
-  category: IBudgetListCategoryDataFromFirebase;
+  category: TBudgetListCategoryDataFromFirebase;
 }
-export interface IBudgetListCategoryDataFromFirebase {
-  [key: string]: IBudgetCategoryItemFromFirebase;
-}
+export type TBudgetListCategoryDataFromFirebase = Record<string, IBudgetCategoryItemFromFirebase>;
 export interface IBudgetCategoryItemFromFirebase {
-  color: string;
-  currency: TCurrency;
-  name: string;
-  value: number;
+  categoryColor: string;
+  categoryCurrency: TCurrency;
+  categoryName: string;
+  categoryMoney: number;
   categoryId: string;
 }

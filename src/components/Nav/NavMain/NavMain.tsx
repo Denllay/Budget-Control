@@ -16,24 +16,27 @@ export const NavMain: React.FC = () => {
   });
   const email = !!auth.currentUser && auth.currentUser.email;
   return (
-    <div className={styles.wrapper}>
-      <ul className={styles.list}>
-        <li className={styles.list_item}>
-          <Link to="/main">Main</Link>
-        </li>
-        <Switch>
-          <Route path="/main">
-            <li className={styles.list_item} onClick={toggleModalAddBudget}>
-              <span>Add budget</span>
-            </li>
-          </Route>
-        </Switch>
-      </ul>
-      <div className={styles.email_block} onClick={toggleModalProfile}>
-        {email}
+    <>
+      <div className={styles.wrapper}>
+        <ul className={styles.list}>
+          <li className={styles.list_item}>
+            <Link to="/main">Main</Link>
+          </li>
+          <Switch>
+            <Route path="/main">
+              <li className={styles.list_item} onClick={toggleModalAddBudget}>
+                <span>Add budget</span>
+              </li>
+            </Route>
+          </Switch>
+        </ul>
+        <div className={styles.email_block} onClick={toggleModalProfile}>
+          {email}
+        </div>
       </div>
+
       {AddBudgetModalComponent}
       {ProfileModalComponent}
-    </div>
+    </>
   );
 };

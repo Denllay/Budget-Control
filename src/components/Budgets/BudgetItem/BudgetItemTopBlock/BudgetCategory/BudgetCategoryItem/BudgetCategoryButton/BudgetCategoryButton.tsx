@@ -4,31 +4,42 @@ import DeleteIcon from '@/assets/svg/daggerIcon.svg';
 import styles from './BudgetCategoryButton.module.scss';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useActions } from '@/hooks/useActions';
+import { TCurrency } from '@/types/Budget/Budget';
 interface IProps {
-  name: string;
+  categoryName: string;
   categoryId: string;
-  value: number;
-  color: string;
+  categoryMoney: number;
+  categoryColor: string;
+  categoryCurrency: TCurrency;
 }
 
-export const BudgetCategoryButton: React.FC<IProps> = ({ categoryId, name, value, color }) => {
+export const BudgetCategoryButton: React.FC<IProps> = ({
+  categoryId,
+  categoryName,
+  categoryMoney,
+  categoryColor,
+  categoryCurrency,
+}) => {
   const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
   const availableIdCategory = 'AvailableMoney';
   const { DeleteCategory, SetVolatileInitialData } = useActions();
+
   const onClickChangeHandler = () =>
     SetVolatileInitialData({
       budgetId,
-      volatileCategoryValue: name,
+      volatileCategoryName: categoryName,
       volatileCategoryId: categoryId,
-      volatileCategoryColor: color,
-      volatileCategoryMoney: value,
+      volatileCategoryColor: categoryColor,
+      volatileCategoryMoney: categoryMoney,
+      volatileCategoryCurrency: categoryCurrency,
     });
+
   const onClickDeleteHandler = () =>
     DeleteCategory({
       budgetId,
       categoryDeleteId: categoryId,
       availableMoneyCategory:
-        (category.find((el) => el.categoryId === availableIdCategory)?.value as number) + value,
+        category.find((el) => el.categoryId === availableIdCategory)?.categoryMoney! + categoryMoney,
       budgetIndex,
     });
 

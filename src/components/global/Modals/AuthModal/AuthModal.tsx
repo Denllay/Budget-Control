@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useActions } from '@/hooks/useActions';
 import { EnumAlertModalData, EnumAuthModalData, IPropsModalComponent } from '@/types/Modal';
-import styles from './AuthModal.module.scss';
 import { IInput } from './type';
 import { CreateModal } from '@/utilities/CreateModal/CreateModal';
 import { AlertModal } from '../AlertModal/AlertModal';
+import styles from './AuthModal.module.scss';
 
 export const AuthModal: React.FC<IPropsModalComponent> = ({ closeModal, dataModal }) => {
   const { register: auth, handleSubmit, watch, errors } = useForm<IInput>();
@@ -18,12 +18,12 @@ export const AuthModal: React.FC<IPropsModalComponent> = ({ closeModal, dataModa
   const password = useRef({});
   password.current = watch('password', '');
 
-  const onSubmit: SubmitHandler<IInput> = (data) => {
-    const { password, email } = data;
-
-    dataModal === EnumAuthModalData.LOGIN
-      ? LoginAuth({ password, email, toggleModalError, closeModal })
-      : RegAuth({ password, email, toggleModalError, closeModal });
+  const onSubmit: SubmitHandler<IInput> = ({ password, email }) => {
+    if (dataModal === EnumAuthModalData.LOGIN) {
+      LoginAuth({ password, email, toggleModalError, closeModal });
+    } else {
+      RegAuth({ password, email, toggleModalError, closeModal });
+    }
   };
 
   return (

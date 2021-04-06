@@ -3,6 +3,7 @@ import { EnumBudgetAction, IBudgetState, TBudgetActions } from '../types/Budget/
 
 const initialState: IBudgetState = {
   budgetsLoadingStatus: 'LOADING',
+  budgetsLength: 0,
   budgetsData: [],
 };
 export const BudgetReducer = (state = initialState, action: TBudgetActions): IBudgetState => {
@@ -14,6 +15,7 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
     case EnumBudgetAction.DELETE_BUDGET: {
       return {
         ...state,
+        budgetsLength: --state.budgetsLength,
         budgetsData: state.budgetsData.filter(({ budgetId }) => budgetId !== action.payload.budgetId),
       };
     }
@@ -21,6 +23,7 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
     case EnumBudgetAction.ADD_BUDGET: {
       return {
         ...state,
+        budgetsLength: ++state.budgetsLength,
         budgetsData: [...state.budgetsData, action.payload],
       };
     }
@@ -28,20 +31,21 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
     case EnumBudgetAction.DELETE_ALL_BUDGETS: {
       return {
         ...state,
+        budgetsLength: 0,
         budgetsData: [],
       };
     }
 
     case EnumBudgetAction.ADD_CATEGORY: {
-      const { newCategoryData, budgetIndex, availableMoneyCategory, availableIdCategory } = action.payload;
+      const { categoryData, budgetIndex, categoryAvailableMoney, categoryAvaibleId } = action.payload;
       const newBudgetsData = [...state.budgetsData];
 
       const newCategoryArray = newBudgetsData[budgetIndex].category.map((el) => {
-        el.categoryId === availableIdCategory && (el.value = availableMoneyCategory);
+        el.categoryId === categoryAvaibleId && (el.categoryMoney = categoryAvailableMoney);
         return el;
       });
 
-      newBudgetsData[budgetIndex].category = [...newCategoryArray, newCategoryData];
+      newBudgetsData[budgetIndex].category = [...newCategoryArray, categoryData];
       return { ...state, budgetsData: newBudgetsData };
     }
 
@@ -49,22 +53,20 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
       const {
         volatileCategoryId,
         budgetIndex,
-        newCategoryName,
-        newCategoryMoney,
+        categoryName,
+        categoryMoney,
         availableIdCategory,
-        newcategoryAvailableMoney,
-        newCategoryColor,
+        categoryAvailableMoney,
+        categoryColor,
       } = action.payload;
 
       const newBudgetsData = [...state.budgetsData];
       const newCategoryArray = newBudgetsData[budgetIndex].category.reduce(
         (acc: ICategoryFormatData[], el) => {
-          if (el.categoryId === volatileCategoryId) {
-            el.name = newCategoryName;
-            el.value = newCategoryMoney;
-            el.color = newCategoryColor;
-          }
-          el.categoryId === availableIdCategory && (el.value = newcategoryAvailableMoney);
+          el.categoryId === volatileCategoryId &&
+            (el = { ...el, categoryName, categoryMoney, categoryColor });
+
+          el.categoryId === availableIdCategory && (el.categoryMoney = categoryAvailableMoney);
 
           acc.push(el);
           return acc;
@@ -79,14 +81,13 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
 
     case EnumBudgetAction.DELETE_CATEGORY: {
       const { budgetIndex, categoryDeleteId, availableIdCategory, availableMoneyCategory } = action.payload;
-      const newBudgetsData = [...state.budgetsData];
 
       const newCategoryArray = state.budgetsData[budgetIndex].category.reduce(
         (acc: ICategoryFormatData[], el) => {
           if (el.categoryId === categoryDeleteId) return acc;
 
           if (el.categoryId === availableIdCategory) {
-            acc.push({ ...el, value: availableMoneyCategory });
+            acc.push({ ...el, categoryMoney: availableMoneyCategory });
             return acc;
           }
           acc.push(el);
@@ -94,11 +95,16 @@ export const BudgetReducer = (state = initialState, action: TBudgetActions): IBu
         },
         []
       );
+      const newBudgetsData = [...state.budgetsData];
       newBudgetsData[budgetIndex].category = newCategoryArray;
       return {
         ...state,
         budgetsData: newBudgetsData,
       };
+    }
+
+    case EnumBudgetAction.GET_LENGTH_BUDGET: {
+      return { ...state, budgetsLength: action.payload.budgetsLength };
     }
 
     default:

@@ -4,7 +4,7 @@ import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 import {
   IBudgetCategoryItemFromFirebase,
   IBudgetDataFromFirebase,
-  IBudgetListCategoryDataFromFirebase,
+  TBudgetListCategoryDataFromFirebase,
 } from '@/store/types/Budget/BudgetGetData';
 import { IBudgetFormatData, ICategoryFormatData } from '@/types/Budget/Budget';
 
@@ -23,11 +23,14 @@ export const GetDataBudget = () => {
           if (snapshot.exists()) return snapshot.val();
         });
 
-      const transformCategoryData = (category: IBudgetListCategoryDataFromFirebase): ICategoryFormatData[] =>
-        Object.entries(category).reduce(
-          (acc: IBudgetCategoryItemFromFirebase[], [_, el]) => [...acc, el],
-          []
-        );
+      const transformBudgetsData = (): IBudgetFormatData[] | never[] => {
+        if (!data) return [];
+
+        return Object.entries(data).reduce((acc: IBudgetFormatData[], BudgetItem: TBudgetItem) => {
+          acc.push(createFormattedBudgetData(BudgetItem));
+          return acc;
+        }, []);
+      };
 
       const createFormattedBudgetData = (budgetItem: TBudgetItem): IBudgetFormatData => {
         const [budgetId, { category: categoryData, ...budgetHeaderData }] = budgetItem;
@@ -39,14 +42,11 @@ export const GetDataBudget = () => {
         };
       };
 
-      const transformBudgetsData = (): IBudgetFormatData[] | never[] => {
-        if (!data) return [];
-
-        return Object.entries(data).reduce((acc: IBudgetFormatData[], BudgetItem: TBudgetItem) => {
-          acc.push(createFormattedBudgetData(BudgetItem));
-          return acc;
-        }, []);
-      };
+      const transformCategoryData = (category: TBudgetListCategoryDataFromFirebase): ICategoryFormatData[] =>
+        Object.entries(category).reduce(
+          (acc: IBudgetCategoryItemFromFirebase[], [_, el]) => [...acc, el],
+          []
+        );
 
       const formatData = transformBudgetsData();
 

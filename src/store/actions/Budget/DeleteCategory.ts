@@ -18,7 +18,7 @@ export const DeleteCategory = ({
       const uid = auth.currentUser && auth.currentUser.uid;
       const availableIdCategory = 'AvailableMoney';
       const deleteCategoryRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
-      deleteCategoryRef.child(availableIdCategory).update({ value: availableMoneyCategory });
+      deleteCategoryRef.child(availableIdCategory).update({ categoryMoney: availableMoneyCategory });
 
       firebase.database();
       deleteCategoryRef.child(categoryDeleteId).remove();

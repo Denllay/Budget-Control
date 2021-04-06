@@ -32,8 +32,7 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
     toggleAlertModal();
   };
 
-  const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
-    const { currentPassword, newPassword } = dataForm;
+  const onSubmit: SubmitHandler<TInputs> = ({ currentPassword, newPassword }) => {
     UpdatePassword({
       currentPassword,
       newPassword,
@@ -88,7 +87,7 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
           placeholder="Confirm password"
           autoComplete="off"
           ref={passwordRef({
-            validate: (value) => value === password.current || '⚠ The passwords do not match',
+            validate: (value: string) => value === password.current || '⚠ The passwords do not match',
           })}
           className={styles.block_form_input}
         />

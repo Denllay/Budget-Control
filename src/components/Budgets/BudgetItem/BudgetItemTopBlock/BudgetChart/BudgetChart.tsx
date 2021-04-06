@@ -9,7 +9,7 @@ export const BudgetChart: React.FC<IProps> = memo(({ categoryData }) => {
     <div>
       <PieChart width={300} height={300}>
         <Pie
-          dataKey="value"
+          dataKey="categoryMoney"
           stroke="none"
           data={categoryData}
           isAnimationActive={false}
@@ -18,8 +18,8 @@ export const BudgetChart: React.FC<IProps> = memo(({ categoryData }) => {
           label={false}
           paddingAngle={1}
         >
-          {categoryData.map(({ color, categoryId }) => (
-            <Cell key={categoryId} fill={`${color}`} />
+          {categoryData.map(({ categoryColor, categoryId }) => (
+            <Cell key={categoryId} fill={`${categoryColor}`} />
           ))}
         </Pie>
       </PieChart>

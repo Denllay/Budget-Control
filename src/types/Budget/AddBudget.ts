@@ -8,8 +8,8 @@ export interface IDiscoverSucsessForm {
   newCategoryMoneyWithCountCurrency: number;
   newCategoryName: string;
 }
-export type TInputs = {
-  newCategoryName: string;
-  moneyCategory: string;
+export type TInputsCategory = {
+  categoryName: string;
+  categoryMoney: number;
   currencyCategory: TCurrency;
 };

@@ -1,8 +1,8 @@
 import React from 'react';
-import { EnumAuthAction, TAuthStatus } from '@/store/types/Auth/Auth';
 import { NavAuth } from './NavAuth/NavAuth';
 import { PreLoader } from '@/components/PreLoader/PreLoader';
 import { NavMain } from './NavMain/NavMain';
+import { EnumAuthAction, TAuthStatus } from '@/types/Auth';
 import styles from './Nav.module.scss';
 interface IProps {
   authStatus: TAuthStatus;

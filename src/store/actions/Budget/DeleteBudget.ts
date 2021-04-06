@@ -7,7 +7,12 @@ export const DeleteBudget = (budgetId: string) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
       firebase.database().ref(`users/${uid}/Budgets/${budgetId}`).remove();
-
+      firebase
+        .database()
+        .ref(`users/${uid}/BudgetsLength`)
+        .transaction(function (value) {
+          return (value || 0) - 1;
+        });
       dispatch({ type: EnumBudgetAction.DELETE_BUDGET, payload: { budgetId } });
     } catch (error) {
       console.log(error);

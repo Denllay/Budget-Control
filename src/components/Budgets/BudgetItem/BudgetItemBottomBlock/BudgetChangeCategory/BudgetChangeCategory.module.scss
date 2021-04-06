@@ -1,55 +1,6 @@
-.default_text {
-  color: #282d3c;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-}
-.title_item span {
-  color: #535763;
-}
-.bottom_container {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-.form {
-  display: flex;
-  flex-direction: column;
-}
-.icon_block {
-  display: flex;
-}
-.form_title h2 {
-  font-size: 36px;
-  @extend .default_text;
-  color: #ffffff;
-}
-.input {
-  background: transparent;
-  border: none;
-  border-bottom: 3px solid #fff;
-  outline: none;
-  padding: 9px 0px 9px 9px;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 24px;
-  @extend .default_text;
-  color: #fff;
-  margin: 15px 0px;
-  width: 70%;
-  &::placeholder {
-    font-size: 24px;
-    @extend .default_text;
-    color: rgba(255, 255, 255, 0.4);
-  }
-  &_number::-webkit-outer-spin-button,
-  &_number::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-}
-
 .button {
   &_block {
+    margin-top: 15px;
   }
   &_item {
     cursor: pointer;
@@ -77,19 +28,4 @@
       translate: 0.3s;
     }
   }
-}
-.block_input_number {
-  display: flex;
-  align-items: center;
-}
-.change_icon {
-  width: 18px;
-  height: 18px;
-  & path {
-    fill: #535763;
-  }
-}
-.block_input_name {
-  display: flex;
-  align-items: center;
 }

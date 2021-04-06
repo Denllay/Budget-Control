@@ -2,6 +2,7 @@ import { IBudgetFormatData, ICategoryFormatData, TBudgetLoadingStatus } from '@/
 
 export enum EnumBudgetAction {
   GET_DATA_BUDGET = 'GET_DATA_BUDGET',
+  GET_LENGTH_BUDGET = 'GET_LENGTH_BUDGET',
   DELETE_BUDGET = 'DELETE_BUDGET',
   ADD_BUDGET = 'ADD_BUDGET',
   DELETE_CATEGORY = 'DELETE_CATEGORY',
@@ -11,6 +12,7 @@ export enum EnumBudgetAction {
 }
 
 export interface IBudgetState {
+  budgetsLength: number;
   budgetsLoadingStatus: TBudgetLoadingStatus;
   budgetsData: Array<never> | IBudgetFormatData[];
 }
@@ -44,29 +46,38 @@ interface IChangeDataCategory {
   payload: {
     budgetIndex: number;
     volatileCategoryId: string;
-    newCategoryName: string;
+    categoryName: string;
     availableIdCategory: string;
-    newCategoryMoney: number;
-    newcategoryAvailableMoney: number;
-    newCategoryColor: string;
+    categoryMoney: number;
+    categoryAvailableMoney: number;
+    categoryColor: string;
   };
 }
 
 interface IAddCategory {
   type: EnumBudgetAction.ADD_CATEGORY;
   payload: {
-    newCategoryData: ICategoryFormatData;
+    categoryData: ICategoryFormatData;
     budgetIndex: number;
-    availableIdCategory: string;
-    availableMoneyCategory: number;
+    categoryAvaibleId: string;
+    categoryAvailableMoney: number;
   };
 }
 
 interface IDeleteAllBudgets {
   type: EnumBudgetAction.DELETE_ALL_BUDGETS;
 }
+
+interface IGetBudgetsLength {
+  type: EnumBudgetAction.GET_LENGTH_BUDGET;
+  payload: {
+    budgetsLength: number;
+  };
+}
+
 export type TBudgetActions =
   | IGetDataBudget
+  | IGetBudgetsLength
   | IDeleteBudget
   | IAddBudget
   | IDeleteCategory
