@@ -7,12 +7,8 @@ export const CheckAuth = () => {
   return async (dispatch: Dispatch<TAuthAction>) => {
     try {
       app.auth().onAuthStateChanged((user) => {
-        if (user) {
-          // При не авторизованном юзере user = null, а авторизованный user = object
-          dispatch({ type: EnumAuthAction.AUTH_ENTERED });
-        } else {
-          dispatch({ type: EnumAuthAction.AUTH_UNAUTHORIZED });
-        }
+        // При не авторизованном юзере user = null, а авторизованный user = object
+        dispatch({ type: user ? EnumAuthAction.AUTH_ENTERED : EnumAuthAction.AUTH_UNAUTHORIZED });
       });
     } catch (error) {
       console.log(error);

@@ -49,6 +49,7 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
       <div className={styles.block_title}>Change Password</div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.block_form}>
         <input
+          type="password"
           name="currentPassword"
           placeholder="Current password"
           autoComplete="off"
@@ -66,6 +67,7 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
         {errors.currentPassword && <p className={styles.text_alert}>{errors.currentPassword.message}</p>}
 
         <input
+          type="password"
           name="newPassword"
           placeholder="New password"
           autoComplete="off"
@@ -83,6 +85,7 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
         {errors.newPassword && <p className={styles.text_alert}>{errors.newPassword.message}</p>}
 
         <input
+          type="password"
           name="confirmPassword"
           placeholder="Confirm password"
           autoComplete="off"

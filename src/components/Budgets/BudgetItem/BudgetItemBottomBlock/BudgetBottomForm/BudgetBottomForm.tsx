@@ -111,6 +111,7 @@ export const BudgetBottomForm: React.FC<IProps> = memo(
                       value: 9,
                       message: '⚠ category name must be no more than 9 characters',
                     },
+                    pattern: /^[\w\S]+$/i,
                   })}
                 />
                 {errors!.categoryName && <p className={styles.text_alert}>{errors!.categoryName.message}</p>}
@@ -131,7 +132,10 @@ export const BudgetBottomForm: React.FC<IProps> = memo(
                       value: true,
                       message: '⚠ you must enter a budget',
                     },
-                    maxLength: 13,
+                    maxLength: {
+                      value: 13,
+                      message: '⚠ this value exceeds the maximum value',
+                    },
                     valueAsNumber: true,
                     validate: checkValidCategory,
                   })}

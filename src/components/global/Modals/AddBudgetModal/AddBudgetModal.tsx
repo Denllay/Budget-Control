@@ -7,7 +7,7 @@ import { IPropsModalComponent } from '@/types/Modal';
 
 type TInputs = {
   nameBudet: string;
-  valueBudget: string;
+  moneyBudget: string;
   currency: TCurrency;
 };
 
@@ -18,15 +18,10 @@ export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) =
   const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue('currency', e.target.value);
 
   const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
-    const { nameBudet, valueBudget, currency } = dataForm;
-    const numValueBudget = Number.parseInt(valueBudget);
+    const { nameBudet, moneyBudget, currency } = dataForm;
 
-    if (nameBudet.trim() && numValueBudget > 0) {
-      AddBudget({ title: nameBudet, value: numValueBudget, currency });
-      closeModal();
-    } else {
-      console.log('Введите данные верно!');
-    }
+    AddBudget({ title: nameBudet, value: +moneyBudget, currency });
+    closeModal();
   };
 
   return (
@@ -57,13 +52,20 @@ export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) =
             type="number"
             className={styles.block_form_input}
             placeholder="Budget"
-            name="valueBudget"
+            name="moneyBudget"
             autoComplete="off"
             ref={budgetRef({
-              required: true,
-              minLength: 1,
+              required: {
+                value: true,
+                message: '⚠ you must enter a budget',
+              },
+              maxLength: {
+                value: 13,
+                message: '⚠ this value exceeds the maximum value',
+              },
             })}
           />
+
           <select
             className={styles.block_form_select}
             name="currency"
