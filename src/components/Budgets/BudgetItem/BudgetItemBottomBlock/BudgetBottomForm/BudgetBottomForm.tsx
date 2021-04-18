@@ -3,11 +3,12 @@ import { useActions } from '@/hooks/useActions';
 import { CreateConfirmDialogModal } from '@/utilities/CreateConfirmDialogModal/CreateConfirmDialogModal';
 import { useForm } from 'react-hook-form';
 import { TInputsCategory } from '@/types/Budget/AddBudget';
-import { useCountCategoryMoneyConsideringCurrency } from '@/hooks/useCheckValidCategoryBudget';
+
 import { EnumCurrency, TCurrency } from '@/types/Budget/Budget';
 import { CategoryColorPick } from '../CategoryColorPick/CategoryColorPick';
 import { onSubmitFormBottomMenuFunction } from '@/types/Budget/BudgetBottomForm';
 import styles from './BudgetBottomForm.module.scss';
+import { useCountMoneyConsideringCurrency } from '@/hooks/useCountMoneyConsideringCurrency';
 
 interface IProps {
   budgetId: string;
@@ -49,9 +50,9 @@ export const BudgetBottomForm: React.FC<IProps> = memo(
     const categoryCurrency = useRef({});
     categoryCurrency.current = watch('currencyCategory');
 
-    const { countCategoryMoneyConsideringCurrency } = useCountCategoryMoneyConsideringCurrency();
+    const { countMoneyConsideringCurrency } = useCountMoneyConsideringCurrency();
 
-    const categoryMoneyConsideringCurrency = countCategoryMoneyConsideringCurrency({
+    const categoryMoneyConsideringCurrency = countMoneyConsideringCurrency({
       categoryMoney: categoryMoney.current as number,
       currencyCategory:
         budgetFormStatus === 'CHNAGE' ? volatileCategoryCurrency : (categoryCurrency.current as TCurrency),

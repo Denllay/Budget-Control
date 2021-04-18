@@ -8,15 +8,21 @@ interface IArgumentCountCategoryMoney {
 }
 type countCategoryMoneyFunction = (data: IArgumentCountCategoryMoney) => number;
 
-export const useCountCategoryMoneyConsideringCurrency = () => {
-  const countCategoryMoneyConsideringCurrency: countCategoryMoneyFunction = useCallback(
+export const useCountMoneyConsideringCurrency = () => {
+  const countMoneyConsideringCurrency: countCategoryMoneyFunction = useCallback(
     ({ currencyCategory, categoryMoney, budgetCurrency }) => {
       if (currencyCategory === budgetCurrency) return categoryMoney;
-      return budgetCurrency === 'RUB' ? categoryMoney * 74 : categoryMoney / 74;
+
+      const moneyListConsideringCurrency: Record<TCurrency, number> = {
+        RUB: categoryMoney / 74,
+        USD: categoryMoney * 74,
+      };
+      return moneyListConsideringCurrency[currencyCategory];
     },
     []
   );
+
   return {
-    countCategoryMoneyConsideringCurrency,
+    countMoneyConsideringCurrency,
   };
 };
