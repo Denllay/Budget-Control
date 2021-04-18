@@ -1,11 +1,12 @@
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useActions } from '@/hooks/useActions';
-import styles from './ProfileChangePassword.module.scss';
 import { TProfileView } from '../types/profileTypes';
-import { CreateModal } from '@/utilities/CreateModal/CreateModal';
+import { Modal } from '@/utilities/Modal/Modal';
 import { AlertModal } from '../../AlertModal/AlertModal';
 import { TAlertModalData } from '@/types/Modal';
+import styles from './ProfileChangePassword.module.scss';
+
 type TInputs = {
   currentPassword: string;
   confirmPassword: string;
@@ -14,22 +15,19 @@ type TInputs = {
 interface IProps {
   setProfileView: Dispatch<SetStateAction<TProfileView>>;
 }
+
 export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
   const { UpdatePassword } = useActions();
-  const [muttableModalData, setMuttableModalData] = useState<TAlertModalData | null>(null);
+  const [alertModalMode, setAlertModalMode] = useState<TAlertModalData | null>(null);
+  const [alertModalStatus, setAlertModalStatus] = useState(false);
 
   const { register: passwordRef, handleSubmit, reset, watch, errors } = useForm<TInputs>();
   const password = useRef({});
   password.current = watch('newPassword', '');
 
-  const { toggleModal: toggleAlertModal, ModalComponent } = CreateModal({
-    component: AlertModal,
-    dataModal: muttableModalData as TAlertModalData,
-  });
-
   const openAlertModal = (modalData: TAlertModalData) => {
-    setMuttableModalData(modalData);
-    toggleAlertModal();
+    setAlertModalMode(modalData);
+    setAlertModalStatus(true);
   };
 
   const onSubmit: SubmitHandler<TInputs> = ({ currentPassword, newPassword }) => {
@@ -101,7 +99,10 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
           <input type="submit" className={styles.submit} value="Change" />
         </form>
       </div>
-      {ModalComponent}
+
+      <Modal modalStatus={alertModalStatus} setModalStatus={setAlertModalStatus}>
+        <AlertModal modalMode={alertModalMode!} setAlertModalStatus={setAlertModalStatus} />
+      </Modal>
     </>
   );
 };

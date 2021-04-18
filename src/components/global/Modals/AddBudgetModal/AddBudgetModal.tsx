@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useActions } from '../../../../hooks/useActions';
 import { TCurrency, EnumCurrency } from '../../../../types/Budget/Budget';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './AddBudgetModal.module.scss';
-import { IPropsModalComponent } from '@/types/Modal';
 
 type TInputs = {
   nameBudet: string;
   moneyBudget: string;
   currency: TCurrency;
 };
+interface IProps {
+  setModalStatus: Dispatch<SetStateAction<boolean>>;
+}
 
-export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) => {
+export const AddBudgetModal: React.FC<IProps> = ({ setModalStatus }) => {
   const { AddBudget } = useActions();
   const { register: budgetRef, handleSubmit, setValue, errors } = useForm<TInputs>();
 
@@ -21,7 +23,7 @@ export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) =
     const { nameBudet, moneyBudget, currency } = dataForm;
 
     AddBudget({ title: nameBudet, value: +moneyBudget, currency });
-    closeModal();
+    setModalStatus(false);
   };
 
   return (

@@ -1,22 +1,17 @@
 import { AuthModal } from '@/components/global/Modals/AuthModal/AuthModal';
-import { CreateModal } from '@/utilities/CreateModal/CreateModal';
 import React, { useState } from 'react';
+import { Modal } from '@/utilities/Modal/Modal';
 import styles from './NavAuth.module.scss';
-
-type TdataModalEnumKey = 'LOGIN' | 'REGISTRATION';
+import { TAuthModalMode } from '@/types/Modal';
 
 export const NavAuth: React.FC = () => {
-  const [muttableModalData, setMuttableModalData] = useState<TdataModalEnumKey | null>(null);
+  const [authModalMode, setAuthModalMode] = useState<TAuthModalMode | null>(null);
+  const [authModalStatus, setAuthModalStatus] = useState(false);
 
-  const onClickOpenModalHandler = (modalData: TdataModalEnumKey) => {
-    setMuttableModalData(modalData);
-    toggleModal();
+  const onClickOpenModalHandler = (modalData: TAuthModalMode) => {
+    setAuthModalMode(modalData);
+    setAuthModalStatus(true);
   };
-
-  const { toggleModal, ModalComponent } = CreateModal({
-    component: AuthModal,
-    dataModal: muttableModalData!,
-  });
 
   return (
     <>
@@ -28,7 +23,9 @@ export const NavAuth: React.FC = () => {
           <span>Register</span>
         </li>
       </ul>
-      {ModalComponent}
+      <Modal modalStatus={authModalStatus} setModalStatus={setAuthModalStatus}>
+        <AuthModal authModalMode={authModalMode!} />
+      </Modal>
     </>
   );
 };

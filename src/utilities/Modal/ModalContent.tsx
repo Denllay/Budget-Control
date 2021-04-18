@@ -1,21 +1,12 @@
-import { IPropsModalComponent } from '@/types/Modal';
 import React from 'react';
 import { useRef } from 'react';
 import { animated, useTransition, config } from 'react-spring';
 
 interface IProps {
   modalStatus: boolean;
-  closeModal(): void;
-  component: React.FC<IPropsModalComponent>;
-  dataModal: string;
 }
 
-export const ModalContent: React.FC<IProps> = ({
-  closeModal,
-  modalStatus,
-  component: Component,
-  dataModal,
-}) => {
+export const ModalContent: React.FC<IProps> = ({ modalStatus, children }) => {
   const parentDiv = useRef(null);
   const transitionContentModal = useTransition(modalStatus, {
     expires: 0,
@@ -29,9 +20,7 @@ export const ModalContent: React.FC<IProps> = ({
     return (
       item && (
         <animated.div style={{ ...props, outline: 'none' }} ref={parentDiv} tabIndex={0}>
-          <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
-            <Component closeModal={closeModal} dataModal={dataModal} />
-          </div>
+          <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>{children}</div>
         </animated.div>
       )
     );

@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '@/firebase/config';
 import { Route, Switch } from 'react-router-dom';
 import { AddBudgetModal } from '@/components/global/Modals/AddBudgetModal/AddBudgetModal';
+import { Modal } from '@/utilities/Modal/Modal';
 import { ProfileModal } from '@/components/global/Modals/ProfileModal/ProfileModal';
-import { CreateModal } from '@/utilities/CreateModal/CreateModal';
 import styles from './NavMain.module.scss';
 
 export const NavMain: React.FC = () => {
-  const { toggleModal: toggleModalAddBudget, ModalComponent: AddBudgetModalComponent } = CreateModal({
-    component: AddBudgetModal,
-  });
-  const { toggleModal: toggleModalProfile, ModalComponent: ProfileModalComponent } = CreateModal({
-    component: ProfileModal,
-  });
+  const [addBudgetModalStatus, setAddBudgetModalStatus] = useState(false);
+
+  const [profileModalStatus, setProfileModalStatus] = useState(false);
+
   const email = !!auth.currentUser && auth.currentUser.email;
   return (
     <>
@@ -24,19 +22,24 @@ export const NavMain: React.FC = () => {
           </li>
           <Switch>
             <Route path="/main">
-              <li className={styles.list_item} onClick={toggleModalAddBudget}>
+              <li className={styles.list_item} onClick={() => setAddBudgetModalStatus(true)}>
                 <span>Add budget</span>
               </li>
             </Route>
           </Switch>
         </ul>
-        <div className={styles.email_block} onClick={toggleModalProfile}>
+        <div className={styles.email_block} onClick={() => setProfileModalStatus(true)}>
           {email}
         </div>
       </div>
 
-      {AddBudgetModalComponent}
-      {ProfileModalComponent}
+      <Modal modalStatus={addBudgetModalStatus} setModalStatus={setAddBudgetModalStatus}>
+        <AddBudgetModal setModalStatus={setAddBudgetModalStatus} />
+      </Modal>
+
+      <Modal modalStatus={profileModalStatus} setModalStatus={setProfileModalStatus}>
+        <ProfileModal />
+      </Modal>
     </>
   );
 };
