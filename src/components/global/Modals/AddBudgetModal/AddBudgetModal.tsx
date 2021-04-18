@@ -25,7 +25,7 @@ export const AddBudgetModal: React.FC<IPropsModalComponent> = ({ closeModal }) =
   };
 
   return (
-    <div className={styles.content} onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
+    <div className={styles.content}>
       <h2 className={styles.block_title}>Please write budget</h2>
       <form className={styles.block_form} onSubmit={handleSubmit(onSubmit)}>
         <input

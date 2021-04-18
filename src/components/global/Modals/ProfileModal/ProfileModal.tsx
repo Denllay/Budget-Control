@@ -8,14 +8,10 @@ import { IPropsModalComponent } from '@/types/Modal';
 export const ProfileModal: React.FC<IPropsModalComponent> = () => {
   const [profileView, setProfileView] = useState<TProfileView>('view');
   const { SignOutAuth } = useActions();
+  const profileModalList = {
+    view: <ProfileMain onClickSignOut={SignOutAuth} setProfileView={setProfileView} />,
+    passwordChange: <ProfileChangePassword setProfileView={setProfileView} />,
+  };
 
-  return (
-    <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
-      {profileView === 'view' ? (
-        <ProfileMain onClickSignOut={SignOutAuth} setProfileView={setProfileView} />
-      ) : (
-        <ProfileChangePassword setProfileView={setProfileView} />
-      )}
-    </div>
-  );
+  return profileModalList[profileView];
 };

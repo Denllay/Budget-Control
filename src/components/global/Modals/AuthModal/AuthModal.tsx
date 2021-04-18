@@ -27,7 +27,7 @@ export const AuthModal: React.FC<IPropsModalComponent> = ({ closeModal, dataModa
   };
 
   return (
-    <div className={styles.content} onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
+    <div className={styles.content}>
       <div className={styles.block_title}>
         {dataModal === EnumAuthModalData.LOGIN ? 'Login' : 'Registration'}
       </div>

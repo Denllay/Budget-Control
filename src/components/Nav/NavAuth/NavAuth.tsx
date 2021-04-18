@@ -15,7 +15,7 @@ export const NavAuth: React.FC = () => {
 
   const { toggleModal, ModalComponent } = CreateModal({
     component: AuthModal,
-    dataModal: muttableModalData as TdataModalEnumKey,
+    dataModal: muttableModalData!,
   });
 
   return (

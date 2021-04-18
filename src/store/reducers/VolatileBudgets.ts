@@ -5,7 +5,7 @@ import {
 } from '../types/Budget/VolatileBudget';
 
 const initialState: TVolatileBudgetsData = {};
-export const VolatileBudgetsReducer = (
+export const VolatileBudgets = (
   state = initialState,
   action: TVolatileBudgetAction
 ): TVolatileBudgetsData => {

@@ -4,7 +4,6 @@ import { IBudgetFormatData } from '@/types/Budget/Budget';
 import { BudgetItemBottomBlock } from './BudgetItemBottomBlock/BudgetItemBottomBlock';
 import { BudgetItemTopBlock } from './BudgetItemTopBlock/BudgetItemTopBlock';
 import styles from './BudgetItem.module.scss';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
 interface IProps {
   data: IBudgetFormatData;
   budgetIndex: number;

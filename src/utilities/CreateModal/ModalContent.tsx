@@ -29,7 +29,9 @@ export const ModalContent: React.FC<IProps> = ({
     return (
       item && (
         <animated.div style={{ ...props, outline: 'none' }} ref={parentDiv} tabIndex={0}>
-          <Component closeModal={closeModal} dataModal={dataModal} />
+          <div onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
+            <Component closeModal={closeModal} dataModal={dataModal} />
+          </div>
         </animated.div>
       )
     );

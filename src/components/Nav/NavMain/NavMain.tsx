@@ -15,6 +15,7 @@ export const NavMain: React.FC = () => {
     component: ProfileModal,
   });
   const email = !!auth.currentUser && auth.currentUser.email;
+
   return (
     <>
       <div className={styles.wrapper}>

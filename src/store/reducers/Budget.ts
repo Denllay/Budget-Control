@@ -6,7 +6,7 @@ const initialState: IBudgetState = {
   budgetsLength: 0,
   budgetsData: [],
 };
-export const BudgetReducer = (state = initialState, action: TBudgetActions): IBudgetState => {
+export const Budget = (state = initialState, action: TBudgetActions): IBudgetState => {
   switch (action.type) {
     case EnumBudgetAction.GET_DATA_BUDGET: {
       return { ...state, budgetsData: action.payload, budgetsLoadingStatus: 'LOADED' };
