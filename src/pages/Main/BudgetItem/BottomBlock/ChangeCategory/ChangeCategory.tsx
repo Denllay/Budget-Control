@@ -1,35 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { BottomForm } from '../BottomForm/BottomForm';
-import { TCurrency } from '@/types/Budget/Budget';
 import { onSubmitFormBottomMenuFunction } from '@/types/Budget/BudgetBottomForm';
 import styles from './ChangeCategory.module.scss';
-interface IProps {
-  availableMoneyCategory: number;
-  budgetCurrency: TCurrency;
-  budgetId: string;
-  budgetIndex: number;
+import { BudgetBlockContext } from '@/context/BudgetBlockContext';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
-  volatileCategoryName: string;
-  volatileCategoryMoney: number;
-  volatileCategoryId: string;
-  volatileCategoryColor: string;
-  volatileCategoryCurrency: TCurrency;
-}
+const categoryAvailableMoneyId = 'AvailableMoney';
 
-export const ChangeCategory: React.FC<IProps> = ({
-  availableMoneyCategory,
-  budgetCurrency,
-  budgetId,
-  budgetIndex,
-
-  volatileCategoryName,
-  volatileCategoryMoney,
-  volatileCategoryId,
-  volatileCategoryColor,
-  volatileCategoryCurrency,
-}) => {
+export const ChangeCategory = () => {
   const { ClearVolatileData, ChangeDataCategory } = useActions();
+
+  const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
+  const { categoryMoney: availableMoneyCategory, categoryCurrency: budgetCurrency } = category.find(
+    ({ categoryId }) => categoryId === categoryAvailableMoneyId
+  )!;
+
+  const { volatileCategoryMoney, volatileCategoryCurrency, ...volatileData } = useTypedSelector(
+    (state) => state.volatileBudgets[budgetId]
+  );
 
   const clearVolatileData = () => ClearVolatileData(budgetId);
 
@@ -40,7 +29,7 @@ export const ChangeCategory: React.FC<IProps> = ({
       categoryMoney,
       categoryName,
       categoryColor,
-      volatileCategoryId,
+      volatileCategoryId: volatileData.volatileCategoryId,
       categoryAvailableMoney: availableMoneyCategory + (volatileCategoryMoney - categoryMoney),
     });
   };
@@ -52,9 +41,8 @@ export const ChangeCategory: React.FC<IProps> = ({
       budgetCurrency={budgetCurrency}
       budgetId={budgetId}
       onSubmit={onSubmit}
-      volatileCategoryCurrency={volatileCategoryCurrency}
-      volatileCategoryName={volatileCategoryName}
-      volatileCategoryColor={volatileCategoryColor}
+      {...volatileData}
+      volatileCategoryCurrency={volatileCategoryCurrency!}
       volatileCategoryMoney={volatileCategoryMoney}
     >
       <div className={styles.button_block}>

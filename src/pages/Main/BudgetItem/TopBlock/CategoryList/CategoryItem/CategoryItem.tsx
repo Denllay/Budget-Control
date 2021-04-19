@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ICategoryFormatData } from '@/types/Budget/Budget';
 import styles from './CategoryItem.module.scss';
 import { CategoryButton } from './CategoryButton/CategoryButton';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 interface IProps {
-  budgetSum: number;
-  categoryData: ICategoryFormatData;
-  budgetIsChange: boolean;
+  dataCategory: ICategoryFormatData;
 }
-export const CategoryItem: React.FC<IProps> = ({ categoryData, budgetSum, budgetIsChange }) => {
-  const { categoryColor, categoryName, categoryMoney, categoryId, categoryCurrency } = categoryData;
+export const CategoryItem: React.FC<IProps> = ({ dataCategory }) => {
+  const { budgetSum, budgetId } = useContext(BudgetBlockContext);
+  const { budgetIsChange } = useTypedSelector((state) => state?.volatileBudgets[budgetId] || {});
+  const { categoryColor, categoryName, categoryMoney, categoryId, categoryCurrency } = dataCategory;
 
   const availableIdCategory = 'AvailableMoney';
   const procentCategory = (categoryMoney / (budgetSum / 100)).toFixed(1);

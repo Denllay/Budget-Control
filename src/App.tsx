@@ -5,9 +5,9 @@ import { Nav } from './components/Nav/Nav';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { Route, Switch } from 'react-router-dom';
 import { Home } from './pages/Home/Home';
-import { BudgetContainer } from './containers/Budget/BudgetContainer';
 import styles from './App.module.scss';
 import { EnumAuthAction } from './types/Auth';
+import { Main } from './pages/Main/Main';
 
 export const App: React.FC = () => {
   const { status } = useTypedSelector((state) => state.auth);
@@ -24,7 +24,7 @@ export const App: React.FC = () => {
       <Nav authStatus={status} />
       <Switch>
         <PrivateRoute
-          component={BudgetContainer}
+          component={Main}
           condition={status}
           trueCondition={EnumAuthAction.AUTH_ENTERED}
           pathRedirect="/"
