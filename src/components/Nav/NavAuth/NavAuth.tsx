@@ -1,6 +1,6 @@
-import { AuthModal } from '@/components/global/Modals/AuthModal/AuthModal';
+import { AuthModal } from '@/components/Modals/AuthModal/AuthModal';
 import React, { useState } from 'react';
-import { Modal } from '@/utilities/Modal/Modal';
+import { Modal } from '@/components/global/Modal/Modal';
 import styles from './NavAuth.module.scss';
 import { TAuthModalMode } from '@/types/Modal';
 

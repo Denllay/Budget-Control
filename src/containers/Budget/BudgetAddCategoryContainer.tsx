@@ -1,4 +1,4 @@
-import { BudgetAddCategory } from '@/components/Budgets/BudgetItem/BudgetItemBottomBlock/BudgetAddCategory/BudgetAddCategory';
+import { AddCategory } from '@/pages/Main/BudgetItem/BottomBlock/AddCategory/AddCategory';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import React, { useContext } from 'react';
 
@@ -10,7 +10,7 @@ export const BudgetAddCategoryContainer: React.FC = () => {
   )!;
 
   return (
-    <BudgetAddCategory
+    <AddCategory
       availableMoneyCategory={availableMoneyCategory}
       budgetCurrency={budgetCurrency}
       budgetId={budgetId}

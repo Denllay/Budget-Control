@@ -4,7 +4,7 @@ import { useTypedSelector } from './hooks/useTypedSelector';
 import { Nav } from './components/Nav/Nav';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { Route, Switch } from 'react-router-dom';
-import { Home } from './components/Home/Home';
+import { Home } from './pages/Home/Home';
 import { BudgetContainer } from './containers/Budget/BudgetContainer';
 import styles from './App.module.scss';
 import { EnumAuthAction } from './types/Auth';

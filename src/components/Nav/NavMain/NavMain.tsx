@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '@/firebase/config';
 import { Route, Switch } from 'react-router-dom';
-import { AddBudgetModal } from '@/components/global/Modals/AddBudgetModal/AddBudgetModal';
-import { Modal } from '@/utilities/Modal/Modal';
-import { ProfileModal } from '@/components/global/Modals/ProfileModal/ProfileModal';
+import { AddBudgetModal } from '@/components/Modals/AddBudgetModal/AddBudgetModal';
+import { Modal } from '@/components/global/Modal/Modal';
+import { ProfileModal } from '@/components/Modals/ProfileModal/ProfileModal';
 import styles from './NavMain.module.scss';
 
 export const NavMain: React.FC = () => {
   const [addBudgetModalStatus, setAddBudgetModalStatus] = useState(false);
-
   const [profileModalStatus, setProfileModalStatus] = useState(false);
 
   const email = !!auth.currentUser && auth.currentUser.email;

@@ -1,5 +1,5 @@
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
-import { BudgetChangeCategory } from '@/components/Budgets/BudgetItem/BudgetItemBottomBlock/BudgetChangeCategory/BudgetChangeCategory';
+import { ChangeCategory } from '@/pages/Main/BudgetItem/BottomBlock/ChangeCategory/ChangeCategory';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import React, { useContext } from 'react';
 
@@ -20,7 +20,7 @@ export const BudgetChangeCategoryContainer: React.FC = () => {
   } = useTypedSelector((state) => state.volatileBudgets[budgetId]);
 
   return (
-    <BudgetChangeCategory
+    <ChangeCategory
       availableMoneyCategory={availableMoneyCategory}
       budgetCurrency={budgetCurrency}
       budgetId={budgetId}

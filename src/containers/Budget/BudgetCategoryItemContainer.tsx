@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { BudgetCategoryItem } from '@/components/Budgets/BudgetItem/BudgetItemTopBlock/BudgetCategory/BudgetCategoryItem/BudgetCategoryItem';
+import { CategoryItem } from '@/pages/Main/BudgetItem/TopBlock/CategoryList/CategoryItem/CategoryItem';
 import { ICategoryFormatData } from '@/types/Budget/Budget';
 interface IProps {
   categoryData: ICategoryFormatData;
@@ -9,7 +9,5 @@ interface IProps {
 export const BudgetCategoryItemContainer: React.FC<IProps> = ({ categoryData }) => {
   const { budgetSum, budgetId } = useContext(BudgetBlockContext);
   const { budgetIsChange } = useTypedSelector((state) => state?.volatileBudgets[budgetId] || {});
-  return (
-    <BudgetCategoryItem budgetIsChange={budgetIsChange} budgetSum={budgetSum} categoryData={categoryData} />
-  );
+  return <CategoryItem budgetIsChange={budgetIsChange} budgetSum={budgetSum} categoryData={categoryData} />;
 };
