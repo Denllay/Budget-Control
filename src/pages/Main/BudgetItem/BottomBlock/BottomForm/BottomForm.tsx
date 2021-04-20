@@ -1,97 +1,47 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { Dispatch, memo, SetStateAction, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
-import { useForm } from 'react-hook-form';
-import { TInputsCategory } from '@/types/Budget/AddBudget';
 import { Modal } from '@/components/global/Modal/Modal';
-import { EnumCurrency, TCurrency } from '@/types/Budget/Budget';
 import { CategoryColorPick } from '../CategoryColorPick/CategoryColorPick';
-import { onSubmitFormBottomMenuFunction } from '@/types/Budget/BudgetBottomForm';
-import { useCountMoneyConsideringCurrency } from '@/hooks/useCountMoneyConsideringCurrency';
 import { ConfirmModal } from '@/components/Modals/ConfirmModal/ConfrimModal';
 import styles from './BottomForm.module.scss';
+import { UseFormMethods } from 'react-hook-form';
 // Надо бы как то отрефакторить данный компонент, а то просто пздц)
 //! Change
-interface IProps {
+interface IProps extends Pick<UseFormMethods, 'register' | 'errors' | 'setValue'> {
   budgetId: string;
-  availableMoneyCategory: number;
-  budgetCurrency: TCurrency;
-  budgetFormStatus: 'CHNAGE' | 'ADD';
-  onSubmit: onSubmitFormBottomMenuFunction;
-
-  volatileCategoryName?: string;
-  volatileCategoryMoney?: number;
-  volatileCategoryColor?: string;
-  volatileCategoryCurrency?: TCurrency;
+  budgetFormStatus: 'CHANGE' | 'ADD';
+  categoryColor: string;
+  setCategoryColor: Dispatch<SetStateAction<string>>;
+  onSubmit: (e?: React.BaseSyntheticEvent<object, any, any> | undefined) => Promise<void>;
+  checkCategoryMaxMoney(): string | boolean;
 }
+
 export const BottomForm: React.FC<IProps> = memo(
   ({
     budgetId,
     children,
     budgetFormStatus,
-    availableMoneyCategory,
-    budgetCurrency,
     onSubmit,
-
-    volatileCategoryColor = '#c4c4c4',
-    volatileCategoryName = '',
-    volatileCategoryMoney = '',
-    volatileCategoryCurrency = EnumCurrency.RUB,
+    categoryColor,
+    setCategoryColor,
+    register: categoryRef,
+    errors,
+    setValue,
+    checkCategoryMaxMoney,
   }) => {
     const [deleteBudetModalStatus, setDeleteBudetModalStatus] = useState(false);
     const toggleDeleteBudgetModal = () => setDeleteBudetModalStatus((prev) => !prev);
 
-    const [categoryColor, setCategoryColor] = useState(volatileCategoryColor);
-
     const { DeleteBudget } = useActions();
     const deleteBudget = () => DeleteBudget(budgetId);
-
-    const { register: categoryRef, handleSubmit, setValue, reset, errors, watch } = useForm<TInputsCategory>({
-      defaultValues: {
-        categoryMoney: volatileCategoryMoney as number,
-        categoryName: volatileCategoryName,
-        currencyCategory: volatileCategoryCurrency,
-      },
-    });
-    const categoryMoney = useRef({});
-    categoryMoney.current = watch('categoryMoney');
-    const categoryCurrency = useRef({});
-    categoryCurrency.current = watch('currencyCategory');
-
-    const { countMoneyConsideringCurrency } = useCountMoneyConsideringCurrency();
-
-    const categoryMoneyConsideringCurrency = countMoneyConsideringCurrency({
-      categoryMoney: categoryMoney.current as number,
-      currencyCategory:
-        budgetFormStatus === 'CHNAGE' ? volatileCategoryCurrency : (categoryCurrency.current as TCurrency),
-      budgetCurrency,
-    });
-
-    const checkValidCategory = (): boolean | string => {
-      const avaibleMoneyConsideringtatusTheForm =
-        budgetFormStatus === 'CHNAGE'
-          ? availableMoneyCategory + (volatileCategoryMoney as number)
-          : availableMoneyCategory;
-      return (
-        categoryMoneyConsideringCurrency <= avaibleMoneyConsideringtatusTheForm ||
-        '⚠  category budget exceeds available funds'
-      );
-    };
 
     const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
       setValue('currencyCategory', e.target.value);
 
-    const onSubmitForm = handleSubmit(({ categoryName }) => {
-      onSubmit({ categoryMoney: categoryMoneyConsideringCurrency, categoryColor, categoryName });
-      if (budgetFormStatus === 'ADD') {
-        reset();
-        setCategoryColor('#c4c4c4');
-      }
-    });
-
     return (
       <>
         <div className={styles.bottom_container}>
-          <form className={styles.form} onSubmit={onSubmitForm}>
+          <form className={styles.form} onSubmit={onSubmit}>
             <div className={styles.form_title}>
               <h2>Add new Category</h2>
             </div>
@@ -104,7 +54,7 @@ export const BottomForm: React.FC<IProps> = memo(
                   name="categoryName"
                   autoComplete="off"
                   className={styles.input}
-                  ref={categoryRef!({
+                  ref={categoryRef({
                     required: true,
                     minLength: {
                       value: 3,
@@ -130,7 +80,7 @@ export const BottomForm: React.FC<IProps> = memo(
                   name="categoryMoney"
                   autoComplete="off"
                   className={`${styles.input} ${styles.input_number}`}
-                  ref={categoryRef!({
+                  ref={categoryRef({
                     required: {
                       value: true,
                       message: '⚠ you must enter a budget',
@@ -140,10 +90,9 @@ export const BottomForm: React.FC<IProps> = memo(
                       message: '⚠ this value exceeds the maximum value',
                     },
                     valueAsNumber: true,
-                    validate: checkValidCategory,
+                    validate: checkCategoryMaxMoney,
                   })}
                 />
-
                 {errors!.categoryMoney && (
                   <p className={styles.text_alert}>{errors!.categoryMoney.message}</p>
                 )}

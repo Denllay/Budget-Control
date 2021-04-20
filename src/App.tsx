@@ -31,9 +31,8 @@ export const App: React.FC = () => {
           path="/main"
           exact
         />
-        <Route exact path="/">
-          <Home />
-        </Route>
+
+        <Route exact path="/" component={Home} />
       </Switch>
     </div>
   );
