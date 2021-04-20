@@ -32,9 +32,19 @@ export const Modal: React.FC<IProps> = ({ children, setModalStatus, modalStatus 
   });
 
   useEffect(() => {
+    const onCloseModalKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalStatus(false);
+      }
+    };
+
     if (modalStatus) {
       document.body.appendChild(el);
+      window.addEventListener('keydown', onCloseModalKeydown);
     }
+    return () => {
+      window.removeEventListener('keydown', onCloseModalKeydown);
+    };
   }, [modalStatus, el]);
 
   const ModalComponent = transitionModal((props, item) => {
