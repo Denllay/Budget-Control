@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { animated, useTransition } from 'react-spring';
 import { ModalContent } from './ModalContent';
-import styles from './CreateModal.module.scss';
+import styles from './Modal.module.scss';
 
 interface IProps {
   modalStatus: boolean;

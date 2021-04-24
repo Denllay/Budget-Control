@@ -1,0 +1,25 @@
+.error {
+  color: #e72d2d;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  margin-top: 15px;
+}
+.input {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-bottom: 3px solid #282d3c;
+  color: #282d3c;
+  font-size: 1.3rem;
+  &::placeholder {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}

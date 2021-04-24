@@ -10,6 +10,7 @@ export const CategoryColorPick: React.FC<IProps> = ({ setColor, color }) => {
   const onChangeColor = ({ hex }: { hex: string }) => {
     setColor(hex);
   };
+
   const onTargetDisplayColor = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     setDisplayColor((prev) => !prev);

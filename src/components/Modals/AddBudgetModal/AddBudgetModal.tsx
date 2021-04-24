@@ -1,86 +1,65 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { useActions } from '../../../hooks/useActions';
-import { TCurrency, EnumCurrency } from '../../../types/Budget/Budget';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useActions } from '@/hooks/useActions';
+import { TCurrency } from '@/types/Budget/Budget';
+import { Formik, Form, Field } from 'formik';
+import { FormInput } from '@/components/UIKit/FormInput/FormInput';
+import { FormSelect } from '@/components/UIKit/FormSelect/FormSelect';
 import styles from './AddBudgetModal.module.scss';
+import * as Yup from 'yup';
 
-type TInputs = {
-  nameBudet: string;
-  moneyBudget: string;
-  currency: TCurrency;
-};
+interface IFormValues {
+  name: string;
+  money: string;
+  currency: string;
+}
 interface IProps {
   setModalStatus: Dispatch<SetStateAction<boolean>>;
 }
 
+const addBudgetSchema: Yup.SchemaOf<IFormValues> = Yup.object().shape({
+  name: Yup.string()
+    .required()
+    .min(3, '⚠ Name must be at least 3 characters long')
+    .max(13, '⚠ Maximum name length 13 characters'),
+
+  money: Yup.string().required().required('⚠ You must enter a budget').max(13, '⚠ This value exceeds the maximum value'),
+
+  currency: Yup.string().required(),
+});
+
+const options = [
+  { value: 'RUB', name: 'RUB' },
+  { value: 'USD', name: 'USD' },
+];
+
 export const AddBudgetModal: React.FC<IProps> = ({ setModalStatus }) => {
   const { AddBudget } = useActions();
-  const { register: budgetRef, handleSubmit, setValue, errors } = useForm<TInputs>();
 
-  const selectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setValue('currency', e.target.value);
-
-  const onSubmit: SubmitHandler<TInputs> = (dataForm) => {
-    const { nameBudet, moneyBudget, currency } = dataForm;
-
-    AddBudget({ title: nameBudet, value: +moneyBudget, currency });
+  const onSubmit = ({ name, money, currency }: IFormValues) => {
+    AddBudget({ title: name, money: +money, currency: currency as TCurrency });
     setModalStatus(false);
   };
 
   return (
     <div className={styles.content}>
       <h2 className={styles.block_title}>Please write budget</h2>
-      <form className={styles.block_form} onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          className={styles.block_form_input}
-          placeholder="Title"
-          name="nameBudet"
-          autoComplete="off"
-          ref={budgetRef({
-            required: true,
-            minLength: {
-              value: 3,
-              message: '⚠ Name must be at least 3 characters long',
-            },
-            maxLength: 13,
-            pattern: /^[\w\S]+$/i,
-          })}
-        />
+      <Formik
+        initialValues={{ name: '', money: '', currency: 'RUB' }}
+        onSubmit={onSubmit}
+        validationSchema={addBudgetSchema}
+      >
+        <Form className={styles.block_form}>
+          <Field name="name" placeholder="Name budget" className={styles.input} component={FormInput} />
 
-        {errors.nameBudet && <p className={styles.text_alert}>{errors.nameBudet.message}</p>}
+          <div className={styles.block_money}>
+            <Field name="money" type="number" className={styles.input} placeholder="Money budget" component={FormInput} />
 
-        <div className={styles.block_input_budget}>
-          <input
-            type="number"
-            className={styles.block_form_input}
-            placeholder="Budget"
-            name="moneyBudget"
-            autoComplete="off"
-            ref={budgetRef({
-              required: {
-                value: true,
-                message: '⚠ you must enter a budget',
-              },
-              maxLength: {
-                value: 13,
-                message: '⚠ this value exceeds the maximum value',
-              },
-            })}
-          />
+            <FormSelect name="currency" className={styles.select} options={options} />
+          </div>
 
-          <select
-            className={styles.block_form_select}
-            name="currency"
-            onChange={selectChange}
-            ref={budgetRef({ required: true })}
-          >
-            <option className={styles.option}>{EnumCurrency.RUB}</option>
-            <option className={styles.option}>{EnumCurrency.USD}</option>
-          </select>
-        </div>
-
-        <input value="Submit" type="submit" className={styles.button} />
-      </form>
+          <input value="Submit" type="submit" className={styles.button} />
+        </Form>
+      </Formik>
     </div>
   );
 };

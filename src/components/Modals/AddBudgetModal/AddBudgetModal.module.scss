@@ -18,29 +18,10 @@
   &_form {
     display: flex;
     flex-direction: column;
-    &_input {
-      outline: none;
-      border: 2px solid #282d3c;
-      padding: 10px 0px 10px 10px;
-      width: 350px;
-      color: #282d3c;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 500;
-      border-radius: 5px;
-      margin: 15px 0px;
-    }
-    &_select {
-      outline: none;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-left: 5px;
-      height: 40px;
-      background: #282d3c;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 16px;
-      color: #fff;
-    }
+  }
+  &_money {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -66,14 +47,18 @@
     transition: 0.3s;
   }
 }
-.option {
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-}
 .text {
   &_alert {
     color: #e72d2d;
     font-family: 'Montserrat', sans-serif;
   }
+}
+
+.input {
+  height: 35px;
+  margin-top: 20px;
+}
+
+.select {
+  margin: 20px 0px 0px 5px;
 }

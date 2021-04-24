@@ -4,17 +4,17 @@ import { Dispatch } from 'react';
 import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 interface IDataAction {
   title: string;
-  value: number;
+  money: number;
   currency: TCurrency;
 }
-export const AddBudget = ({ title, value, currency }: IDataAction) => {
+export const AddBudget = ({ title, money, currency }: IDataAction) => {
   return (dispatch: Dispatch<TBudgetActions>) => {
     try {
       const uid = auth.currentUser && auth.currentUser.uid;
       const budgetId = `id_${Math.random() * Date.now()}`.replace(/\./g, '');
 
       const categoryData = {
-        categoryMoney: value,
+        categoryMoney: money,
         categoryCurrency: currency,
         categoryId: 'AvailableMoney',
         categoryColor: '#e4e4e4',
@@ -23,7 +23,7 @@ export const AddBudget = ({ title, value, currency }: IDataAction) => {
 
       const budgetHeaderData = {
         title,
-        budgetSum: value,
+        budgetSum: money,
         currency,
       };
 

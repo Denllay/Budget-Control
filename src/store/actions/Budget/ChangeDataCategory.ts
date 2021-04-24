@@ -1,7 +1,9 @@
-import { Dispatch } from 'react';
 import firebase, { auth } from '@/firebase/config';
-import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
+import { EnumBudgetAction } from '@/store/types/Budget/Budget';
 import { ClearVolatileData } from '../VolatileBudget/ClearVolatileData';
+import { ThunkDispatch } from 'redux-thunk';
+import { TRootReducer } from '@/store/reducers';
+import { Action } from 'redux';
 interface IDataAction {
   budgetId: string;
   budgetIndex: number;
@@ -12,13 +14,8 @@ interface IDataAction {
   categoryColor: string;
 }
 
-export const ChangeDataCategory = ({
-  budgetId,
-  budgetIndex,
-  categoryAvailableMoney,
-  ...categoryData
-}: IDataAction) => {
-  return async (dispatch: any) => {
+export const ChangeDataCategory = ({ budgetId, budgetIndex, categoryAvailableMoney, ...categoryData }: IDataAction) => {
+  return async (dispatch: ThunkDispatch<TRootReducer, void, Action>) => {
     try {
       const availableIdCategory = 'AvailableMoney';
       const uid = auth.currentUser && auth.currentUser.uid;

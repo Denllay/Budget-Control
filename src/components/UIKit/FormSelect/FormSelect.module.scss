@@ -1,0 +1,11 @@
+.select {
+  cursor: pointer;
+  padding: 9px;
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  border-radius: 5px;
+  &:focus {
+    outline: none;
+  }
+}

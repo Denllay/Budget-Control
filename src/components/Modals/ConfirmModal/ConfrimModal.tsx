@@ -5,10 +5,11 @@ interface IProps {
   onClickConfirm(): void;
   titleText: string;
 }
+const animationDuration = 300;
 export const ConfirmModal: React.FC<IProps> = ({ toggleModal, onClickConfirm, titleText }) => {
   const onClickConfirmHandler = () => {
-    onClickConfirm();
     toggleModal();
+    setTimeout(() => onClickConfirm(), animationDuration);
   };
   return (
     <div className={styles.container}>
