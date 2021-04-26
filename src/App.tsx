@@ -15,7 +15,7 @@ export const App: React.FC = () => {
     if (authStatus === EnumAuthAction.AUTH_ENTERED) {
       GetBudgetsLength();
     }
-  }, [useActions]);
+  }, [useActions, authStatus]);
 
   return (
     <div className={styles.wrapper}>

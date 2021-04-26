@@ -1,9 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { FormInput } from '@/components/UIKit/FormInput/FormInput';
 import { password, confirmPassword } from '@/validationSchemes';
 import { RegAuth } from '@/store/actions/Auth/RegAuth';
-import { Button } from '@/components/UIKit/Button/Button';
+import { Button, FormInput } from '@/components/UIKit';
 import styles from '../AuthModal.module.scss';
 import * as Yup from 'yup';
 
@@ -24,6 +23,12 @@ const authSchema: Yup.SchemaOf<IFormValues> = Yup.object().shape({
     .required('⚠ Enter your email')
     .matches(/^\S+@\S+$/i, '⚠ Wrong email format'),
 });
+
+const titleStyle = {
+  fontSize: '36px',
+  marginTop: '15px',
+  color: '#282d3c',
+};
 
 export const Registration: React.FC<IProps> = ({ setAlertModalStatus }) => {
   const onSubmit = ({ password, email }: IFormValues) => {

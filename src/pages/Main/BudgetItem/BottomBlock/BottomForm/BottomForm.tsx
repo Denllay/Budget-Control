@@ -1,14 +1,12 @@
 import React, { memo, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
-import { Modal } from '@/components/global/Modal/Modal';
 import { CategoryColorPick } from '../CategoryColorPick/CategoryColorPick';
 import { ConfirmModal } from '@/components/Modals/ConfirmModal/ConfrimModal';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
-import { FormInput } from '@/components/UIKit/FormInput/FormInput';
 import { useCountMoneyConsideringCurrency } from '@/hooks/useCountMoneyConsideringCurrency';
 import { TCurrency } from '@/types/Budget/Budget';
 import { IFormValuesBottomForm, OnSubmitBottomFormFunction } from '@/types/Budget/BottomForm';
-import { FormSelect } from '@/components/UIKit/FormSelect/FormSelect';
+import { FormInput, FormSelect, Modal, Title } from '@/components/UIKit';
 import styles from './BottomForm.module.scss';
 import * as Yup from 'yup';
 
@@ -38,7 +36,7 @@ const options = [
   { value: 'RUB', name: 'RUB' },
   { value: 'USD', name: 'USD' },
 ];
-
+const titleStyle = { color: '#282d3c', fontSize: '36px' };
 export const BottomForm: React.FC<IProps> = memo(
   ({
     budgetId,
@@ -87,9 +85,7 @@ export const BottomForm: React.FC<IProps> = memo(
         <div className={styles.bottom_container}>
           <Formik initialValues={initialValues} onSubmit={onSubmit} validate={validate} validationSchema={categorySchema}>
             <Form className={styles.form}>
-              <div className={styles.form_title}>
-                <h2>Add new Category</h2>
-              </div>
+              <Title style={titleStyle}>Add new Category</Title>
 
               <div className={styles.block_input}>
                 <Field name="categoryName" placeholder="Category name" className={styles.input} component={FormInput} />

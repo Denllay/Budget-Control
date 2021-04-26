@@ -7,12 +7,13 @@ import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 interface IProps {
   dataCategory: ICategoryFormatData;
 }
+const availableIdCategory = 'AvailableMoney';
+
 export const CategoryItem: React.FC<IProps> = ({ dataCategory }) => {
   const { budgetSum, budgetId } = useContext(BudgetBlockContext);
   const { budgetIsChange } = useTypedSelector((state) => state?.volatileBudgets[budgetId] || {});
   const { categoryColor, categoryName, categoryMoney, categoryId, categoryCurrency } = dataCategory;
 
-  const availableIdCategory = 'AvailableMoney';
   const procentCategory = (categoryMoney / (budgetSum / 100)).toFixed(1);
 
   return (

@@ -1,0 +1,13 @@
+.list {
+  &_item {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    & span {
+      font-weight: 500;
+    }
+  }
+}

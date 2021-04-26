@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useActions } from '@/hooks/useActions';
-import { FormInput } from '@/components/UIKit/FormInput/FormInput';
 import { password } from '@/validationSchemes';
+import { FormInput, Button, Title } from '@/components/UIKit';
 import * as Yup from 'yup';
 import styles from '../AuthModal.module.scss';
 
@@ -22,6 +22,12 @@ const authSchema: Yup.SchemaOf<IFormValues> = Yup.object().shape({
   email: Yup.string().required('⚠ Enter your email'),
 });
 
+const titleStyle = {
+  fontSize: '36px',
+  marginTop: '15px',
+  color: '#282d3c',
+};
+
 export const Login: React.FC<IProps> = ({ setAlertModalStatus }) => {
   const { LoginAuth } = useActions();
 
@@ -31,14 +37,17 @@ export const Login: React.FC<IProps> = ({ setAlertModalStatus }) => {
 
   return (
     <>
-      <div className={styles.block_title}>Login</div>
+      <Title style={titleStyle}>Login</Title>
+
       <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit} validationSchema={authSchema}>
         <Form className={styles.block_form}>
           <Field type="email" name="email" placeholder="Email" className={styles.input} component={FormInput} />
 
           <Field type="password" name="password" placeholder="Password" className={styles.input} component={FormInput} />
 
-          <input type="submit" value="submit" className={styles.submit} />
+          <Button theme="green" className={styles.button} type="submit">
+            Submit
+          </Button>
         </Form>
       </Formik>
     </>

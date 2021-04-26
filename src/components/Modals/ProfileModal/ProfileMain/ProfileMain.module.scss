@@ -9,15 +9,6 @@
   border-radius: 10px;
 }
 .block {
-  &_title {
-    color: #282d3c;
-    font-size: 36px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    & span {
-      font-weight: 500;
-    }
-  }
   &_statistics {
     margin-top: 20px;
     display: flex;
@@ -25,19 +16,6 @@
   &_exit {
     position: absolute;
     bottom: 25px;
-  }
-}
-.list {
-  &_item {
-    display: flex;
-    flex-direction: column;
-    margin: 5px 0px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 36px;
-    & span {
-      font-weight: 500;
-    }
   }
 }
 .text {

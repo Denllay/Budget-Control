@@ -4,7 +4,14 @@ import { PreLoader } from '@/components/PreLoader/PreLoader';
 import { NavMain } from './NavMain/NavMain';
 import { EnumAuthAction } from '@/types/Auth';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { Title } from '@/components/UIKit';
 import styles from './Nav.module.scss';
+
+const titleStyle = {
+  fontFamily: 'DelightCandles, sans-serif',
+  fontSize: '30px',
+  margin: '10px 0px',
+};
 
 export const Nav = () => {
   const authStatus = useTypedSelector((state) => state.auth.status);
@@ -18,7 +25,7 @@ export const Nav = () => {
   return (
     <div className={styles.header_inner}>
       <div className={styles.logo_block}>
-        <h1 className={styles.logo}>Budget Control</h1>
+        <Title style={titleStyle}>Budget Control</Title>
       </div>
       <nav className={styles.nav}>{navComponentList[authStatus]}</nav>
     </div>

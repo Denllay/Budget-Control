@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TProfileView } from './types/profileTypes';
+import { TProfileView } from '../../../types/ProfileTypes';
 import { ProfileMain } from './ProfileMain/ProfileMain';
 import { useActions } from '@/hooks/useActions';
 import { ProfileChangePassword } from './ProfileChangePassword/ProfileChangePassword';

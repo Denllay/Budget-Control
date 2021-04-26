@@ -3,8 +3,8 @@ import { useActions } from '@/hooks/useActions';
 import { BottomForm } from '../BottomForm/BottomForm';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { IFormValuesBottomForm, OnSubmitBottomFormFunction } from '@/types/Budget/BottomForm';
-import { Button } from '@/components/UIKit/Button/Button';
 import styles from './AddCategory.module.scss';
+import { Button } from '@/components/UIKit';
 
 const availableIdCategory = 'AvailableMoney';
 
@@ -37,13 +37,13 @@ export const AddCategory: React.FC = memo(() => {
     <BottomForm
       budgetFormStatus="ADD"
       budgetId={budgetId}
-      onSuccessfulFunction={onSubmit} // думаю надо найти более подходящее имя ! Change
+      onSuccessfulFunction={onSubmit}
       budgetCurrency={budgetCurrency}
       availableMoneyCategory={availableMoneyCategory}
       initialValues={initialValues}
       initialDataColor="#c4c4c4"
     >
-      <Button theme="green" type="submit" className={styles.button}>
+      <Button theme="dark" type="submit" className={styles.button}>
         Submit
       </Button>
     </BottomForm>

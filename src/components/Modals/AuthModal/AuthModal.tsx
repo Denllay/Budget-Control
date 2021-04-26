@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { EnumAlertModalData, TAuthModalMode } from '@/types/Modal';
 import { AlertModal } from '../AlertModal/AlertModal';
-import { Modal } from '@/components/global/Modal/Modal';
 import { Login } from './Login/Login';
+import { Modal } from '@/components/UIKit';
 import { Registration } from './Registration/Registration';
 import styles from './AuthModal.module.scss';
 interface IProps {

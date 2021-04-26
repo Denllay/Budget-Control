@@ -1,10 +1,16 @@
 import React from 'react';
 import CrossIcon from '@/assets/svg/crossInCircleIcon.svg';
-import { Button } from '@/components/UIKit/Button/Button';
 import styles from './AlertModal.module.scss';
+import { Button, Title } from '@/components/UIKit';
 interface IProps {
   closeModal(): void;
 }
+const titleStyle = {
+  fontSize: '28px',
+  fontWeight: 500,
+  margin: '15px 0px',
+};
+
 export const ErrorAlert: React.FC<IProps> = ({ closeModal }) => {
   return (
     <div className={styles.content}>
@@ -12,7 +18,7 @@ export const ErrorAlert: React.FC<IProps> = ({ closeModal }) => {
         <CrossIcon className={styles.icon} />
       </div>
 
-      <div className={`${styles.block_title} ${styles.block_title_error}`}>Error!</div>
+      <Title style={titleStyle}>Error!</Title>
 
       <Button className={styles.button} onClick={closeModal} theme="red">
         OK

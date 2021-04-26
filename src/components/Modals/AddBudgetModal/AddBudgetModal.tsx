@@ -2,9 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { TCurrency } from '@/types/Budget/Budget';
 import { Formik, Form, Field } from 'formik';
-import { FormInput } from '@/components/UIKit/FormInput/FormInput';
-import { FormSelect } from '@/components/UIKit/FormSelect/FormSelect';
-import { Button } from '@/components/UIKit/Button/Button';
+import { Button, FormInput, FormSelect, Title } from '@/components/UIKit';
 import styles from './AddBudgetModal.module.scss';
 import * as Yup from 'yup';
 
@@ -32,7 +30,10 @@ const options = [
   { value: 'RUB', name: 'RUB' },
   { value: 'USD', name: 'USD' },
 ];
-
+const tytleStyle = {
+  fontSize: '26px',
+  color: '#282d3c',
+};
 export const AddBudgetModal: React.FC<IProps> = ({ setModalStatus }) => {
   const { AddBudget } = useActions();
 
@@ -43,7 +44,8 @@ export const AddBudgetModal: React.FC<IProps> = ({ setModalStatus }) => {
 
   return (
     <div className={styles.content}>
-      <h2 className={styles.block_title}>Please write budget</h2>
+      <Title style={tytleStyle}>Please write budget</Title>
+
       <Formik
         initialValues={{ name: '', money: '', currency: 'RUB' }}
         onSubmit={onSubmit}

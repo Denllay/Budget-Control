@@ -1,16 +1,21 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { Modal } from '@/components/global/Modal/Modal';
-import { TProfileView } from '../types/profileTypes';
+import { TProfileView } from '../../../../types/ProfileTypes';
 import { useActions } from '@/hooks/useActions';
 import { auth } from '@/firebase/config';
 import { ConfirmModal } from '@/components/Modals/ConfirmModal/ConfrimModal';
-import { Button } from '@/components/UIKit/Button/Button';
+import { Modal, Button } from '@/components/UIKit';
+import { ProfileStatistic } from './ProfileStatistic/ProfileStatistic';
+import { Title } from '@/components/UIKit';
 import styles from './ProfileMain.module.scss';
 interface IProps {
   setProfileView: Dispatch<SetStateAction<TProfileView>>;
   onClickSignOut(): void;
 }
+const titleStyle = {
+  color: '#282d3c',
+  fontSize: '36px',
+};
 export const ProfileMain: React.FC<IProps> = ({ setProfileView, onClickSignOut }) => {
   const { DeleteAllBudgets } = useActions();
   const [exitModalStatus, setExitModalStatus] = useState(false);
@@ -36,22 +41,12 @@ export const ProfileMain: React.FC<IProps> = ({ setProfileView, onClickSignOut }
   return (
     <>
       <div className={styles.content}>
-        <div className={styles.block_title}>
+        <Title style={titleStyle}>
           Email: <span>{email}</span>
-        </div>
+        </Title>
+
         <div className={styles.block_statistics}>
-          <ul className={styles.list}>
-            <li className={styles.list_item}>
-              <div>
-                Password: <span> ***</span>
-              </div>
-            </li>
-            <li className={styles.list_item}>
-              <div>
-                Budgets: <span>{budgetsLength}</span>
-              </div>
-            </li>
-          </ul>
+          <ProfileStatistic budgetsLength={budgetsLength} />
 
           <div className={styles.block_button}>
             <Button theme="dark" onClick={changeProfileModalStatus} className={styles.button}>

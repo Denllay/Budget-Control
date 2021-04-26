@@ -46,4 +46,4 @@ module.exports = {
     // Очистка говна
     new CleanWebpackPlugin(),
   ],
-}; 
+};

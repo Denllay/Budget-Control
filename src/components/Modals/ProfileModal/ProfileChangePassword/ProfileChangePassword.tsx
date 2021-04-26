@@ -1,15 +1,14 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
-import { TProfileView } from '../types/profileTypes';
-import { Modal } from '@/components/global/Modal/Modal';
+import { TProfileView } from '@/types/ProfileTypes';
 import { AlertModal } from '../../AlertModal/AlertModal';
 import { TAlertModalData } from '@/types/Modal';
 import { Formik, Form, Field } from 'formik';
 import { password, confirmPassword } from '@/validationSchemes';
-import { FormInput } from '@/components/UIKit/FormInput/FormInput';
-import { Button } from '@/components/UIKit/Button/Button';
-import * as Yup from 'yup';
+import { Button, FormInput, Modal } from '@/components/UIKit';
+import { Title } from '@/components/UIKit/';
 import styles from './ProfileChangePassword.module.scss';
+import * as Yup from 'yup';
 
 interface IFormValues {
   currentPassword: string;
@@ -25,6 +24,12 @@ const changePasswordSchema: Yup.SchemaOf<IFormValues> = Yup.object().shape({
   currentPassword: password,
   confirmPassword,
 });
+
+const titleStyle = {
+  fontSize: '36px',
+  marginTop: '15px',
+  color: '#282d3c',
+};
 
 export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
   const { UpdatePassword } = useActions();
@@ -53,7 +58,8 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
           Back
         </Button>
 
-        <div className={styles.block_title}>Change Password</div>
+        <Title style={titleStyle}>Change Password</Title>
+
         <Formik
           validationSchema={changePasswordSchema}
           onSubmit={onSubmit}

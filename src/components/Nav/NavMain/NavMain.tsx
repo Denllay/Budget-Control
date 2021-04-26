@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '@/firebase/config';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { AddBudgetModal } from '@/components/Modals/AddBudgetModal/AddBudgetModal';
-import { Modal } from '@/components/global/Modal/Modal';
+import { Modal } from '@/components/UIKit';
 import { ProfileModal } from '@/components/Modals/ProfileModal/ProfileModal';
 import styles from './NavMain.module.scss';
 
@@ -19,13 +19,11 @@ export const NavMain: React.FC = () => {
           <li className={styles.list_item}>
             <Link to="/main">Main</Link>
           </li>
-          <Switch>
-            <Route path="/main">
-              <li className={styles.list_item} onClick={() => setAddBudgetModalStatus(true)}>
-                <span>Add budget</span>
-              </li>
-            </Route>
-          </Switch>
+          <Route path="/main">
+            <li className={styles.list_item} onClick={() => setAddBudgetModalStatus(true)}>
+              <span>Add budget</span>
+            </li>
+          </Route>
         </ul>
         <div className={styles.email_block} onClick={() => setProfileModalStatus(true)}>
           {email}

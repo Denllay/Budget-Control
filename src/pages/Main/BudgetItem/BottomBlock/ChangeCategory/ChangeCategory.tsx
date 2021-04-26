@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { BottomForm } from '../BottomForm/BottomForm';
-import styles from './ChangeCategory.module.scss';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { Button } from '@/components/UIKit/Button/Button';
 import { IFormValuesBottomForm, OnSubmitBottomFormFunction } from '@/types/Budget/BottomForm';
+import { Button } from '@/components/UIKit';
+import styles from './ChangeCategory.module.scss';
 
 const categoryAvailableMoneyId = 'AvailableMoney';
 

@@ -1,12 +1,17 @@
 import React from 'react';
-import { Button } from '@/components/UIKit/Button/Button';
+import { Button, Title } from '@/components/UIKit';
 import styles from './ConfirmModal.module.scss';
 interface IProps {
   titleText: string;
   toggleModal(): void;
   onClickConfirm(): void;
 }
+const titleStyle = {
+  color: '#282d3c',
+  fontSize: '25px',
+};
 const animationDuration = 300;
+
 export const ConfirmModal: React.FC<IProps> = ({ toggleModal, onClickConfirm, titleText }) => {
   const onClickConfirmHandler = () => {
     toggleModal();
@@ -15,9 +20,8 @@ export const ConfirmModal: React.FC<IProps> = ({ toggleModal, onClickConfirm, ti
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>
-        <h2>{titleText}</h2>
-      </div>
+      <Title style={titleStyle}>{titleText}</Title>
+
       <div className={styles.button_block}>
         <Button theme="green" className={styles.button} onClick={onClickConfirmHandler}>
           Yes
