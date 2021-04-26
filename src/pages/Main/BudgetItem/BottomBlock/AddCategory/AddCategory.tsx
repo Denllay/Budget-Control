@@ -36,7 +36,7 @@ export const AddCategory: React.FC = memo(() => {
     <BottomForm
       budgetFormStatus="ADD"
       budgetId={budgetId}
-      onsuccessfulFunction={onSubmit} // думаю надо найти более подходящее имя ! Change
+      onSuccessfulFunction={onSubmit} // думаю надо найти более подходящее имя ! Change
       budgetCurrency={budgetCurrency}
       availableMoneyCategory={availableMoneyCategory}
       initialValues={initialValues}

@@ -23,8 +23,8 @@ export const AddBudget = ({ title, money, currency }: IDataAction) => {
 
       const budgetHeaderData = {
         title,
-        budgetSum: money,
         currency,
+        budgetSum: money,
       };
 
       const budgetData: IBudgetFormatData = {

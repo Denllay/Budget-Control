@@ -13,6 +13,8 @@ interface IProps {
   categoryCurrency: TCurrency;
 }
 
+const availableIdCategory = 'AvailableMoney';
+
 export const CategoryButton: React.FC<IProps> = ({
   categoryId,
   categoryName,
@@ -21,7 +23,6 @@ export const CategoryButton: React.FC<IProps> = ({
   categoryCurrency,
 }) => {
   const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
-  const availableIdCategory = 'AvailableMoney';
   const { DeleteCategory, SetVolatileInitialData } = useActions();
 
   const onClickChangeHandler = () =>
@@ -38,8 +39,7 @@ export const CategoryButton: React.FC<IProps> = ({
     DeleteCategory({
       budgetId,
       categoryDeleteId: categoryId,
-      availableMoneyCategory:
-        category.find((el) => el.categoryId === availableIdCategory)?.categoryMoney! + categoryMoney,
+      availableMoneyCategory: category.find((el) => el.categoryId === availableIdCategory)?.categoryMoney! + categoryMoney,
       budgetIndex,
     });
 

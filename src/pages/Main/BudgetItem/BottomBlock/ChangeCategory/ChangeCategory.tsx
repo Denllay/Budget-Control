@@ -49,7 +49,7 @@ export const ChangeCategory = () => {
     <BottomForm
       budgetFormStatus="CHANGE"
       budgetId={budgetId}
-      onsuccessfulFunction={onSubmit}
+      onSuccessfulFunction={onSubmit}
       availableMoneyCategory={availableMoneyCategory}
       budgetCurrency={budgetCurrency}
       initialValues={initialValues}

@@ -1,12 +1,11 @@
 import React, { memo, useContext } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
-import { ICategoryFormatData } from '@/types/Budget/Budget';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 
 export const Chart = memo(() => {
   const { category } = useContext(BudgetBlockContext);
   return (
-    <div>
+    <>
       <PieChart width={300} height={300}>
         <Pie
           dataKey="categoryMoney"
@@ -23,6 +22,6 @@ export const Chart = memo(() => {
           ))}
         </Pie>
       </PieChart>
-    </div>
+    </>
   );
 });

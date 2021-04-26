@@ -27,7 +27,7 @@ export const CategoryItem: React.FC<IProps> = ({ dataCategory }) => {
         <span style={{ color: categoryColor }}>{`${procentCategory}%`}</span>
       </div>
 
-      {!budgetIsChange && categoryId !== availableIdCategory && (
+      {!budgetIsChange && categoryId !== availableIdCategory ? (
         <CategoryButton
           categoryId={categoryId}
           categoryName={categoryName}
@@ -35,7 +35,7 @@ export const CategoryItem: React.FC<IProps> = ({ dataCategory }) => {
           categoryMoney={categoryMoney}
           categoryCurrency={categoryCurrency}
         />
-      )}
+      ) : null}
     </div>
   );
 };

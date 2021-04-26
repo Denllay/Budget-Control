@@ -19,7 +19,7 @@ interface IProps {
   initialDataColor: string;
   budgetCurrency: TCurrency;
   availableMoneyCategory: number;
-  onsuccessfulFunction: OnSubmitBottomFormFunction;
+  onSuccessfulFunction: OnSubmitBottomFormFunction;
 }
 
 const categorySchema: Yup.SchemaOf<IFormValuesBottomForm> = Yup.object().shape({
@@ -48,7 +48,7 @@ export const BottomForm: React.FC<IProps> = memo(
     initialDataColor,
     budgetCurrency,
     availableMoneyCategory,
-    onsuccessfulFunction,
+    onSuccessfulFunction,
   }) => {
     const { DeleteBudget } = useActions();
     const deleteBudget = () => DeleteBudget(budgetId);
@@ -77,7 +77,7 @@ export const BottomForm: React.FC<IProps> = memo(
       { categoryMoney, ...data }: IFormValuesBottomForm,
       { resetForm }: FormikHelpers<IFormValuesBottomForm>
     ) => {
-      onsuccessfulFunction({ ...data, categoryMoney: +categoryMoney, categoryColor });
+      onSuccessfulFunction({ ...data, categoryMoney: +categoryMoney, categoryColor });
       setCategoryColor('#c4c4c4');
       resetForm();
     };
