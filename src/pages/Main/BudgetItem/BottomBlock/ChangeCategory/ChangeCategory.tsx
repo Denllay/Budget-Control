@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { BottomForm } from '../BottomForm/BottomForm';
 import styles from './ChangeCategory.module.scss';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useCountMoneyConsideringCurrency } from '@/hooks/useCountMoneyConsideringCurrency';
+import { Button } from '@/components/UIKit/Button/Button';
 import { IFormValuesBottomForm, OnSubmitBottomFormFunction } from '@/types/Budget/BottomForm';
 
 const categoryAvailableMoneyId = 'AvailableMoney';
@@ -56,12 +56,13 @@ export const ChangeCategory = () => {
       initialDataColor={volatileCategoryColor}
     >
       <div className={styles.button_block}>
-        <button type="submit" className={styles.button_item}>
-          Submit
-        </button>
-        <button type="button" className={`${styles.button_item} ${styles.button_cancel}`} onClick={clearVolatileData}>
+        <Button theme="green" type="submit" className={styles.button}>
           Cancel
-        </button>
+        </Button>
+
+        <Button onClick={clearVolatileData} theme="red" className={styles.button}>
+          Cancel
+        </Button>
       </div>
     </BottomForm>
   );

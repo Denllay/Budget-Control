@@ -1,0 +1,39 @@
+.button {
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border-radius: 5px;
+
+  &:hover {
+    transition: all 0.3s;
+  }
+  &:not(:hover) {
+    transition: all 0.5s;
+  }
+}
+
+.green {
+  background: #2ac34c;
+  &:hover {
+    background: #42ff6c;
+  }
+}
+.dark {
+  background: #282d3c;
+  &:hover {
+    background: #20232f;
+  }
+}
+.red {
+  background: #e72d2d;
+  &:hover {
+    background: #ff5353;
+  }
+}

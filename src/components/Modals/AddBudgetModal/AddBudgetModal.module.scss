@@ -24,29 +24,6 @@
     align-items: center;
   }
 }
-
-.button {
-  position: absolute;
-  bottom: 15px;
-  cursor: pointer;
-  color: #fff;
-  outline: none;
-  border: 0;
-  border-radius: 5px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 22px;
-  padding: 5px 20px;
-  width: 150px;
-  text-align: center;
-  background: #00ec34;
-  &:hover {
-    background: #00ab26;
-    transition: 0.3s;
-  }
-  &:not(:hover) {
-    transition: 0.3s;
-  }
-}
 .text {
   &_alert {
     color: #e72d2d;
@@ -61,4 +38,11 @@
 
 .select {
   margin: 20px 0px 0px 5px;
+}
+.button {
+  position: absolute;
+  bottom: 15px;
+  font-size: 22px;
+  padding: 5px 20px;
+  width: 150px;
 }

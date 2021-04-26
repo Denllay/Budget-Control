@@ -8,11 +8,10 @@ import styles from './Main.module.scss';
 
 export const Main: React.FC = memo(() => {
   const { budgetsData, budgetsLoadingStatus } = useTypedSelector((state) => state.budgets);
-  const test = useTypedSelector((state) => state.auth.status);
   const { GetDataBudget } = useActions();
   useEffect(() => {
     GetDataBudget();
-  }, [useActions, test]);
+  }, [useActions]);
 
   const budgetItems = (budgetsData as IBudgetFormatData[]).map((dataItem, index) => (
     <BudgetItem key={dataItem.budgetId} data={dataItem} budgetIndex={index} />

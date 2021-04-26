@@ -1,5 +1,6 @@
 import React from 'react';
 import CheckMarkIcon from '@/assets/svg/checkMarkIcon.svg';
+import { Button } from '@/components/UIKit/Button/Button';
 import styles from './AlertModal.module.scss';
 interface IProps {
   closeModal(): void;
@@ -12,9 +13,9 @@ export const SucsessfulAlert: React.FC<IProps> = ({ closeModal }) => {
       </div>
       <div className={styles.block_title}>Great!</div>
 
-      <button className={styles.block_button} onClick={closeModal}>
+      <Button className={styles.button} onClick={closeModal} theme="green">
         OK
-      </button>
+      </Button>
     </div>
   );
 };

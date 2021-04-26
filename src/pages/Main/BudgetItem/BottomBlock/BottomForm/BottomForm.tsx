@@ -67,7 +67,7 @@ export const BottomForm: React.FC<IProps> = memo(
         budgetCurrency,
       });
 
-      if (moneyConsideringCurrency >= availableMoneyCategory) {
+      if (moneyConsideringCurrency > availableMoneyCategory) {
         error.categoryMoney = '⚠  Category budget exceeds available funds';
       }
       return error;

@@ -7,6 +7,7 @@ import { TAlertModalData } from '@/types/Modal';
 import { Formik, Form, Field } from 'formik';
 import { password, confirmPassword } from '@/validationSchemes';
 import { FormInput } from '@/components/UIKit/FormInput/FormInput';
+import { Button } from '@/components/UIKit/Button/Button';
 import * as Yup from 'yup';
 import styles from './ProfileChangePassword.module.scss';
 
@@ -30,6 +31,8 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
   const [alertModalMode, setAlertModalMode] = useState<TAlertModalData | null>(null);
   const [alertModalStatus, setAlertModalStatus] = useState(false);
 
+  const backProfileModalStatus = () => setProfileView('view');
+
   const openAlertModal = (modalData: TAlertModalData) => {
     setAlertModalMode(modalData);
     setAlertModalStatus(true);
@@ -46,9 +49,10 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
   return (
     <>
       <div className={styles.content}>
-        <span className={styles.button_back} onClick={() => setProfileView('view')}>
+        <Button theme="dark" className={styles.button_back} onClick={backProfileModalStatus}>
           Back
-        </span>
+        </Button>
+
         <div className={styles.block_title}>Change Password</div>
         <Formik
           validationSchema={changePasswordSchema}
@@ -64,13 +68,7 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
               component={FormInput}
             />
 
-            <Field
-              placeholder="Password"
-              name="password"
-              type="password"
-              className={styles.input}
-              component={FormInput}
-            />
+            <Field placeholder="Password" name="password" type="password" className={styles.input} component={FormInput} />
 
             <Field
               placeholder="Confirm password"
@@ -80,7 +78,9 @@ export const ProfileChangePassword: React.FC<IProps> = ({ setProfileView }) => {
               component={FormInput}
             />
 
-            <input type="submit" className={styles.submit} value="Change" />
+            <Button className={styles.button} theme="green" type="submit">
+              Change
+            </Button>
           </Form>
         </Formik>
       </div>

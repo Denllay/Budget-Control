@@ -9,30 +9,6 @@
   border-radius: 10px;
 }
 .block {
-  &_button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    &_item {
-      cursor: pointer;
-      margin: 5px 0px 5px 9px;
-      background: #282d3c;
-      border-radius: 5px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      color: #fff;
-      border: 0;
-      padding: 7px 7px;
-      &:hover {
-        background: #383c49;
-        transition: 0.5s;
-      }
-      &:not(:hover) {
-        transition: 0.5s;
-      }
-    }
-  }
   &_title {
     color: #282d3c;
     font-size: 36px;
@@ -49,25 +25,6 @@
   &_exit {
     position: absolute;
     bottom: 25px;
-    &_button {
-      cursor: pointer;
-      color: #fff;
-      background: #e72d2d;
-      border-radius: 5px;
-      padding: 6px 12px;
-      font-size: 24px;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      border: 0;
-      outline: none;
-      &:hover {
-        background: #ff4949;
-        transition: 0.5s;
-      }
-      &:not(:hover) {
-        transition: 0.5s;
-      }
-    }
   }
 }
 .list {
@@ -89,4 +46,18 @@
     font-size: 18px;
     color: #e72d2d;
   }
+}
+.button_block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.button {
+  margin: 10px 0px 5px 9px;
+  font-size: 18px;
+  padding: 7px 7px;
+}
+.button_exit {
+  padding: 6px 12px;
+  font-size: 24px;
 }

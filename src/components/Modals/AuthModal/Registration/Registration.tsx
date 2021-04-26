@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import { FormInput } from '@/components/UIKit/FormInput/FormInput';
 import { password, confirmPassword } from '@/validationSchemes';
 import { RegAuth } from '@/store/actions/Auth/RegAuth';
+import { Button } from '@/components/UIKit/Button/Button';
 import styles from '../AuthModal.module.scss';
 import * as Yup from 'yup';
 
@@ -49,8 +50,9 @@ export const Registration: React.FC<IProps> = ({ setAlertModalStatus }) => {
             className={styles.input}
             component={FormInput}
           />
-
-          <input type="submit" value="submit" className={styles.submit} />
+          <Button className={styles.button} theme="green" type="submit">
+            Submit
+          </Button>
         </Form>
       </Formik>
     </>

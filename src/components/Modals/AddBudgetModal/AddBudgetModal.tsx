@@ -4,6 +4,7 @@ import { TCurrency } from '@/types/Budget/Budget';
 import { Formik, Form, Field } from 'formik';
 import { FormInput } from '@/components/UIKit/FormInput/FormInput';
 import { FormSelect } from '@/components/UIKit/FormSelect/FormSelect';
+import { Button } from '@/components/UIKit/Button/Button';
 import styles from './AddBudgetModal.module.scss';
 import * as Yup from 'yup';
 
@@ -57,7 +58,9 @@ export const AddBudgetModal: React.FC<IProps> = ({ setModalStatus }) => {
             <FormSelect name="currency" className={styles.select} options={options} />
           </div>
 
-          <input value="Submit" type="submit" className={styles.button} />
+          <Button type="submit" theme="dark" className={styles.button}>
+            Submit
+          </Button>
         </Form>
       </Formik>
     </div>

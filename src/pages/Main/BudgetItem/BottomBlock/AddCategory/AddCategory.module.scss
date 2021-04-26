@@ -1,21 +1,6 @@
-.submit {
-  cursor: pointer;
+.button {
   width: 110px;
   padding: 4px 29px;
   font-size: 24px;
-  color: #282d3c;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  color: #535763;
-  border-radius: 5px;
-  border: none;
   margin-top: 15px;
-  &:hover {
-    background: #282d3c;
-    color: #fff;
-    transition: all 0.5s;
-  }
-  &:not(:hover) {
-    transition: all 0.5s;
-  }
 }

@@ -2,12 +2,13 @@ import React from 'react';
 import { NavAuth } from './NavAuth/NavAuth';
 import { PreLoader } from '@/components/PreLoader/PreLoader';
 import { NavMain } from './NavMain/NavMain';
-import { EnumAuthAction, TAuthStatus } from '@/types/Auth';
+import { EnumAuthAction } from '@/types/Auth';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import styles from './Nav.module.scss';
-interface IProps {
-  authStatus: TAuthStatus;
-}
-export const Nav: React.FC<IProps> = ({ authStatus }) => {
+
+export const Nav = () => {
+  const authStatus = useTypedSelector((state) => state.auth.status);
+
   const navComponentList = {
     [EnumAuthAction.AUTH_UNAUTHORIZED]: <NavAuth />,
     [EnumAuthAction.AUTH_ENTERED]: <NavMain />,

@@ -2,32 +2,35 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { Modal } from '@/components/global/Modal/Modal';
 import { TProfileView } from '../types/profileTypes';
-import styles from './ProfileMain.module.scss';
 import { useActions } from '@/hooks/useActions';
 import { auth } from '@/firebase/config';
 import { ConfirmModal } from '@/components/Modals/ConfirmModal/ConfrimModal';
+import { Button } from '@/components/UIKit/Button/Button';
+import styles from './ProfileMain.module.scss';
 interface IProps {
   setProfileView: Dispatch<SetStateAction<TProfileView>>;
   onClickSignOut(): void;
 }
 export const ProfileMain: React.FC<IProps> = ({ setProfileView, onClickSignOut }) => {
+  const { DeleteAllBudgets } = useActions();
   const [exitModalStatus, setExitModalStatus] = useState(false);
   const [deleteBudgetsModalStatus, setDeleteBudgetsModalStatus] = useState(false);
+
   const toggleExitModal = () => setExitModalStatus((prev) => !prev);
   const toggleDeleteBudgetModal = () => setDeleteBudgetsModalStatus((prev) => !prev);
+  const changeProfileModalStatus = () => setProfileView('passwordChange');
 
   const email = !!auth.currentUser ? (auth.currentUser.email as string) : 'null';
-
   const budgetsLength = useTypedSelector((state) => state.budgets.budgetsLength);
   const [budgetsButtonPromptStatus, setBudgetsButtonPromptStatus] = useState(false);
-
-  const { DeleteAllBudgets } = useActions();
 
   const onClickHandlerDeleteBudgets = () => {
     if (budgetsLength) {
       toggleDeleteBudgetModal();
       setBudgetsButtonPromptStatus(false);
-    } else setBudgetsButtonPromptStatus(true);
+    } else {
+      setBudgetsButtonPromptStatus(true);
+    }
   };
 
   return (
@@ -49,37 +52,32 @@ export const ProfileMain: React.FC<IProps> = ({ setProfileView, onClickSignOut }
               </div>
             </li>
           </ul>
+
           <div className={styles.block_button}>
-            <button className={styles.block_button_item} onClick={() => setProfileView('passwordChange')}>
+            <Button theme="dark" onClick={changeProfileModalStatus} className={styles.button}>
               Change
-            </button>
-            <button className={styles.block_button_item} onClick={onClickHandlerDeleteBudgets}>
+            </Button>
+
+            <Button theme="dark" onClick={onClickHandlerDeleteBudgets} className={styles.button}>
               Delete all
-            </button>
+            </Button>
           </div>
         </div>
         <div className={styles.block_exit}>
-          <button className={styles.block_exit_button} onClick={toggleExitModal}>
+          <Button theme="red" onClick={toggleExitModal} className={styles.button_exit}>
             Sign Out
-          </button>
+          </Button>
         </div>
+
         {budgetsButtonPromptStatus && <span className={styles.text_alert}>⚠ You don't have budgets!</span>}
       </div>
 
       <Modal modalStatus={deleteBudgetsModalStatus} setModalStatus={setDeleteBudgetsModalStatus}>
-        <ConfirmModal
-          toggleModal={toggleDeleteBudgetModal}
-          onClickConfirm={DeleteAllBudgets}
-          titleText="Delete budgets?"
-        />
+        <ConfirmModal toggleModal={toggleDeleteBudgetModal} onClickConfirm={DeleteAllBudgets} titleText="Delete budgets?" />
       </Modal>
 
       <Modal modalStatus={exitModalStatus} setModalStatus={setExitModalStatus}>
-        <ConfirmModal
-          toggleModal={toggleExitModal}
-          onClickConfirm={onClickSignOut}
-          titleText="Do you want exit?"
-        />
+        <ConfirmModal toggleModal={toggleExitModal} onClickConfirm={onClickSignOut} titleText="Do you want exit?" />
       </Modal>
     </>
   );
