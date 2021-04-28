@@ -42,10 +42,11 @@ export const GetDataBudget = (): AppThunk => async (dispath: AppDispatch) => {
     };
 
     const transformCategoryData = (category: TBudgetListCategoryDataFromFirebase): ICategoryFormatData[] =>
-      Object.entries(category).reduce((acc: IBudgetCategoryItemFromFirebase[], [_, el]) => [...acc, el], []);
+      Object.entries(category).reduce((acc: IBudgetCategoryItemFromFirebase[], [_, el]) => {
+        return [...acc, el];
+      }, []);
 
-    const formatData = transformBudgetsData();
-    dispath(getDataBudgets(formatData));
+    dispath(getDataBudgets(transformBudgetsData()));
   } catch (error) {
     console.log(error);
   }

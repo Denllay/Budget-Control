@@ -8,7 +8,7 @@ export const CategoryList: React.FC = () => {
   const { budgetIndex } = useContext(BudgetBlockContext);
   const { category } = useTypedSelector((state) => state.budgets.budgetsData[budgetIndex]);
 
-  const categoryList = category.map((dataCategory, index) => (
+  const categoryList = category.map((dataCategory) => (
     <CategoryItem dataCategory={dataCategory} key={dataCategory.categoryId} />
   ));
 

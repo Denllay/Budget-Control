@@ -5,6 +5,7 @@ import { deleteBudgetById } from '@/store/reducers/Budget';
 export const DeleteBudget = (budgetId: string): AppThunk => (dispatch: AppDispatch) => {
   try {
     const uid = auth.currentUser && auth.currentUser.uid;
+
     firebase.database().ref(`users/${uid}/Budgets/${budgetId}`).remove();
     firebase
       .database()

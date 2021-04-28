@@ -36,7 +36,9 @@ const options = [
   { value: 'RUB', name: 'RUB' },
   { value: 'USD', name: 'USD' },
 ];
+
 const titleStyle = { fontSize: '36px' };
+
 export const BottomForm: React.FC<IProps> = memo(
   ({
     budgetId,

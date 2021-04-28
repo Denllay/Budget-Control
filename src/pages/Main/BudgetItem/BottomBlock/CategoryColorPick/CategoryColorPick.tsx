@@ -18,6 +18,7 @@ export const CategoryColorPick: React.FC<IProps> = ({ setColor, color }) => {
 
   useEffect(() => {
     const closeDisplayColor = () => setDisplayColor(false);
+
     window.addEventListener('click', closeDisplayColor);
     return () => {
       window.removeEventListener('click', closeDisplayColor);
