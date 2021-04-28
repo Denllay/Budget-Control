@@ -7,15 +7,14 @@ import { IFormValuesBottomForm, OnSubmitBottomFormFunction } from '@/types/Budge
 import { Button } from '@/components/UIKit';
 import styles from './ChangeCategory.module.scss';
 
-const categoryAvailableMoneyId = 'AvailableMoney';
+const indexCategoryAvaibleMoney = 0;
 
 export const ChangeCategory = () => {
   const { ClearVolatileData, ChangeDataCategory } = useActions();
 
-  const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
-  const { categoryMoney: availableMoneyCategory, categoryCurrency: budgetCurrency } = category.find(
-    ({ categoryId }) => categoryId === categoryAvailableMoneyId
-  )!;
+  const { budgetIndex } = useContext(BudgetBlockContext);
+  const { budgetId, category } = useTypedSelector((state) => state.budgets.budgetsData[budgetIndex]);
+  const { categoryMoney: availableMoneyCategory, categoryCurrency: budgetCurrency } = category[indexCategoryAvaibleMoney];
 
   const {
     volatileCategoryMoney,

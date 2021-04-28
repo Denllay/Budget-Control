@@ -5,16 +5,16 @@ import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { IFormValuesBottomForm, OnSubmitBottomFormFunction } from '@/types/Budget/BottomForm';
 import styles from './AddCategory.module.scss';
 import { Button } from '@/components/UIKit';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
-const availableIdCategory = 'AvailableMoney';
+const indexCategoryAvaibleMoney = 0;
 
 export const AddCategory: React.FC = memo(() => {
   const { AddCategoryBudget } = useActions();
 
-  const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
-  const { categoryMoney: availableMoneyCategory, categoryCurrency: budgetCurrency } = category.find(
-    ({ categoryId }) => categoryId === availableIdCategory
-  )!;
+  const { budgetIndex } = useContext(BudgetBlockContext);
+  const { budgetId, category } = useTypedSelector((state) => state.budgets.budgetsData[budgetIndex]);
+  const { categoryMoney: availableMoneyCategory, categoryCurrency: budgetCurrency } = category[indexCategoryAvaibleMoney];
 
   const onSubmit: OnSubmitBottomFormFunction = ({ categoryMoney, categoryName, categoryColor }) => {
     AddCategoryBudget({

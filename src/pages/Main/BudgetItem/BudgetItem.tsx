@@ -13,13 +13,13 @@ const titleStyle = {
   fontSize: '48px',
 };
 export const BudgetItem: React.FC<IProps> = ({ data, budgetIndex }) => {
-  const { budgetSum, title, category, budgetId, currency } = data;
+  const { budgetSum, title, budgetId, currency } = data;
   return (
     <div className={styles.wrapper}>
       <Title style={titleStyle}>{`${title}: ${budgetSum} ${currency}`}</Title>
 
       <div className={styles.container}>
-        <BudgetBlockContext.Provider value={{ category, budgetSum, budgetId, budgetIndex }}>
+        <BudgetBlockContext.Provider value={{ budgetIndex }}>
           <BudgetItemTopBlock />
           <BottomBlock budgetId={budgetId} />
         </BudgetBlockContext.Provider>

@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import { CategoryItem } from './CategoryItem/CategoryItem';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import styles from './CategoryList.module.scss';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 export const CategoryList: React.FC = () => {
-  const { category } = useContext(BudgetBlockContext);
+  const { budgetIndex } = useContext(BudgetBlockContext);
+  const { category } = useTypedSelector((state) => state.budgets.budgetsData[budgetIndex]);
 
-  const categoryList = category.map((dataCategory) => (
+  const categoryList = category.map((dataCategory, index) => (
     <CategoryItem dataCategory={dataCategory} key={dataCategory.categoryId} />
   ));
 

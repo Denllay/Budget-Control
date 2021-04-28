@@ -4,26 +4,20 @@ import DeleteIcon from '@/assets/svg/daggerIcon.svg';
 import styles from './CategoryButton.module.scss';
 import { BudgetBlockContext } from '@/context/BudgetBlockContext';
 import { useActions } from '@/hooks/useActions';
-import { TCurrency } from '@/types/Budget/Budget';
+import { ICategoryFormatData } from '@/types/Budget/Budget';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 interface IProps {
-  categoryName: string;
-  categoryId: string;
-  categoryMoney: number;
-  categoryColor: string;
-  categoryCurrency: TCurrency;
+  dataCategory: ICategoryFormatData;
 }
 
-const availableIdCategory = 'AvailableMoney';
+const indexCategoryAvaibleMoney = 0;
 
-export const CategoryButton: React.FC<IProps> = ({
-  categoryId,
-  categoryName,
-  categoryMoney,
-  categoryColor,
-  categoryCurrency,
-}) => {
-  const { category, budgetId, budgetIndex } = useContext(BudgetBlockContext);
+export const CategoryButton: React.FC<IProps> = ({ dataCategory }) => {
+  const { budgetIndex } = useContext(BudgetBlockContext);
+  const { budgetId, category } = useTypedSelector((state) => state.budgets.budgetsData[budgetIndex]);
   const { DeleteCategory, SetVolatileInitialData } = useActions();
+
+  const { categoryColor, categoryName, categoryCurrency, categoryId, categoryMoney } = dataCategory;
 
   const onClickChangeHandler = () =>
     SetVolatileInitialData({
@@ -39,7 +33,7 @@ export const CategoryButton: React.FC<IProps> = ({
     DeleteCategory({
       budgetId,
       categoryDeleteId: categoryId,
-      availableMoneyCategory: category.find((el) => el.categoryId === availableIdCategory)?.categoryMoney! + categoryMoney,
+      availableMoneyCategory: category[indexCategoryAvaibleMoney].categoryMoney! + categoryMoney,
       budgetIndex,
     });
 
