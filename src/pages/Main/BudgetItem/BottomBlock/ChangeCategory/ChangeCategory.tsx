@@ -23,7 +23,7 @@ export const ChangeCategory = () => {
     volatileCategoryName,
     volatileCategoryId,
     volatileCategoryColor,
-  } = useTypedSelector((state) => state.volatileBudgets[budgetId]);
+  } = useTypedSelector((state) => state.volatile[budgetId]);
 
   const clearVolatileData = () => ClearVolatileData(budgetId);
 

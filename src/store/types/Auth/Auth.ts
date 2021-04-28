@@ -9,13 +9,6 @@ export interface IAuthPayload {
 export interface IAuthState {
   status: TAuthStatus;
 }
-interface IAuthPendingAction {
-  type: EnumAuthAction.AUTH_PENDING;
+export interface IActionCheckAuth {
+  payload: EnumAuthAction;
 }
-interface IAuthLoginAction {
-  type: EnumAuthAction.AUTH_UNAUTHORIZED;
-}
-interface IAuthEnteredAction {
-  type: EnumAuthAction.AUTH_ENTERED;
-}
-export type TAuthAction = IAuthPendingAction | IAuthLoginAction | IAuthEnteredAction;

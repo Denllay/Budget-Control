@@ -1,20 +1,31 @@
 import { EnumAlertModalData, TAlertModalData } from '@/types/Modal';
-import firebase, { app, auth } from '../../../firebase/config';
+import firebase, { app, auth } from '@/firebase/config';
+import { AppThunk } from '@/store';
 interface IData {
   currentPassword: string;
   password: string;
   openAlertModal(dataModal: TAlertModalData): void;
 }
-export const UpdatePassword = ({ currentPassword, password, openAlertModal }: IData) => {
-  return (): void => {
-    const email = auth.currentUser && auth.currentUser.email;
-    const user = app.auth().currentUser as firebase.User;
 
-    user
-      .reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(email!, currentPassword))
-      .then(() => user.updatePassword(password).then(() => openAlertModal(EnumAlertModalData.SUCCESSFUL)))
-      .catch(({ code, message }) =>
-        code === 'auth/wrong-password' ? openAlertModal(EnumAlertModalData.ERROR) : console.error(message)
-      );
-  };
+const errorStatusPassword = 'auth/wrong-password';
+
+export const UpdatePassword = ({ currentPassword, password, openAlertModal }: IData): AppThunk => () => {
+  const email = auth.currentUser && auth.currentUser.email;
+  const userCredential = firebase.auth.EmailAuthProvider.credential(email!, currentPassword);
+  const user = app.auth().currentUser as firebase.User;
+
+  user
+    .reauthenticateWithCredential(userCredential)
+    .then(() =>
+      user.updatePassword(password).then(() => {
+        openAlertModal(EnumAlertModalData.SUCCESSFUL);
+      })
+    )
+    .catch(({ code, message }) => {
+      if (code === errorStatusPassword) {
+        openAlertModal(EnumAlertModalData.ERROR);
+      } else {
+        console.error(message);
+      }
+    });
 };

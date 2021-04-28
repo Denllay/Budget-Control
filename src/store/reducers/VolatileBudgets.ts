@@ -1,50 +1,33 @@
-import {
-  TVolatileBudgetsData,
-  TVolatileBudgetAction,
-  EnumVolatileBudgetAction,
-} from '../types/Budget/VolatileBudget';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TVolatileBudgetsData, ISetVolatileBudgetDataAction } from '../types/Budget/VolatileBudget';
 
 const initialState: TVolatileBudgetsData = {};
-export const VolatileBudgets = (
-  state = initialState,
-  action: TVolatileBudgetAction
-): TVolatileBudgetsData => {
-  switch (action.type) {
-    case EnumVolatileBudgetAction.SET_VOLATILE_DATA: {
-      const {
-        volatileCategoryId,
-        volatileCategoryName,
-        volatileCategoryColor,
-        volatileCategoryMoney,
-        volatileCategoryCurrency,
-        budgetId,
-      } = action.payload;
-      return {
-        ...state,
-        [budgetId]: {
-          budgetIsChange: true,
-          volatileCategoryName,
-          volatileCategoryColor,
-          volatileCategoryId,
-          volatileCategoryMoney,
-          volatileCategoryCurrency,
-        },
+
+const VolatileBudgets = createSlice({
+  name: 'VolatileBudgets',
+  initialState,
+  reducers: {
+    setVolatileData(state, { payload }: PayloadAction<ISetVolatileBudgetDataAction>) {
+      const { budgetId } = payload;
+
+      state[budgetId] = {
+        budgetIsChange: true,
+        ...payload,
       };
-    }
-    case EnumVolatileBudgetAction.CLEAR_VOLATILE_DATA: {
-      return {
-        ...state,
-        [action.payload.budgetId]: {
-          budgetIsChange: false,
-          volatileCategoryId: '',
-          volatileCategoryName: '',
-          volatileCategoryColor: '',
-          volatileCategoryCurrency: null,
-          volatileCategoryMoney: 0,
-        },
+    },
+
+    clearVolatileDataById(state, { payload }: PayloadAction<string>) {
+      state[payload] = {
+        budgetIsChange: false,
+        volatileCategoryId: '',
+        volatileCategoryName: '',
+        volatileCategoryColor: '',
+        volatileCategoryCurrency: null,
+        volatileCategoryMoney: 0,
       };
-    }
-    default:
-      return { ...state };
-  }
-};
+    },
+  },
+});
+
+export default VolatileBudgets.reducer;
+export const { clearVolatileDataById, setVolatileData } = VolatileBudgets.actions;

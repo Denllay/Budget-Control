@@ -1,7 +1,7 @@
 import firebase, { auth } from '@/firebase/config';
-import { Dispatch } from 'react';
-import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
 import { EnumCurrency, ICategoryFormatData } from '@/types/Budget/Budget';
+import { AppDispatch, AppThunk } from '@/store';
+import { budgetAddCategory } from '@/store/reducers/Budget';
 interface IDataAction {
   budgetId: string;
   categoryName: string;
@@ -10,32 +10,31 @@ interface IDataAction {
   categoryColor: string;
   budgetIndex: number;
 }
+
+const categoryAvaibleId = 'AvailableMoney';
+
 export const AddCategoryBudget = ({
   categoryAvailableMoney,
   budgetId,
   budgetIndex,
   ...dataCategory
-}: IDataAction) => {
-  return (dispatch: Dispatch<TBudgetActions>) => {
-    try {
-      const uid = auth.currentUser && auth.currentUser.uid;
-      const newBudgetCollectionRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
-      const categoryId = `id_${Math.random() * Date.now()}`.replace(/\./gi, '');
-      const categoryAvaibleId = 'AvailableMoney';
-      const data: ICategoryFormatData = {
-        categoryCurrency: EnumCurrency.RUB,
-        categoryId,
-        ...dataCategory,
-      };
+}: IDataAction): AppThunk => (dispatch: AppDispatch) => {
+  try {
+    const uid = auth.currentUser && auth.currentUser.uid;
+    const newBudgetCollectionRef = firebase.database().ref(`users/${uid}/Budgets/${budgetId}/category`);
+    const categoryId = `id_${Math.random() * Date.now()}`.replace(/\./gi, '');
 
-      newBudgetCollectionRef.child(categoryAvaibleId).update({ categoryMoney: categoryAvailableMoney });
-      newBudgetCollectionRef.child(categoryId).set(data);
-      dispatch({
-        type: EnumBudgetAction.ADD_CATEGORY,
-        payload: { categoryData: data, budgetIndex, categoryAvaibleId, categoryAvailableMoney },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const data: ICategoryFormatData = {
+      categoryCurrency: EnumCurrency.RUB,
+      categoryId,
+      ...dataCategory,
+    };
+
+    newBudgetCollectionRef.child(categoryAvaibleId).update({ categoryMoney: categoryAvailableMoney });
+    newBudgetCollectionRef.child(categoryId).set(data);
+
+    dispatch(budgetAddCategory({ categoryData: data, budgetIndex, categoryAvailableMoney }));
+  } catch (error) {
+    console.log(error);
+  }
 };

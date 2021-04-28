@@ -6,8 +6,7 @@ interface IProps {
   budgetId: string;
 }
 export const BottomBlock: React.FC<IProps> = ({ budgetId }) => {
-  const budgetChangeStatus = useTypedSelector(
-    (state) => state?.volatileBudgets[budgetId]?.budgetIsChange || false
-  );
+  const budgetChangeStatus = useTypedSelector((state) => state?.volatile[budgetId]?.budgetIsChange || false);
+
   return budgetChangeStatus ? <ChangeCategory /> : <AddCategory />;
 };

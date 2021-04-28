@@ -1,113 +1,91 @@
-import { ICategoryFormatData } from '@/types/Budget/Budget';
-import { EnumBudgetAction, IBudgetState, TBudgetActions } from '../types/Budget/Budget';
+import { IBudgetFormatData } from '@/types/Budget/Budget';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IAddCategory, IBudgetState, IChangeCategory, IDeleteCategory, TGetDataBudget } from '../types/Budget/Budget';
 
 const initialState: IBudgetState = {
   budgetsLoadingStatus: 'LOADING',
   budgetsLength: 0,
   budgetsData: [],
 };
-export const Budget = (state = initialState, action: TBudgetActions): IBudgetState => {
-  switch (action.type) {
-    case EnumBudgetAction.GET_DATA_BUDGET: {
-      return { ...state, budgetsData: action.payload, budgetsLoadingStatus: 'LOADED' };
-    }
 
-    case EnumBudgetAction.DELETE_BUDGET: {
-      return {
-        ...state,
-        budgetsLength: --state.budgetsLength,
-        budgetsData: state.budgetsData.filter(({ budgetId }) => budgetId !== action.payload.budgetId),
-      };
-    }
+const Budget = createSlice({
+  name: 'Budget',
+  initialState,
+  reducers: {
+    getDataBudgets(state, { payload }: PayloadAction<TGetDataBudget>) {
+      state.budgetsLoadingStatus = 'LOADED';
+      state.budgetsData = payload;
+    },
 
-    case EnumBudgetAction.ADD_BUDGET: {
-      return {
-        ...state,
-        budgetsLength: ++state.budgetsLength,
-        budgetsData: [...state.budgetsData, action.payload],
-      };
-    }
+    deleteBudgetById(state, { payload }: PayloadAction<string>) {
+      state.budgetsLength -= 1;
+      state.budgetsData = state.budgetsData.filter(({ budgetId }) => budgetId !== payload);
+    },
 
-    case EnumBudgetAction.DELETE_ALL_BUDGETS: {
-      return {
-        ...state,
-        budgetsLength: 0,
-        budgetsData: [],
-      };
-    }
+    addBudget(state, { payload }: PayloadAction<IBudgetFormatData>) {
+      state.budgetsLength += 1;
+      state.budgetsData.push(payload);
+    },
 
-    case EnumBudgetAction.ADD_CATEGORY: {
-      const { categoryData, budgetIndex, categoryAvailableMoney, categoryAvaibleId } = action.payload;
-      const newBudgetsData = [...state.budgetsData];
+    deleteAllBudgets(state) {
+      state.budgetsLength = 0;
+      state.budgetsData = [];
+    },
 
-      const newCategoryArray = newBudgetsData[budgetIndex].category.map((el) => {
-        el.categoryId === categoryAvaibleId && (el.categoryMoney = categoryAvailableMoney);
-        return el;
-      });
+    budgetAddCategory(state, { payload }: PayloadAction<IAddCategory>) {
+      const indexCategoryAvaibleMoney = 0;
+      const { categoryData, budgetIndex, categoryAvailableMoney } = payload;
 
-      newBudgetsData[budgetIndex].category = [...newCategoryArray, categoryData];
-      return { ...state, budgetsData: newBudgetsData };
-    }
+      state.budgetsData[budgetIndex].category[indexCategoryAvaibleMoney].categoryMoney = categoryAvailableMoney;
+      state.budgetsData[budgetIndex].category.push(categoryData);
+    },
 
-    case EnumBudgetAction.CHANGE_DATA_CATEGORY: {
+    budgetChangeCateogry(state, { payload }: PayloadAction<IChangeCategory>) {
       const {
-        volatileCategoryId,
         budgetIndex,
-        categoryName,
-        categoryMoney,
         availableIdCategory,
         categoryAvailableMoney,
-        categoryColor,
-      } = action.payload;
+        volatileCategoryId,
+        ...categoryChangeData
+      } = payload;
 
-      const newBudgetsData = [...state.budgetsData];
-      const newCategoryArray = newBudgetsData[budgetIndex].category.reduce(
-        (acc: ICategoryFormatData[], el) => {
-          el.categoryId === volatileCategoryId &&
-            (el = { ...el, categoryName, categoryMoney, categoryColor });
+      state.budgetsData[budgetIndex].category = state.budgetsData[budgetIndex].category.map((el) => {
+        if (el.categoryId === availableIdCategory) {
+          el.categoryMoney = categoryAvailableMoney;
+        }
+        if (el.categoryId === volatileCategoryId) {
+          el = { ...el, ...categoryChangeData };
+        }
+        return el;
+      });
+    },
 
-          el.categoryId === availableIdCategory && (el.categoryMoney = categoryAvailableMoney);
+    budgetDeleteCategory(state, { payload }: PayloadAction<IDeleteCategory>) {
+      const indexCategoryAvaibleMoney = 0;
+      const { budgetIndex, categoryDeleteId, availableMoneyCategory } = payload;
 
-          acc.push(el);
-          return acc;
-        },
-        []
+      state.budgetsData[budgetIndex].category = state.budgetsData[budgetIndex].category.filter(
+        (el) => el.categoryId !== categoryDeleteId
       );
 
-      newBudgetsData[budgetIndex].category = newCategoryArray;
+      state.budgetsData[budgetIndex].category[indexCategoryAvaibleMoney].categoryMoney = availableMoneyCategory;
+    },
 
-      return { ...state, budgetsData: newBudgetsData };
-    }
+    setLenghtBudgets(state, { payload }: PayloadAction<number>) {
+      state.budgetsLength = payload;
+    },
+  },
+});
 
-    case EnumBudgetAction.DELETE_CATEGORY: {
-      const { budgetIndex, categoryDeleteId, availableIdCategory, availableMoneyCategory } = action.payload;
+export default Budget.reducer;
 
-      const newCategoryArray = state.budgetsData[budgetIndex].category.reduce(
-        (acc: ICategoryFormatData[], el) => {
-          if (el.categoryId === categoryDeleteId) return acc;
-
-          if (el.categoryId === availableIdCategory) {
-            acc.push({ ...el, categoryMoney: availableMoneyCategory });
-            return acc;
-          }
-          acc.push(el);
-          return acc;
-        },
-        []
-      );
-      const newBudgetsData = [...state.budgetsData];
-      newBudgetsData[budgetIndex].category = newCategoryArray;
-      return {
-        ...state,
-        budgetsData: newBudgetsData,
-      };
-    }
-
-    case EnumBudgetAction.GET_LENGTH_BUDGET: {
-      return { ...state, budgetsLength: action.payload.budgetsLength };
-    }
-
-    default:
-      return { ...state };
-  }
-};
+export const {
+  addBudget,
+  budgetChangeCateogry,
+  deleteAllBudgets,
+  deleteBudgetById,
+  budgetDeleteCategory,
+  getDataBudgets,
+  setLenghtBudgets,
+  budgetAddCategory,
+} = Budget.actions;

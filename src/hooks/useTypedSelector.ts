@@ -1,4 +1,4 @@
+import { TRootState } from '@/store';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { TRootReducer } from '../store/reducers';
 
-export const useTypedSelector: TypedUseSelectorHook<TRootReducer> = useSelector;
+export const useTypedSelector: TypedUseSelectorHook<TRootState> = useSelector;

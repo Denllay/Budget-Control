@@ -11,7 +11,7 @@ const availableIdCategory = 'AvailableMoney';
 
 export const CategoryItem: React.FC<IProps> = ({ dataCategory }) => {
   const { budgetSum, budgetId } = useContext(BudgetBlockContext);
-  const { budgetIsChange } = useTypedSelector((state) => state?.volatileBudgets[budgetId] || {});
+  const budgetIsChange = useTypedSelector((state) => state?.volatile[budgetId]?.budgetIsChange || false);
   const { categoryColor, categoryName, categoryMoney, categoryId, categoryCurrency } = dataCategory;
 
   const procentCategory = (categoryMoney / (budgetSum / 100)).toFixed(1);

@@ -1,60 +1,60 @@
 import { IBudgetFormatData, TCurrency } from '@/types/Budget/Budget';
 import firebase, { auth } from '@/firebase/config';
-import { Dispatch } from 'react';
-import { EnumBudgetAction, TBudgetActions } from '@/store/types/Budget/Budget';
+import { addBudget } from '@/store/reducers/Budget';
+import { AppDispatch, AppThunk } from '@/store';
 interface IDataAction {
   title: string;
   money: number;
   currency: TCurrency;
 }
-export const AddBudget = ({ title, money, currency }: IDataAction) => {
-  return (dispatch: Dispatch<TBudgetActions>) => {
-    try {
-      const uid = auth.currentUser && auth.currentUser.uid;
-      const budgetId = `id_${Math.random() * Date.now()}`.replace(/\./g, '');
 
-      const categoryData = {
-        categoryMoney: money,
-        categoryCurrency: currency,
-        categoryId: 'AvailableMoney',
-        categoryColor: '#e4e4e4',
-        categoryName: 'Available Money',
-      };
+export const AddBudget = ({ title, money, currency }: IDataAction): AppThunk => (dispatch: AppDispatch) => {
+  try {
+    const uid = auth.currentUser && auth.currentUser.uid;
+    const budgetId = `id_${Math.random() * Date.now()}`.replace(/\./g, '');
 
-      const budgetHeaderData = {
-        title,
-        currency,
-        budgetSum: money,
-      };
+    const categoryData = {
+      categoryMoney: money,
+      categoryCurrency: currency,
+      categoryId: 'AvailableMoney',
+      categoryColor: '#e4e4e4',
+      categoryName: 'Available Money',
+    };
 
-      const budgetData: IBudgetFormatData = {
-        ...budgetHeaderData,
-        budgetId,
-        category: [
-          {
-            ...categoryData,
-          },
-        ],
-      };
+    const budgetHeaderData = {
+      title,
+      currency,
+      budgetSum: money,
+    };
 
-      const firebaseData = {
-        ...budgetHeaderData,
-        category: {
-          AvailableMoney: {
-            ...categoryData,
-          },
+    const budgetData: IBudgetFormatData = {
+      ...budgetHeaderData,
+      budgetId,
+      category: [
+        {
+          ...categoryData,
         },
-      };
-      firebase
-        .database()
-        .ref(`users/${uid}/BudgetsLength`)
-        .transaction(function (value) {
-          return (value || 0) + 1;
-        });
-      firebase.database().ref(`users/${uid}/Budgets/${budgetId}`).set(firebaseData);
-      dispatch({ type: EnumBudgetAction.ADD_BUDGET, payload: budgetData });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      ],
+    };
+
+    const firebaseData = {
+      ...budgetHeaderData,
+      category: {
+        AvailableMoney: {
+          ...categoryData,
+        },
+      },
+    };
+    firebase
+      .database()
+      .ref(`users/${uid}/BudgetsLength`)
+      .transaction(function (value) {
+        return (value || 0) + 1;
+      });
+    firebase.database().ref(`users/${uid}/Budgets/${budgetId}`).set(firebaseData);
+
+    dispatch(addBudget(budgetData));
+  } catch (error) {
+    console.log(error);
+  }
 };

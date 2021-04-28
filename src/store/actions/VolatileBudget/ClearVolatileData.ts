@@ -1,7 +1,6 @@
-import { TVolatileBudgetAction, EnumVolatileBudgetAction } from '@/store/types/Budget/VolatileBudget';
-import { Dispatch } from 'react';
+import { AppDispatch, AppThunk } from '@/store';
+import { clearVolatileDataById } from '@/store/reducers/VolatileBudgets';
 
-export const ClearVolatileData = (budgetId: string) => {
-  return (dispatch: Dispatch<TVolatileBudgetAction>) =>
-    dispatch({ type: EnumVolatileBudgetAction.CLEAR_VOLATILE_DATA, payload: { budgetId } });
+export const ClearVolatileData = (budgetId: string): AppThunk => (dispatch: AppDispatch) => {
+  dispatch(clearVolatileDataById(budgetId));
 };

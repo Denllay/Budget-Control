@@ -36,7 +36,7 @@ const options = [
   { value: 'RUB', name: 'RUB' },
   { value: 'USD', name: 'USD' },
 ];
-const titleStyle = { color: '#282d3c', fontSize: '36px' };
+const titleStyle = { fontSize: '36px' };
 export const BottomForm: React.FC<IProps> = memo(
   ({
     budgetId,
@@ -65,17 +65,23 @@ export const BottomForm: React.FC<IProps> = memo(
         budgetCurrency,
       });
 
-      if (moneyConsideringCurrency > availableMoneyCategory) {
+      if (moneyConsideringCurrency > availableMoneyCategory + +initialValues.categoryMoney) {
         error.categoryMoney = '⚠  Category budget exceeds available funds';
       }
       return error;
     };
 
     const onSubmit = async (
-      { categoryMoney, ...data }: IFormValuesBottomForm,
+      { categoryMoney, categoryCurrency, categoryName }: IFormValuesBottomForm,
       { resetForm }: FormikHelpers<IFormValuesBottomForm>
     ) => {
-      onSuccessfulFunction({ ...data, categoryMoney: +categoryMoney, categoryColor });
+      const moneyConsideringCurrency = countMoneyConsideringCurrency({
+        categoryMoney: +categoryMoney,
+        categoryCurrency: categoryCurrency as TCurrency,
+        budgetCurrency,
+      });
+
+      onSuccessfulFunction({ categoryName, categoryMoney: moneyConsideringCurrency, categoryColor });
       setCategoryColor('#c4c4c4');
       resetForm();
     };

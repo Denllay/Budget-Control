@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { password, confirmPassword } from '@/validationSchemes';
 import { RegAuth } from '@/store/actions/Auth/RegAuth';
-import { Button, FormInput } from '@/components/UIKit';
+import { Button, FormInput, Title } from '@/components/UIKit';
 import styles from '../AuthModal.module.scss';
 import * as Yup from 'yup';
 
@@ -37,7 +37,8 @@ export const Registration: React.FC<IProps> = ({ setAlertModalStatus }) => {
 
   return (
     <>
-      <div className={styles.block_title}>Registration</div>
+      <Title style={titleStyle}>Registration</Title>
+
       <Formik
         initialValues={{ email: '', password: '', confirmPassword: '' }}
         onSubmit={onSubmit}

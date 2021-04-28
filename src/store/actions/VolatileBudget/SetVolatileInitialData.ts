@@ -1,11 +1,7 @@
-import {
-  TVolatileBudgetAction,
-  ISetVolatileBudgetDataAction,
-  EnumVolatileBudgetAction,
-} from '@/store/types/Budget/VolatileBudget';
-import { Dispatch } from 'react';
+import { AppDispatch, AppThunk } from '@/store';
+import { setVolatileData } from '@/store/reducers/VolatileBudgets';
+import { ISetVolatileBudgetDataAction } from '@/store/types/Budget/VolatileBudget';
 
-export const SetVolatileInitialData = (data: ISetVolatileBudgetDataAction) => {
-  return (dispatch: Dispatch<TVolatileBudgetAction>) =>
-    dispatch({ type: EnumVolatileBudgetAction.SET_VOLATILE_DATA, payload: data });
+export const SetVolatileInitialData = (data: ISetVolatileBudgetDataAction): AppThunk => (dispatch: AppDispatch) => {
+  dispatch(setVolatileData(data));
 };

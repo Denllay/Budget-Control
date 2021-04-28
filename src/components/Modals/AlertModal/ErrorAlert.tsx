@@ -9,6 +9,7 @@ const titleStyle = {
   fontSize: '28px',
   fontWeight: 500,
   margin: '15px 0px',
+  color: '#e72d2d',
 };
 
 export const ErrorAlert: React.FC<IProps> = ({ closeModal }) => {
