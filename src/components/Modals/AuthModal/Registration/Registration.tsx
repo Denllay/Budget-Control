@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { password, confirmPassword } from '@/validationSchemes';
-import { RegAuth } from '@/store/actions/Auth/RegAuth';
 import { Button, FormInput, Title } from '@/components/UIKit';
 import styles from '../AuthModal.module.scss';
 import * as Yup from 'yup';
+import { useActions } from '@/hooks/useActions';
 
 interface IFormValues {
   email: string;
@@ -31,6 +31,7 @@ const titleStyle = {
 };
 
 export const Registration: React.FC<IProps> = ({ setAlertModalStatus }) => {
+  const { RegAuth } = useActions();
   const onSubmit = ({ password, email }: IFormValues) => {
     RegAuth({ password, email, setAlertModalStatus });
   };
@@ -51,7 +52,7 @@ export const Registration: React.FC<IProps> = ({ setAlertModalStatus }) => {
 
           <Field
             type="password"
-            name="confirmPassowrd"
+            name="confirmPassword"
             placeholder="Confirm password"
             className={styles.input}
             component={FormInput}

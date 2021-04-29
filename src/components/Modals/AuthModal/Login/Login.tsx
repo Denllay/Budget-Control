@@ -13,7 +13,6 @@ interface IProps {
 interface IFormValues {
   email: string;
   password: string;
-  confirmPassowrd?: string;
 }
 
 const authSchema: Yup.SchemaOf<IFormValues> = Yup.object().shape({
