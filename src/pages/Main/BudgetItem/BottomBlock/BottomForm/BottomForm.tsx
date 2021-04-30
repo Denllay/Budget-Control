@@ -27,7 +27,10 @@ const categorySchema: Yup.SchemaOf<IFormValuesBottomForm> = Yup.object().shape({
     .max(9, '⚠ Category name must be no more than 9 characters')
     .matches(/^[\w\S]+$/i, '⚠ Invalid characters entered'),
 
-  categoryMoney: Yup.string().required('⚠ Enter money category').max(13, '⚠ This value exceeds the maximum value'),
+  categoryMoney: Yup.number()
+    .required('⚠ Enter money category')
+    .max(13, '⚠ This value exceeds the maximum value')
+    .positive('⚠ Enter positive number'),
 
   categoryCurrency: Yup.string().required(),
 });
@@ -59,7 +62,7 @@ export const BottomForm: React.FC<IProps> = memo(
     const toggleDeleteBudgetModal = () => setDeleteBudetModalStatus((prev) => !prev);
 
     const validate = ({ categoryMoney, categoryCurrency }: IFormValuesBottomForm) => {
-      let error = {} as IFormValuesBottomForm;
+      let error: Record<string, string> = {};
 
       const moneyConsideringCurrency = countMoneyConsideringCurrency({
         categoryMoney: +categoryMoney,

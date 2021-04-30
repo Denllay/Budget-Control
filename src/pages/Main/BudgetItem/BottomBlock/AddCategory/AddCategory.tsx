@@ -29,7 +29,7 @@ export const AddCategory: React.FC = memo(() => {
 
   const initialValues: IFormValuesBottomForm = {
     categoryCurrency: 'RUB',
-    categoryMoney: '',
+    categoryMoney: 0,
     categoryName: '',
   };
 

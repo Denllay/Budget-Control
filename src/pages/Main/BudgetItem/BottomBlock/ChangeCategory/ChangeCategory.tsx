@@ -40,7 +40,7 @@ export const ChangeCategory = () => {
 
   const initialValues: IFormValuesBottomForm = {
     categoryCurrency: volatileCategoryCurrency!,
-    categoryMoney: String(volatileCategoryMoney),
+    categoryMoney: volatileCategoryMoney,
     categoryName: volatileCategoryName,
   };
 
@@ -56,7 +56,7 @@ export const ChangeCategory = () => {
     >
       <div className={styles.button_block}>
         <Button theme="green" type="submit" className={styles.button}>
-          Cancel
+          Submit
         </Button>
 
         <Button onClick={clearVolatileData} theme="red" className={styles.button}>

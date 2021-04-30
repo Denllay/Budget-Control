@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 interface IFormValues {
   name: string;
-  money: string;
+  money: number;
   currency: string;
 }
 interface IProps {
@@ -21,7 +21,10 @@ const addBudgetSchema: Yup.SchemaOf<IFormValues> = Yup.object().shape({
     .min(3, '⚠ Name must be at least 3 characters long')
     .max(13, '⚠ Maximum name length 13 characters'),
 
-  money: Yup.string().required().required('⚠ You must enter a budget').max(13, '⚠ This value exceeds the maximum value'),
+  money: Yup.number()
+    .required('⚠ You must enter a budget')
+    .max(13, '⚠ This value exceeds the maximum value')
+    .positive('⚠ Enter positive number'),
 
   currency: Yup.string().required(),
 });
@@ -46,11 +49,7 @@ export const AddBudgetModal: React.FC<IProps> = ({ setModalStatus }) => {
     <div className={styles.content}>
       <Title style={tytleStyle}>Please write budget</Title>
 
-      <Formik
-        initialValues={{ name: '', money: '', currency: 'RUB' }}
-        onSubmit={onSubmit}
-        validationSchema={addBudgetSchema}
-      >
+      <Formik initialValues={{ name: '', money: 0, currency: 'RUB' }} onSubmit={onSubmit} validationSchema={addBudgetSchema}>
         <Form className={styles.block_form}>
           <Field name="name" placeholder="Name budget" className={styles.input} component={FormInput} />
 
