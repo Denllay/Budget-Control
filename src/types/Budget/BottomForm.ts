@@ -8,6 +8,6 @@ interface IArgumentSubmitFunction {
 
 export interface IFormValuesBottomForm {
   categoryName: string;
-  categoryMoney: number;
+  categoryMoney: number | string;
   categoryCurrency: string;
 }

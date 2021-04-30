@@ -29,7 +29,7 @@ const categorySchema: Yup.SchemaOf<IFormValuesBottomForm> = Yup.object().shape({
 
   categoryMoney: Yup.number()
     .required('⚠ Enter money category')
-    .max(13, '⚠ This value exceeds the maximum value')
+    .max(9999999999999, '⚠ Exceeded the maximum number')
     .positive('⚠ Enter positive number'),
 
   categoryCurrency: Yup.string().required(),

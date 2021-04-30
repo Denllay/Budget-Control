@@ -2,9 +2,9 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { password, confirmPassword } from '@/validationSchemes';
 import { Button, FormInput, Title } from '@/components/UIKit';
+import { useActions } from '@/hooks/useActions';
 import styles from '../AuthModal.module.scss';
 import * as Yup from 'yup';
-import { useActions } from '@/hooks/useActions';
 
 interface IFormValues {
   email: string;
