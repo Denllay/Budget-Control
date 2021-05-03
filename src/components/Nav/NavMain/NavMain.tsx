@@ -17,9 +17,9 @@ export const NavMain: React.FC = () => {
       <div className={styles.wrapper}>
         <ul className={styles.list}>
           <li className={styles.list_item}>
-            <Link to="/main">Main</Link>
+            <Link to="/Budget-Control/main">Main</Link>
           </li>
-          <Route path="/main">
+          <Route path="/Budget-Control/main">
             <li className={styles.list_item} onClick={() => setAddBudgetModalStatus(true)}>
               <span>Add budget</span>
             </li>
